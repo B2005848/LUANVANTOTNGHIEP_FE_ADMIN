@@ -1,7 +1,7 @@
 import loginPage from "@/layouts/account.login.vue";
 
 const admin = [
-  // Router for admin login page (separated from admin routes)
+  // Router for admin login page (separated from admin routes).
   {
     path: "/login",
     name: "admin.login",
