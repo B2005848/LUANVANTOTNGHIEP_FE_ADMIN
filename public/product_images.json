@@ -1,0 +1,114 @@
+{
+  "product_images": [
+    {
+      "product_id": 1,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P21853_1.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P21853_2.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P21853_3.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P21853_4.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P21853_5.png"
+      ]
+    },
+    {
+      "product_id": 2,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P25917_11.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P25917_222.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P25917_3.jpg"
+      ]
+    },
+    {
+      "product_id": 3,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P02021.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P02021_1.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P02021_3.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P02021_4.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P02021_5.jpg"
+      ]
+    },
+    {
+      "product_id": 4,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/20240528064014-0-P28033_1.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/20240528064014-1-P28033_2.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/20240528064014-2-P28033_3.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/20240528064014-3-P28033_4.jpg"
+      ]
+    },
+    {
+      "product_id": 5,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P11349.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P11349_1.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P11349_3.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P11349_5.png"
+      ]
+    },
+    {
+      "product_id": 6,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P08734.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P08734_1.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P08734_3.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P08734_4.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P08734_5.png"
+      ]
+    },
+    {
+      "product_id": 7,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P07340_1_l.webp"
+      ]
+    },
+    {
+      "product_id": 8,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P03287.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P03287_1.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P03287_3.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P03287_4.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P03287_5.png"
+      ]
+    },
+    {
+      "product_id": 9,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P11349.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P11349_1.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P11349_3.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P11349_5.png"
+      ]
+    },
+    {
+      "product_id": 10,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P08734.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P08734_1.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P08734_3.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P08734_4.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P08734_5.png"
+      ]
+    },
+    {
+      "product_id": 11,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/P27310_1.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P27310_3.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P27310_4.jpg",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P27310_5.jpg"
+      ]
+    },
+    {
+      "product_id": 12,
+      "images": [
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/1000x1000/20240630024954-1-P00169_1.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P00169_1.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P00169_4.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P00169_3.png",
+        "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P00169_5.png"
+      ]
+    }
+  ]
+}

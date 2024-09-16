@@ -1,0 +1,20 @@
+{
+  "productTypes": [
+    {
+      "id": "TPCN",
+      "name": "Thực phẩm chức năng"
+    },
+    {
+      "id": "CSCN",
+      "name": "Chăm sóc cá nhân"
+    },
+    {
+      "id": "MOMABB",
+      "name": "Mẹ và Bé"
+    },
+    {
+      "id": "CSSD",
+      "name": "Chăm sóc sắc đẹp"
+    }
+  ]
+}

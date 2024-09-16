@@ -1,0 +1,143 @@
+{
+  "listdoctors": [
+    {
+      "id": 1,
+      "username": "drtvn1",
+      "password": "$2b$12$Kix2XsU6vI8Dl8zIv8ps3eZmZGQa8TQwGfGzYBfOrPlB9zT9esKCa",
+      "name": "Dr. Nguyễn Văn A",
+      "birthyear": "18/12/2002",
+      "address": "ấp Trường Trung, Xã Trường Thành, Huyện Thới Lai, Cần Thơ",
+      "gender": "Nam",
+      "join": "06/02/2015",
+      "description": [
+        "TTUT. Bác sĩ CKII Nguyễn Văn A là một trong những chuyên gia đầu ngành về lĩnh vực ngoại tổng hợp, ngoại tiêu hoá. Với hơn 35 năm kinh nghiệm, bác sĩ Hàn Văn Bạ đã cứu chữa thành công nhiều ca bệnh nặng như tai nạn giao thông, tai nạn lao động, chấn thương do sinh hoạt."
+      ],
+      "department": "NK",
+      "phone": "096215978",
+      "specialty": "Ngoại Khoa",
+      "email": "abc@2014gmail.com",
+      "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "availableTimes": ["8:00", "9:00", "10:00", "11:00"]
+    },
+    {
+      "id": 2,
+      "username": "drtvn2",
+      "password": "$2b$12$Kix2XsU6vI8Dl8zIv8ps3eZmZGQa8TQwGfGzYBfOrPlB9zT9esKCa",
+      "name": "Dr. Phạm Văn D",
+      "birthyear": "11/5/1995",
+      "address": "HH32, Đường số 25, Khu dân cư lô số 49, Khu đô thị mới Nam s, Phường Hưng Thạnh, Quận Cái Răng, Cần Thơ",
+      "gender": "Nam",
+      "join": "06/02/2015",
+
+      "description": [
+        "Với 40 năm kinh nghiệm trong lĩnh vực Tim mạch, Tiến sĩ D đã thành công chẩn đoán và chữa trị nhiều trường hợp bệnh khó, phức tạp. Đặc biệt là người mở đầu cho 3 kỹ thuật can thiệp tim mạch ở Việt Nam: phẫu thuật cấy máy tạo nhịp đồng bộ nhĩ thất (2 buồng tim) điều trị rối loạn nhịp tim; phẫu thuật cấy máy phá rung tim tự động, điều trị và dự phòng đột tử do tim; phẫu thuật cấy máy tái đồng bộ tim (3 buồng tim) điều trị suy tim nặng."
+      ],
+      "department": "TM",
+      "phone": "0123456789",
+      "specialty": "Tim mạch",
+      "email": "abc@2214gmail.com",
+      "image": "https://plus.unsplash.com/premium_photo-1661764878654-3d0fc2eefcca?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "availableTimes": ["8:00", "9:00", "10:00", "11:00"]
+    },
+    {
+      "id": 3,
+      "username": "drtvn3",
+      "password": "$2b$12$Kix2XsU6vI8Dl8zIv8ps3eZmZGQa8TQwGfGzYBfOrPlB9zT9esKCa",
+      "name": "Dr. Trần Văn E",
+      "birthyear": "01/07/1996",
+      "address": " Số 58C/3 Đường 3/2, KV6, Phường Hưng Lợi, Quận Ninh Kiều, Cần Thơ",
+      "gender": "Nam",
+      "join": "06/02/2015",
+
+      "description": [
+        "Bác sĩ Trần Văn E có hơn 25 năm kinh nghiệm trong lĩnh vực Phục hồi chức năng, chuyên điều trị các bệnh về xương khớp, thần kinh, và tim mạch."
+      ],
+      "department": "PHCN",
+      "phone": "0987654321",
+      "specialty": "Phục hồi chức năng",
+      "email": "tran.e@example.com",
+      "image": "https://media.istockphoto.com/id/1861008688/vi/anh/b%C3%A1c-s%C4%A9-vui-v%E1%BA%BB-gi%C6%A1-ng%C3%B3n-tay-c%C3%A1i-l%C3%AAn-m%E1%BA%B7c-%C3%A1o-kho%C3%A1c-tr%E1%BA%AFng.jpg?s=2048x2048&w=is&k=20&c=2ZwlLHHV6M6dfvfpJ-BzbS7H5NLZaLOpJ91xNsrJvvc=",
+      "availableTimes": ["8:00", "9:00", "10:00", "11:00"]
+    },
+    {
+      "id": 4,
+      "username": "drtvn4",
+      "password": "$2b$12$Kix2XsU6vI8Dl8zIv8ps3eZmZGQa8TQwGfGzYBfOrPlB9zT9esKCa",
+      "name": "Dr. Lê Thị F",
+      "birthyear": "05/02/1994",
+      "address": "151/42 Hoàng Văn Thụ, Phường An Cư, Quận Ninh Kiều, Cần Thơ",
+      "gender": "Nữ",
+      "join": "06/02/2015",
+
+      "description": [
+        "Bác sĩ Lê Thị F là chuyên gia đầu ngành trong lĩnh vực Hô hấp, với hơn 30 năm kinh nghiệm trong điều trị các bệnh về phổi và hô hấp."
+      ],
+      "department": "HH",
+      "phone": "0976543210",
+      "specialty": "Hô hấp",
+      "email": "le.f@example.com",
+      "image": "https://media.istockphoto.com/id/1205334985/vi/anh/ng%C6%B0%E1%BB%9Di-ph%E1%BB%A5-n%E1%BB%AF-b%C3%A1c-s%C4%A9-da-tr%E1%BA%AFng-t%C3%B3c-%C4%91%E1%BB%8F-%C4%91eo-%E1%BB%91ng-nghe-tr%C3%AAn-n%E1%BB%81n-b%E1%BB%8B-c%C3%B4-l%E1%BA%ADp-l%C3%A0m-c%E1%BB%AD-ch%E1%BB%89-gi%C6%A1-ng%C3%B3n-tay-c%C3%A1i.jpg?s=2048x2048&w=is&k=20&c=9BUH78zG_8G_r7TSyg2s02GDeYp9S6dRcUsiZ8Bq_qE=",
+      "availableTimes": ["8:00", "9:00", "10:00", "11:00"]
+    },
+    {
+      "id": 5,
+      "username": "drtvn5",
+      "password": "$2b$12$Kix2XsU6vI8Dl8zIv8ps3eZmZGQa8TQwGfGzYBfOrPlB9zT9esKCa",
+      "name": "Dr. Nguyễn Thị G",
+      "birthyear": "07/08/1978",
+      "address": " 57(59A) đường Cách Mạng Tháng Tám, Phường An Hòa, Quận Ninh Kiều, Cần Thơ",
+      "gender": "Nữ",
+      "join": "06/02/2015",
+
+      "description": [
+        "Bác sĩ Nguyễn Thị G có hơn 20 năm kinh nghiệm trong lĩnh vực Phụ sản, chuyên chẩn đoán và điều trị các vấn đề sức khỏe phụ nữ."
+      ],
+      "department": "PS",
+      "phone": "0965432109",
+      "specialty": "Phụ sản",
+      "email": "nguyen.g@example.com",
+      "image": "https://plus.unsplash.com/premium_photo-1681996484614-6afde0d53071?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "availableTimes": ["8:00", "9:00", "10:00", "11:00"]
+    },
+    {
+      "id": 6,
+      "username": "drtvn6",
+      "password": "$2b$12$Kix2XsU6vI8Dl8zIv8ps3eZmZGQa8TQwGfGzYBfOrPlB9zT9esKCa",
+      "name": "Dr. Trương Văn H",
+      "birthyear": "06/07/1998",
+      "address": "Số 133D, đường 3/2, Phường Hưng Lợi, Quận Ninh Kiều, Cần Thơ",
+      "gender": "Nam",
+      "join": "06/02/2015",
+
+      "description": [
+        "Bác sĩ Trương Văn H là chuyên gia trong lĩnh vực Nhi khoa, với nhiều năm kinh nghiệm chăm sóc và điều trị cho trẻ em."
+      ],
+      "department": "KN",
+      "phone": "0954321098",
+      "specialty": "Nhi khoa",
+      "email": "truong.h@example.com",
+      "image": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "availableTimes": ["8:00", "9:00", "10:00", "11:00"]
+    },
+    {
+      "id": 7,
+      "username": "drtvn7",
+      "password": "$2b$12$Kix2XsU6vI8Dl8zIv8ps3eZmZGQa8TQwGfGzYBfOrPlB9zT9esKCa",
+      "name": "Dr. Hồ Thị I",
+      "birthyear": "02/10/1994",
+      "address": "Số 223/1, ấp Nhơn Lộc 1, Thị Trấn Phong Điền, Huyện Phong Điền, Cần Thơ",
+      "gender": "Nữ",
+      "join": "06/02/2015",
+
+      "description": [
+        "Bác sĩ Hồ Thị I là chuyên gia trong lĩnh vực Răng Hàm Mặt, với nhiều năm kinh nghiệm trong phẫu thuật và điều trị các vấn đề răng miệng."
+      ],
+      "department": "RHM",
+      "phone": "0943210987",
+      "specialty": "Răng Hàm Mặt",
+      "email": "ho.i@example.com",
+      "image": "https://media.istockphoto.com/id/1486172842/vi/anh/ch%C3%A2n-dung-nam-y-t%C3%A1-trong-v%C4%83n-ph%C3%B2ng.jpg?s=2048x2048&w=is&k=20&c=18RxHOXylZdt33OTPMnmN25XU1QxIqdjzrmhRypOg0c=",
+      "availableTimes": ["8:00", "9:00", "10:00", "11:00"]
+    }
+  ]
+}
