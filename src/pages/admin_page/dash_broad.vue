@@ -1,33 +1,35 @@
 <!-- TRANG THỐNG KÊ DOANH THU -->
 <template>
-  <div class="mt-2">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Thống kê doanh thu</h3>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="from">Từ ngày</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="from"
-                    placeholder="Từ ngày"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="to">Đến ngày</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="to"
-                    placeholder="Đến ngày"
-                  />
+  <div>
+    <div class="mt-2">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Thống kê doanh thu</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="from">Từ ngày</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="from"
+                      placeholder="Từ ngày"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="to">Đến ngày</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="to"
+                      placeholder="Đến ngày"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -35,55 +37,48 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ------------------------MORE------------- -->
-  <div class="dashboard">
-    <!-- Sales Overview -->
-    <section class="section sales-overview">
-      <h2>Sales Overview</h2>
-      <div class="chart-container">
-        <!-- Placeholder for sales chart -->
-        <canvas id="revenueChart"></canvas>
-      </div>
-    </section>
-
-    <!-- Latest Orders -->
-    <section class="section latest-orders">
-      <h2>Latest Orders</h2>
-      <div class="order-list">
-        <div
-          class="order-item"
-          v-for="(order, index) in latestOrders"
-          :key="index"
-        >
-          <span class="order-info">{{ order.customerName }}</span>
-          <span class="order-info">{{ order.productName }}</span>
-          <span class="order-info">{{ formatDate(order.orderDate) }}</span>
+    <!-- ------------------------MORE------------- -->
+    <div class="dashboard">
+      <!-- Sales Overview -->
+      <section class="section sales-overview">
+        <h2>Sales Overview</h2>
+        <div class="chart-container">
+          <!-- Placeholder for sales chart -->
+          <canvas id="revenueChart"></canvas>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Product Inventory -->
-    <section class="section product-inventory">
-      <h2>Product Inventory</h2>
-      <div class="inventory-list">
-        <div
-          class="inventory-item"
-          v-for="(product, index) in productInventory"
-          :key="index"
-        >
-          <span class="product-info">{{ product.name }}</span>
-          <span class="product-info">Stock: {{ product.quantity }}</span>
-          <span class="product-info"
-            >Rating: {{ product.rating }}/5 ({{
-              product.reviews
-            }}
-            reviews)</span
+      <!-- Latest Orders -->
+      <section class="section latest-orders">
+        <h2>Latest Orders</h2>
+        <div class="order-list">
+          <div class="order-item" v-for="(order, index) in latestOrders" :key="index">
+            <span class="order-info">{{ order.customerName }}</span>
+            <span class="order-info">{{ order.productName }}</span>
+            <span class="order-info">{{ formatDate(order.orderDate) }}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Product Inventory -->
+      <section class="section product-inventory">
+        <h2>Product Inventory</h2>
+        <div class="inventory-list">
+          <div
+            class="inventory-item"
+            v-for="(product, index) in productInventory"
+            :key="index"
           >
+            <span class="product-info">{{ product.name }}</span>
+            <span class="product-info">Stock: {{ product.quantity }}</span>
+            <span class="product-info"
+              >Rating: {{ product.rating }}/5 ({{ product.reviews }} reviews)</span
+            >
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
 </template>
 
