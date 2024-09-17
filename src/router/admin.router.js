@@ -7,7 +7,7 @@ const admin = [
     name: "admin.login",
     component: () => import("../layouts/account.login.vue"),
     meta: {
-      title: "Shineonyou - Login",
+      title: "CTU CLINIC - Login",
     },
   },
   // Router for admin pages
@@ -16,7 +16,7 @@ const admin = [
     name: "admin.page",
     component: () => import("../layouts/index.vue"),
     meta: {
-      title: "Shineonyou - Administrators",
+      title: "CTU CLINIC - Administrators",
     },
     children: [
       // Router for admin dashboard page
@@ -25,7 +25,7 @@ const admin = [
         name: "admin.dashboard",
         component: () => import("../pages/admin_page/dash_broad.vue"),
         meta: {
-          title: "Shineonyou - Dashboard",
+          title: "CTU CLINIC - Dashboard",
         },
       },
       // Router for admin employee managements page
@@ -34,7 +34,7 @@ const admin = [
         name: "admin.emp",
         component: () => import("../pages/emp_management/index.vue"),
         meta: {
-          title: "Shineonyou - Quản lí nhân viên",
+          title: "CTU CLINIC - Quản lí nhân viên",
         },
       },
       // Show employee details
@@ -43,7 +43,7 @@ const admin = [
         name: "admin.emp_details",
         component: () => import("../pages/emp_management/emp_detail_info.vue"),
         meta: {
-          title: "Shineonyou - Chi tiết nhân viên",
+          title: "CTU CLINIC - Chi tiết nhân viên",
         },
       },
       // Router for admin patients managements page
@@ -52,7 +52,7 @@ const admin = [
         name: "admin.patients",
         component: () => import("../pages/patient_managements/index.vue"),
         meta: {
-          title: "Shineonyou - Quản lí bệnh nhân",
+          title: "CTU CLINIC - Quản lí bệnh nhân",
         },
       },
       // Show patient details
@@ -62,7 +62,7 @@ const admin = [
         component: () =>
           import("../pages/patient_managements/patient_detail_info.vue"),
         meta: {
-          title: "Shineonyou - Chi tiết bệnh nhân",
+          title: "CTU CLINIC - Chi tiết bệnh nhân",
         },
       },
       // Add a new patient
@@ -72,7 +72,7 @@ const admin = [
         component: () =>
           import("../pages/patient_managements/add_patient_detail_info.vue"),
         meta: {
-          title: "Shineonyou - Thêm bệnh nhân mới",
+          title: "CTU CLINIC - Thêm bệnh nhân mới",
         },
       },
       // Router for admin products managements page
@@ -81,7 +81,7 @@ const admin = [
         name: "admin.products",
         component: () => import("../pages/admin_page/products_mga.vue"),
         meta: {
-          title: "Shineonyou - Quản lí sản phẩm",
+          title: "CTU CLINIC - Quản lí sản phẩm",
         },
       },
       // Router for admin services managements page
@@ -90,7 +90,7 @@ const admin = [
         name: "admin.services",
         component: () => import("../pages/admin_page/services_mga.vue"),
         meta: {
-          title: "Shineonyou - Quản lí dịch vụ",
+          title: "CTU CLINIC - Quản lí dịch vụ",
         },
       },
       // Router for admin booking managements page
@@ -99,7 +99,7 @@ const admin = [
         name: "admin.booking",
         component: () => import("../pages/admin_page/booking_mga.vue"),
         meta: {
-          title: "Shineonyou - Quản lí lịch hẹn",
+          title: "CTU CLINIC - Quản lí lịch hẹn",
         },
       },
       // Router for admin category product managements page
@@ -108,7 +108,7 @@ const admin = [
         name: "admin.category_products",
         component: () => import("../pages/admin_page/category_product_mga.vue"),
         meta: {
-          title: "Shineonyou - Quản lí danh mục sản phẩm",
+          title: "CTU CLINIC - Quản lí danh mục sản phẩm",
         },
       },
       // Router for admin setting page
@@ -117,7 +117,7 @@ const admin = [
         name: "admin.settings",
         component: () => import("../pages/admin_page/setting_page.vue"),
         meta: {
-          title: "Shineonyou - Cài đặt hệ thống",
+          title: "CTU CLINIC - Cài đặt hệ thống",
         },
       },
     ],
