@@ -28,8 +28,7 @@ p {
 <template>
   <div class="d-flex justify-content-between">
     <div>
-      <img src="/LogoNoText.svg" width="50" alt="" />
-      <img src="/TitleLogo.svg" width="200" alt="" />
+      <img src="LogoCTUWithText.png" width="150" alt="" />
     </div>
 
     <div class="dropdown">
@@ -50,7 +49,9 @@ p {
         <li><a class="dropdown-item" href="#">Tài khoản</a></li>
         <li><a class="dropdown-item" href="#">Another action</a></li>
         <li>
-          <button @click="handleLogout" class="dropdown-item" href="#">Đăng xuất</button>
+          <button @click="handleLogout" class="dropdown-item" href="#">
+            Đăng xuất
+          </button>
         </li>
       </ul>
     </div>
