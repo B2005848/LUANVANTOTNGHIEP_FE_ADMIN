@@ -1,6 +1,11 @@
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useAuthStore } from "@/stores/authenticate-login";
+import {  ref
+} from "vue";
+import {
+  useRouter
+} from "vue-router";
+import {
+  useAuthStore
+} from "@/stores/authenticate-login";
 
 export const handleLoginService = () => {
   const router = useRouter();
@@ -20,15 +25,37 @@ export const handleLoginService = () => {
         loginData.value
       );
       if (response.status === 200) {
-        const { accessToken, refreshToken } = response.data;
+        const {
+          accessToken,
+          refreshToken
+        } = response.data;
 
         // Save status login into store Pinia
         authStore.login(loginData.value.username, accessToken, refreshToken);
 
         // navigate to list product page
-        router.push({ name: "admin.dashboard" });
+        router.push({
+          name: "admin.dashboard"
+        });
         console.log("Login success", loginData.value.username);
       }
+    } catch (error) {
+      errorMessage.value = error.response?.data?.message || "Login failed";
+      console.log(error.response.data.message);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      // Save status logout into store Pinia
+      authStore.logout();
+
+      // navigate to list product page
+      router.push({
+        name: "admin.login"
+      });
+      console.log("sign out success", loginData.value.username);
+
     } catch (error) {
       errorMessage.value = error.response?.data?.message || "Login failed";
       console.log(error.response.data.message);
@@ -38,6 +65,7 @@ export const handleLoginService = () => {
   return {
     loginData,
     handleLogin,
+    handleLogout,
     errorMessage,
   };
 };

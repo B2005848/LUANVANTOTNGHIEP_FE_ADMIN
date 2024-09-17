@@ -31,12 +31,32 @@ p {
       <img src="/LogoNoText.svg" width="50" alt="" />
       <img src="/TitleLogo.svg" width="200" alt="" />
     </div>
-    <div>
-      <font-awesome-icon
-        style="color: #34495e; font-size: 20px"
-        icon="fa-bars-staggered"
-      />
+
+    <div class="dropdown">
+      <div
+        class="btn"
+        href="#"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <font-awesome-icon
+          style="color: #34495e; font-size: 20px"
+          icon="fa-bars-staggered"
+        />
+      </div>
+
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Tài khoản</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li>
+          <button @click="handleLogout" class="dropdown-item" href="#">Đăng xuất</button>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { handleLoginService } from "@/services/handleLogin";
+const { handleLogout } = handleLoginService();
+</script>
