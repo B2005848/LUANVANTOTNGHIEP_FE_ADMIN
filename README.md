@@ -28,3 +28,4 @@ npm run dev
 ```sh
 npm run build
 ```
+# Copyright (c) 2024 LeThanhNamCTUB2005848. All rights reserved.
