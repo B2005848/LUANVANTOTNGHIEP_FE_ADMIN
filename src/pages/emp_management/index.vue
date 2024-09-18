@@ -43,6 +43,7 @@
                 <th scope="col">Trạng thái</th>
                 <th scope="col">Ngày tạo</th>
                 <th scope="col">Ngày chỉnh sửa</th>
+                <th scope="col">Tools</th>
               </tr>
             </thead>
             <tbody>
@@ -51,7 +52,9 @@
                 v-for="(emp, index) in staffListData"
                 :key="index"
               >
-                <th scope="row">{{ index + 1 }}</th>
+                <th scope="row">
+                  {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
+                </th>
                 <td>{{ emp.staff_id }}</td>
                 <td>{{ emp.first_name }} {{ emp.last_name }}</td>
                 <td>
@@ -96,7 +99,7 @@
         <PaginationComponent
           :pageCount="totalPagesData"
           :currentPage="currentPage"
-          @page-change="fetchPage"
+          @page-change="fetchDataByPage"
         />
       </div>
     </div>
@@ -105,13 +108,19 @@
   </div>
 </template>
 
+<!----------------------------------------------------------SCRIP SETUP----------------------------------------------->
 <script setup>
 import { onMounted, ref } from "vue";
 import { handleGetData } from "@/services/handleGetListStaff";
 import PaginationComponent from "@/components/Pagination.vue";
 import { formatDate } from "@/helper/format-datetime";
-const { handleGetListStaff, staffListData, errorMessage, totalPagesData } =
-  handleGetData();
+const {
+  handleGetListStaff,
+  staffListData,
+  errorMessage,
+  totalPagesData,
+  itemsPerPageData,
+} = handleGetData();
 const currentPage = ref(1);
 
 const fetchDataByPage = async (page) => {
@@ -123,6 +132,7 @@ onMounted(async () => {
 });
 </script>
 
+<!------------------------------------------------------CSS SCOPED------------------------------------------>
 <style scoped>
 .card .d-flex {
   display: flex;
@@ -137,6 +147,11 @@ onMounted(async () => {
   align-items: center;
   border: none;
 }
+
+table {
+  height: 300px;
+}
+
 .pagination {
   display: flex;
   justify-content: center;

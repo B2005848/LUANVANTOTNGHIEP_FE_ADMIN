@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
 import Paginate from "vuejs-paginate-next"; // Import paginate
 
 // Props từ component cha

@@ -4,15 +4,17 @@ export const handleGetData = () => {
   const errorMessage = ref("");
   const staffListData = ref([]);
   const totalPagesData = ref(0);
+  const itemsPerPageData = ref(10);
   const handleGetListStaff = async (page = 1) => {
     try {
       const response = await window.axios.get(
         `http://localhost:3000/api/handle/staff/getListAccount/?page=${page}`
       );
       if (response.status === 200) {
-        const { totalPages, staffList } = response.data;
+        const { totalPages, staffList, itemsPerPage } = response.data;
         totalPagesData.value = totalPages;
         staffListData.value = staffList;
+        itemsPerPage.value = itemsPerPageData;
         console.log("Get list staff success", totalPages, staffList);
       }
     } catch (error) {
@@ -27,5 +29,6 @@ export const handleGetData = () => {
     errorMessage,
     totalPagesData,
     staffListData,
+    itemsPerPageData,
   };
 };
