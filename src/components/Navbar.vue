@@ -28,7 +28,7 @@ p {
 <template>
   <div class="d-flex justify-content-between">
     <div>
-      <img src="LogoCTUWithText.png" width="150" alt="" />
+      <img src="/LogoCTUWithText.png" width="150" alt="" />
     </div>
 
     <div class="dropdown">

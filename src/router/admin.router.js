@@ -1,4 +1,3 @@
-
 const admin = [
   // Router for admin login page (separated from admin routes).
   {
@@ -87,7 +86,7 @@ const admin = [
       {
         path: "services_managements",
         name: "admin.services",
-        component: () => import("../pages/admin_page/services_mga.vue"),
+        component: () => import("../pages/service_managements/index.vue"),
         meta: {
           title: "CTU CLINIC - Quản lí dịch vụ",
         },

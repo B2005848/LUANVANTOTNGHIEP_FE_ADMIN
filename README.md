@@ -1,7 +1,9 @@
 # CLIENT
+
 # clinic management
 
 This template should help get you started developing with Vue 3 in Vite.
+Tailwind CSS Vue
 
 ## Recommended IDE Setup
 
@@ -28,4 +30,5 @@ npm run dev
 ```sh
 npm run build
 ```
+
 # Copyright (c) 2024 LeThanhNamCTUB2005848. All rights reserved.

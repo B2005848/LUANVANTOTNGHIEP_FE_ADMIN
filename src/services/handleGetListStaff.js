@@ -14,7 +14,7 @@ export const handleGetData = () => {
         const { totalPages, staffList, itemsPerPage } = response.data;
         totalPagesData.value = totalPages;
         staffListData.value = staffList;
-        itemsPerPage.value = itemsPerPageData;
+        itemsPerPageData.value = itemsPerPage;
         console.log("Get list staff success", totalPages, staffList);
       }
     } catch (error) {

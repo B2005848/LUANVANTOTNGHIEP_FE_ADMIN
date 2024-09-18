@@ -100,12 +100,15 @@ h1 {
 <template>
   <div class="back-ground">
     <div class="flex-1 logo-title">
-      <img src="LogoCTUWithText.png" width="500" alt="" />
+      <img src="\LogoCTUWithText.png" width="500" alt="" />
     </div>
 
     <div class="flex-1">
       <div class="form-login">
-        <p>"Chào mừng bạn đến với khu vực quản trị, vui lòng đăng nhập để tiếp tục"</p>
+        <p>
+          "Chào mừng bạn đến với khu vực quản trị, vui lòng đăng nhập để tiếp
+          tục"
+        </p>
         <form @submit.prevent="handleLogin">
           <div class="box-input">
             <input
@@ -124,14 +127,20 @@ h1 {
               name="password"
               placeholder="Mật khẩu"
             />
-            <font-awesome-icon :icon="iconPasswd" @click="showPass" id="show-pass" />
+            <font-awesome-icon
+              :icon="iconPasswd"
+              @click="showPass"
+              id="show-pass"
+            />
           </div>
           <!-- ----------------Element show error when staff login-->
           <div v-if="errorMessage" class="alert alert-danger">
             {{ errorMessage }}
           </div>
           <div class="wapper-btn-login">
-            <button class="form-control btn-login" type="submit">Đăng nhập</button>
+            <button class="form-control btn-login" type="submit">
+              Đăng nhập
+            </button>
           </div>
         </form>
       </div>

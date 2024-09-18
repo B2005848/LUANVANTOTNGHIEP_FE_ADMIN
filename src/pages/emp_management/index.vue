@@ -5,16 +5,30 @@
       <div class="card p-2">
         <div class="d-flex">
           <div class="flex-1">
-            <h3 class="card-title">Danh sách nhân viên</h3>
+            <h3 class="tw-text-2xl tw-font-bold">Danh sách nhân viên</h3>
           </div>
-          <div class="flex-1">
-            <input
-              type="text"
-              class="form-control"
-              size="50"
-              placeholder="Nhập mã nhân viên muốn tìm......"
-            />
+          <div class="d-flex">
+            <div class="flex-1">
+              <input
+                type="text"
+                class="form-control"
+                v-model="searchData"
+                size="50"
+                placeholder="Nhập thông tin nhân viên muốn tìm......"
+              />
+            </div>
+            <div class="flex-1">
+              <button
+                class="btn-search"
+                type="button"
+                title="Tìm kiếm"
+                @click="handleSearch"
+              >
+                Tìm kiếm
+              </button>
+            </div>
           </div>
+
           <div class="flex-1">
             <button type="button" title="Thêm nhân viên mới">
               <font-awesome-icon
@@ -112,6 +126,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { handleGetData } from "@/services/handleGetListStaff";
+import { searchStaff } from "@/services/handleSearchStaffAccount";
 import PaginationComponent from "@/components/Pagination.vue";
 import { formatDate } from "@/helper/format-datetime";
 const {
@@ -127,6 +142,18 @@ const fetchDataByPage = async (page) => {
   currentPage.value = page;
   await handleGetListStaff(page);
 };
+
+// handle search staff
+const searchData = ref("");
+const handleSearch = async () => {
+  if (searchData.value) {
+    const resultDataSearch = await searchStaff(searchData.value);
+    console.log(resultDataSearch);
+    if (resultDataSearch) {
+      staffListData.value = resultDataSearch.data;
+    }
+  }
+};
 onMounted(async () => {
   await fetchDataByPage(1);
 });
@@ -140,6 +167,11 @@ onMounted(async () => {
   justify-content: space-between;
 }
 
+.btn-search {
+  background-color: #007bff;
+  border-radius: 14px;
+}
+
 .d-flex div:nth-child(2) button {
   color: #ffffff;
   font-size: 25px;
@@ -149,7 +181,7 @@ onMounted(async () => {
 }
 
 table {
-  height: 300px;
+  height: 400px;
 }
 
 .pagination {

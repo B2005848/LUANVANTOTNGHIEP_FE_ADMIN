@@ -32,18 +32,19 @@ a:focus {
   <ul>
     <li>
       <font-awesome-icon
-        icon="fa-sharp-duotone fa-solid fa-chart-simple"
+        icon=" fa-solid fa-chart-simple"
         style="color: #094067"
-        size="xl"
-        class="me-2"
+        size="sm"
       />
-      <router-link :to="{ name: 'admin.dashboard' }"> THỐNG KÊ DOANH THU</router-link>
+      <router-link :to="{ name: 'admin.dashboard' }">
+        THỐNG KÊ DOANH THU</router-link
+      >
     </li>
     <li>
       <font-awesome-icon
         icon="fa-solid fa-user"
         style="color: #094067"
-        size="xl"
+        size="sm"
         class="me-2"
       />
       <router-link :to="{ name: 'admin.emp' }" href="#admin"
@@ -52,9 +53,9 @@ a:focus {
     </li>
     <li>
       <font-awesome-icon
-        icon="fa-sharp-duotone fa-solid fa-bed-pulse"
+        icon="fa-solid fa-bed-pulse"
         style="color: #094067"
-        size="xl"
+        size="sm"
         class="me-2"
       />
       <router-link :to="{ name: 'admin.patients' }" href="#admin"
@@ -70,7 +71,7 @@ a:focus {
       <font-awesome-icon
         :icon="['fab', 'creative-commons-nd']"
         style="color: #094067"
-        size="xl"
+        size="sm"
         class="me-2"
       />
       <router-link :to="{ name: 'admin.services' }" href="#admin"
@@ -82,7 +83,7 @@ a:focus {
       <font-awesome-icon
         :icon="['far', 'calendar-check']"
         style="color: #094067"
-        size="xl"
+        size="sm"
         class="me-2"
       />
       <router-link :to="{ name: 'admin.booking' }" href="#admin"
