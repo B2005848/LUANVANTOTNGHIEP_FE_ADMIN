@@ -5,7 +5,6 @@ import router from "./router/index.router";
 
 // --------------------tailwind use after----------------
 import "./main.css";
-
 // -------------- bootstrap use before----------------
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
