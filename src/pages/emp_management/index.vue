@@ -2,18 +2,13 @@
   <div>
     <!-- Quản lí nhân viên -->
     <div class="container-fluid mt-3">
-      <div class="wapper p-2">
-        <div class="d-flex">
+      <div class="wapper card p-3">
+        <div class="d-flex mt-3">
           <div class="flex-1">
-            <h3 class="card-title">Danh sách nhân viên</h3>
+            <h3 class="">Danh sách tài khoản nhân viên</h3>
           </div>
           <div class="d-flex">
             <form class="tw-max-w-md tw-mx-auto">
-              <label
-                for="default-search"
-                class="tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 tw-sr-only dark:tw-text-white"
-                >Search</label
-              >
               <div class="tw-relative">
                 <div
                   class="tw-absolute tw-inset-y-0 tw-start-0 tw-flex tw-items-center tw-ps-3 tw-pointer-events-none"
@@ -46,9 +41,9 @@
                 <button
                   @click="handleSearch"
                   type="button"
-                  class="tw-text-white tw-absolute tw-end-2.5 tw-bottom-2.5 tw-bg-blue-700 hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-blue-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-4 tw-py-2 dark:tw-bg-blue-600 dark:hover:tw-bg-blue-700 dark:focus:tw-ring-blue-800"
+                  class="tw-text-white tw-absolute tw-end-2.5 tw-bottom-2.5 tw-bg-blue-500 hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-blue-300 tw-font-normal tw-rounded-lg tw-text-sm tw-px-4 tw-py-2 dark:tw-bg-blue-600 dark:hover:tw-bg-blue-700 dark:focus:tw-ring-blue-800"
                 >
-                  Search
+                  Tìm kiếm
                 </button>
               </div>
             </form>
@@ -81,7 +76,7 @@
                 <th scope="col" class="tw-px-6 tw-py-3">STT</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Mã nhân viên</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Họ và tên</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Chức vụ</th>
+                <th scope="col" class="tw-px-6 tw-py-3">Quyền truy cập</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Email</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Số CCCD/CMND</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Trạng thái</th>
@@ -212,10 +207,6 @@ onMounted(async () => {
   text-align: center;
   align-items: center;
   border: none;
-}
-
-table {
-  height: 400px;
 }
 
 .pagination {
