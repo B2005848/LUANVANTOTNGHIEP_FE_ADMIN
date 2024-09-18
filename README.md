@@ -3,7 +3,10 @@
 # clinic management
 
 This template should help get you started developing with Vue 3 in Vite.
-Tailwind CSS Vue
+
+# Tailwind CSS Vue
+
+doc: https://flowbite.com/docs/getting-started/vue/
 
 ## Recommended IDE Setup
 
