@@ -182,7 +182,7 @@
           </div>
         </div>
       </div>
-      <!-------------------------------------------------------------------------------------------------- THÔNG TIN CÔNG VIỆC-->
+      <!--------------------------------------------------------------------------------------------------WORK INFORMATION: THÔNG TIN CÔNG VIỆC-->
       <div class="container-infor-detail mt-3 card p-5">
         <h4 class="text-center">
           THÔNG TIN CÔNG VIỆC
