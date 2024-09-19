@@ -108,7 +108,7 @@
       <!-- ----------------------PAYMENT HISTORY------------------------------ -->
       <div class="row mt-5">
         <div class="col-md-12">
-          <h3 class="text-center mb-5">Lịch sử mua hàng</h3>
+          <h3 class="text-center mb-5">Lịch sử khám bệnh</h3>
         </div>
       </div>
     </div>
