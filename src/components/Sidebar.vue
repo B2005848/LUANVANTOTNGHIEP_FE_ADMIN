@@ -62,11 +62,19 @@ a:focus {
         >QUẢN LÍ TÀI KHOẢN BỆNH NHÂN</router-link
       >
     </li>
+
     <li>
-      <router-link :to="{ name: 'admin.products' }" href="#admin"
-        >QUẢN LÍ SẢN PHẨM</router-link
+      <font-awesome-icon
+        icon="fa-solid fa-window-restore"
+        style="color: #094067"
+        size="sm"
+        class="me-2"
+      />
+      <router-link :to="{ name: 'admin.departments' }" href="#admin"
+        >QUẢN LÍ PHÒNG KHÁM</router-link
       >
     </li>
+
     <li>
       <font-awesome-icon
         :icon="['fab', 'creative-commons-nd']"
@@ -90,17 +98,28 @@ a:focus {
         >QUẢN LÍ LỊCH HẸN</router-link
       >
     </li>
-    <li>
-      <router-link :to="{ name: 'admin.category_products' }" href="#admin"
-        >QUẢN LÍ DANH MỤC SẢN PHẨM</router-link
-      >
-    </li>
 
     <li>
-      <router-link :to="{ name: '' }" href="#admin">CÁC YÊU CẦU</router-link>
+      <font-awesome-icon
+        icon="fa-regular fa-bell"
+        style="color: #094067"
+        size="sm"
+        class="me-2"
+      />
+      <router-link :to="{ name: 'admin.requests' }" href="#admin"
+        >CÁC YÊU CẦU</router-link
+      >
     </li>
     <li>
-      <router-link :to="{ name: '' }" href="#admin">CÀI ĐẶT</router-link>
+      <font-awesome-icon
+        icon="fa-solid fa-gear"
+        style="color: #094067"
+        size="sm"
+        class="me-2"
+      />
+      <router-link :to="{ name: 'admin.settings' }" href="#admin"
+        >CÀI ĐẶT</router-link
+      >
     </li>
   </ul>
 </template>

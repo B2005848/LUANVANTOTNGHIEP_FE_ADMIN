@@ -8,7 +8,7 @@ const admin = [
       title: "CTU CLINIC - Login",
     },
   },
-  // Router for admin pages
+  // -----------------------------------Router for admin pages
   {
     path: "/admin",
     name: "admin.page",
@@ -17,16 +17,16 @@ const admin = [
       title: "CTU CLINIC - Administrators",
     },
     children: [
-      // Router for admin dashboard page
+      //------------------------------------------ Router for admin dashboard page
       {
         path: "dashboard",
         name: "admin.dashboard",
-        component: () => import("../pages/admin_page/dash_broad.vue"),
+        component: () => import("../pages/dashbroad/index.vue"),
         meta: {
           title: "CTU CLINIC - Dashboard",
         },
       },
-      // Router for admin employee managements page
+      //------------------------------- Router for admin employee managements page
       {
         path: "emp_managements",
         name: "admin.emp",
@@ -44,7 +44,7 @@ const admin = [
           title: "CTU CLINIC - Chi tiết nhân viên",
         },
       },
-      // Router for admin patients managements page
+      // --------------------------------------Router for admin patients managements page
       {
         path: "patients_managements",
         name: "admin.patients",
@@ -73,16 +73,18 @@ const admin = [
           title: "CTU CLINIC - Thêm bệnh nhân mới",
         },
       },
-      // Router for admin products managements page
+
+      //------------------------------------------------Router for admin department managements page
       {
-        path: "products_managements",
-        name: "admin.products",
-        component: () => import("../pages/admin_page/products_mga.vue"),
+        path: "department_managements",
+        name: "admin.departments",
+        component: () => import("../pages/departments_managements/index.vue"),
         meta: {
-          title: "CTU CLINIC - Quản lí sản phẩm",
+          title: "CTU CLINIC - Quản lí phòng khám bệnh",
         },
       },
-      // Router for admin services managements page
+
+      //---------------------------------------------- Router for admin services managements page
       {
         path: "services_managements",
         name: "admin.services",
@@ -91,29 +93,31 @@ const admin = [
           title: "CTU CLINIC - Quản lí dịch vụ",
         },
       },
-      // Router for admin booking managements page
+      //-------------------------------------------------- Router for admin booking managements page
       {
         path: "booking_managements",
         name: "admin.booking",
-        component: () => import("../pages/admin_page/booking_mga.vue"),
+        component: () => import("../pages/booking_managements/index.vue"),
         meta: {
           title: "CTU CLINIC - Quản lí lịch hẹn",
         },
       },
-      // Router for admin category product managements page
+
+      //---------------------------------------------------------Router for admin request managements page
       {
-        path: "category_products_managements",
-        name: "admin.category_products",
-        component: () => import("../pages/admin_page/category_product_mga.vue"),
+        path: "request_managements",
+        name: "admin.requests",
+        component: () => import("../pages/request_managements/index.vue"),
         meta: {
-          title: "CTU CLINIC - Quản lí danh mục sản phẩm",
+          title: "CTU CLINIC - Các yêu cầu",
         },
       },
-      // Router for admin setting page
+
+      //------------------------------------------------------- Router for admin setting page
       {
         path: "settings",
         name: "admin.settings",
-        component: () => import("../pages/admin_page/setting_page.vue"),
+        component: () => import("../pages/setting_page/index.vue"),
         meta: {
           title: "CTU CLINIC - Cài đặt hệ thống",
         },
