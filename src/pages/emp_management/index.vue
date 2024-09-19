@@ -100,12 +100,7 @@
                 </th>
                 <td>{{ emp.staff_id }}</td>
                 <td>{{ emp.first_name }} {{ emp.last_name }}</td>
-                <td>
-                  <span v-if="emp.role_id === 'AD'">Người quản trị</span>
-                  <span v-if="emp.role_id === 'BS'">Bác Sĩ</span>
-                  <span v-if="emp.role_id === 'TN'">Kế Toán</span>
-                  <span v-if="emp.role_id === 'YT'">Y Tá</span>
-                </td>
+                <td>{{ emp.role_name }}</td>
 
                 <td class="px-6 py-4">{{ emp.email }}</td>
                 <td class="px-6 py-4">{{ emp.citizen_id }}</td>
