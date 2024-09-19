@@ -1,5 +1,6 @@
 <template>
-  <div class="card container-fuild p-3">
+  <div v-if="staffDetail" class="card container-fuild p-3">
+    <div v-if="errorMessage">{{ errorMessage }}</div>
     <div class="mb-5">
       <!-- control -->
       <div class="me-3">
@@ -39,8 +40,8 @@
                 <!-- -------------------SRC IMG STAFF-------------------------------- -->
                 <img
                   class="tw-h-auto tw-max-w-full tw-rounded-lg"
-                  src="https://scontent.fvca1-1.fna.fbcdn.net/v/t39.30808-1/276272639_696360524952560_7771497957306498064_n.jpg?stp=dst-jpg_s200x200&_nc_cat=106&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=6b-6zBL6DD0Q7kNvgHwNlSu&_nc_ht=scontent.fvca1-1.fna&_nc_gid=ALnaq4Rh2HUpQ4zZKed6gHy&oh=00_AYAhvs3s9ke4lKKZ042AGOSYQH6hPedwbMJviSCAoOrGzA&oe=66F0E565"
-                  alt="image description"
+                  :src="staffDetail.image_avt"
+                  alt="Chưa cập nhật"
                 />
               </figure>
             </div>
@@ -60,27 +61,46 @@
             </div>
             <div class="col-md-8">
               <!-- Staff id  -->
-              <p class="value tw-text-black-500 tw-font-semibold">B2005848</p>
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ staffDetail.staff_id }}
+              </p>
 
               <!-- Name -->
               <p class="value tw-text-black-500 tw-font-semibold">
-                Lê Thanh Nam
+                {{ staffDetail.first_name }} {{ staffDetail.last_name }}
               </p>
 
               <!-- Birthday -->
-              <p class="value tw-text-black-500 tw-font-semibold">18-12-2002</p>
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ formatBirthDay(staffDetail.birthday) }}
+              </p>
 
               <!-- Citizen ID -->
               <p class="value tw-text-black-500 tw-font-semibold">
-                0912020556664
+                {{ staffDetail.citizen_id }}
               </p>
 
               <!-- Gender -->
-              <p class="value tw-text-black-500 tw-font-semibold">Nam</p>
+              <p class="value tw-text-black-500 tw-font-semibold">
+                <span v-if="staffDetail.gender == 0"
+                  >Nữ
+                  <font-awesome-icon
+                    icon=" fa-venus"
+                    style="color: #b197fc"
+                    size="lg"
+                /></span>
+                <span v-if="staffDetail.gender == 1"
+                  >Nam
+                  <font-awesome-icon
+                    icon=" fa-mars"
+                    style="color: #74c0fc"
+                    size="lg"
+                /></span>
+              </p>
 
               <!-- Contact address -->
               <p class="value tw-text-black-500 tw-font-semibold">
-                ấp Cống Cả, xã Vĩnh Điều, huyện Giang Thành, tỉnh Kiên Giang
+                {{ staffDetail.address_contact }}
               </p>
             </div>
           </div>
@@ -90,29 +110,74 @@
               <p class="tw-dark:text-white tw-ms-5">Quyền truy cập</p>
               <p class="tw-dark:text-white tw-ms-5">Số điện thoại</p>
               <p class="tw-dark:text-white tw-ms-5">Dân tộc</p>
-
               <p class="tw-dark:text-white tw-ms-5">Tôn giáo</p>
               <p class="tw-dark:text-white tw-ms-5">Quốc tịch</p>
+              <p class="tw-dark:text-white tw-ms-5">Trạng thái tài khoản</p>
             </div>
             <div class="col-md-8">
               <!-- Role id -->
               <p class="value tw-text-black-500 tw-font-semibold">
-                Người quản trị
+                {{ staffDetail.role_name }}
               </p>
 
               <!-- number-phone -->
               <p class="value tw-text-black-500 tw-font-semibold">
-                09812321545
+                {{ staffDetail.phone_number }}
               </p>
 
-              <!-- Nation -->
-              <p class="value tw-text-black-500 tw-font-semibold">Kinh</p>
+              <!-- Nation: Dân tộc -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ staffDetail.nation || "Chưa cập nhật !" }}
+              </p>
 
-              <!-- Religion -->
-              <p class="value tw-text-black-500 tw-font-semibold">Phật</p>
+              <!-- Religion: Tôn giáo -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ staffDetail.religion || "Chưa cập nhật !" }}
+              </p>
 
-              <!-- Nationality -->
-              <p class="value tw-text-black-500 tw-font-semibold">Việt Nam</p>
+              <!-- Nationality: Quốc tịch -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ staffDetail.nationality || "Chưa cập nhật !" }}
+              </p>
+
+              <!-- Status account -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                <!-- status = 1: Hoạt động -->
+                <span
+                  class="text-success"
+                  v-if="staffDetail.statusAccount === '1'"
+                  >Đang hoạt động
+                  <font-awesome-icon
+                    class="tw-ms-4"
+                    icon="fa-solid fa-signal"
+                    size="lg"
+                    style="color: #63e6be"
+                /></span>
+
+                <!-- status = 0: Ngừng hoạt động -->
+                <span
+                  class="text-danger"
+                  v-if="staffDetail.statusAccount === '0'"
+                  >Ngừng hoạt động<font-awesome-icon
+                    class="tw-ms-4"
+                    icon="fa-solid fa-ban"
+                    size="lg"
+                    style="color: #f41f1f"
+                  />
+                </span>
+
+                <!-- status = 2: Tạm khóa -->
+                <span
+                  class="text-warning"
+                  v-if="staffDetail.statusAccount === '2'"
+                  >Tạm khóa
+                  <font-awesome-icon
+                    class="tw-ms-4"
+                    size="lg"
+                    icon="fa-lock"
+                    style="color: #ffd43b"
+                /></span>
+              </p>
             </div>
           </div>
         </div>
@@ -134,6 +199,28 @@
     <!-- END CODE DIV CONTAINER -->
   </div>
 </template>
+
+<script setup>
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import {
+  handleGetDetailStaff,
+  staffDetail,
+  specialtyData,
+  errorMessage,
+} from "@/services/staff_managements/handleGetDetailStaff";
+import formatDate from "@/helper/format-datetime";
+const formatDateTime = formatDate.formatDateTime;
+const formatBirthDay = formatDate.formatDateBirth;
+const route = useRoute();
+const staff_id = route.params.id;
+
+onMounted(() => {
+  handleGetDetailStaff(staff_id);
+  console.log(staff_id);
+});
+onMounted;
+</script>
 
 <style scoped>
 .value {

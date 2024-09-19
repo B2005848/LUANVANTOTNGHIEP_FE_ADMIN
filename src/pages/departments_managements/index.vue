@@ -96,19 +96,10 @@
                 </th>
                 <td>{{ dep.department_id }}</td>
                 <td>{{ dep.department_name }}</td>
-                <td class="px-6 py-4">{{ formatDate(dep.created_at) }}</td>
-                <td class="px-6 py-4">{{ formatDate(dep.updated_at) }}</td>
+                <td class="px-6 py-4">{{ formatDateTime(dep.created_at) }}</td>
+                <td class="px-6 py-4">{{ formatDateTime(dep.updated_at) }}</td>
 
-                <td class="px-6 py-4">
-                  <router-link
-                    :to="{
-                      name: 'admin.emp_details',
-                      params: { username: dep.department_id },
-                    }"
-                  >
-                    Chi tiết
-                  </router-link>
-                </td>
+                <td class="px-6 py-4">Chi tiết</td>
               </tr>
             </tbody>
           </table>
@@ -133,7 +124,8 @@ import { onMounted, ref } from "vue";
 import { handleGetListDep } from "@/services/department_managements/handleGetListDep";
 import { searchDepartments } from "@/services/department_managements/handleSearchDep";
 import PaginationComponent from "@/components/Pagination.vue";
-import { formatDate } from "@/helper/format-datetime";
+import formatDate from "@/helper/format-datetime";
+const formatDateTime = formatDate.formatDateTime;
 const {
   getData,
   listDepartmentsData,

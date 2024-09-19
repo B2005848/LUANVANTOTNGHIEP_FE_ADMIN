@@ -37,7 +37,7 @@ const admin = [
       },
       // Show employee details
       {
-        path: "emp_details/:username",
+        path: "emp_details/:id",
         name: "admin.emp_details",
         component: () => import("../pages/emp_management/emp_detail_info.vue"),
         meta: {

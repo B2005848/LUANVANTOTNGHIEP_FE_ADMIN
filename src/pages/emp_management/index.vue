@@ -115,14 +115,14 @@
                     >Tạm khóa</span
                   >
                 </td>
-                <td class="px-6 py-4">{{ formatDate(emp.created_at) }}</td>
-                <td class="px-6 py-4">{{ formatDate(emp.updated_at) }}</td>
+                <td class="px-6 py-4">{{ formatDateTime(emp.created_at) }}</td>
+                <td class="px-6 py-4">{{ formatDateTime(emp.updated_at) }}</td>
 
                 <td class="px-6 py-4">
                   <router-link
                     :to="{
                       name: 'admin.emp_details',
-                      params: { username: emp.staff_id },
+                      params: { id: emp.staff_id },
                     }"
                   >
                     Chi tiết
@@ -149,17 +149,18 @@
 <!----------------------------------------------------------SCRIP SETUP----------------------------------------------->
 <script setup>
 import { onMounted, ref } from "vue";
-import { handleGetData } from "@/services/staff_managements/handleGetListStaff";
-import { searchStaff } from "@/services/staff_managements/handleSearchStaffAccount";
-import PaginationComponent from "@/components/Pagination.vue";
-import { formatDate } from "@/helper/format-datetime";
-const {
+import {
   handleGetListStaff,
   staffListData,
   errorMessage,
   totalPagesData,
   itemsPerPageData,
-} = handleGetData();
+} from "@/services/staff_managements/handleGetListStaff";
+import { searchStaff } from "@/services/staff_managements/handleSearchStaffAccount";
+import PaginationComponent from "@/components/Pagination.vue";
+import formatDate from "@/helper/format-datetime";
+const formatDateTime = formatDate.formatDateTime;
+const formatBirthDat = formatDate.formatDateBirth;
 const currentPage = ref(1);
 
 const fetchDataByPage = async (page) => {
@@ -167,17 +168,21 @@ const fetchDataByPage = async (page) => {
   await handleGetListStaff(page);
 };
 
-// handle search staff
+// Xử lý tìm kiếm tài khoản nhân viên
 const searchData = ref("");
 const handleSearch = async () => {
   if (searchData.value) {
     const resultDataSearch = await searchStaff(searchData.value);
-    console.log(resultDataSearch);
-    if (resultDataSearch) {
+    if (resultDataSearch && resultDataSearch.data.length > 0) {
       staffListData.value = resultDataSearch.data;
+    } else {
+      errorMessage.value = "Không tìm thấy tài khoản nào phù hợp.";
     }
+  } else {
+    await fetchDataByPage(1);
   }
 };
+
 onMounted(async () => {
   await fetchDataByPage(1);
 });
