@@ -58,6 +58,7 @@
               <p class="tw-dark:text-white tw-ms-5">Số CCCD/CMND</p>
               <p class="tw-dark:text-white tw-ms-5">Giới tính</p>
               <p class="tw-dark:text-white tw-ms-5">Địa chỉ liên hệ</p>
+              <p class="tw-dark:text-white tw-ms-5">Ngày vào làm</p>
             </div>
             <div class="col-md-8">
               <!-- Staff id  -->
@@ -102,6 +103,11 @@
               <p class="value tw-text-black-500 tw-font-semibold">
                 {{ staffDetail.address_contact }}
               </p>
+
+              <!-- date hire or join in -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ formatDateTime(staffDetail.created_at) }}
+              </p>
             </div>
           </div>
           <!-- col-2 -->
@@ -113,6 +119,7 @@
               <p class="tw-dark:text-white tw-ms-5">Tôn giáo</p>
               <p class="tw-dark:text-white tw-ms-5">Quốc tịch</p>
               <p class="tw-dark:text-white tw-ms-5">Trạng thái tài khoản</p>
+              <p class="tw-dark:text-white tw-ms-5">Ngày sửa đổi</p>
             </div>
             <div class="col-md-8">
               <!-- Role id -->
@@ -177,6 +184,11 @@
                     icon="fa-lock"
                     style="color: #ffd43b"
                 /></span>
+              </p>
+
+              <!-- date modify -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ formatDateTime(staffDetail.updated_at) }}
               </p>
             </div>
           </div>
