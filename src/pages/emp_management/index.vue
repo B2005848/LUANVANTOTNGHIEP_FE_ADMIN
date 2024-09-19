@@ -154,8 +154,8 @@
 <!----------------------------------------------------------SCRIP SETUP----------------------------------------------->
 <script setup>
 import { onMounted, ref } from "vue";
-import { handleGetData } from "@/services/handleGetListStaff";
-import { searchStaff } from "@/services/handleSearchStaffAccount";
+import { handleGetData } from "@/services/staff_managements/handleGetListStaff";
+import { searchStaff } from "@/services/staff_managements/handleSearchStaffAccount";
 import PaginationComponent from "@/components/Pagination.vue";
 import { formatDate } from "@/helper/format-datetime";
 const {
