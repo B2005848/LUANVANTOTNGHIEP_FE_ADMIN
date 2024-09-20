@@ -58,7 +58,7 @@
               <p class="tw-dark:text-white tw-ms-5">Số CCCD/CMND</p>
               <p class="tw-dark:text-white tw-ms-5">Giới tính</p>
               <p class="tw-dark:text-white tw-ms-5">Địa chỉ liên hệ</p>
-              <p class="tw-dark:text-white tw-ms-5">Ngày vào làm</p>
+              <p class="tw-dark:text-white tw-ms-5">Ngày cấp tài khoản</p>
             </div>
             <div class="col-md-8">
               <!-- Staff id  -->
