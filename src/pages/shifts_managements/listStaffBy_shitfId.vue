@@ -5,7 +5,8 @@
       <div class="wapper card p-3">
         <div class="d-flex mt-3">
           <div class="flex-1">
-            <h3 class="">Danh sách tài khoản nhân viên</h3>
+            <h3 class="">DANH SÁCH NHÂN VIÊN THEO CA LÀM VIỆC</h3>
+            <h5>Ca: {{}}</h5>
           </div>
           <div class="d-flex">
             <form class="tw-max-w-md tw-mx-auto">
@@ -33,9 +34,9 @@
                   type="search"
                   v-model="searchData"
                   id="default-search"
-                  size="50"
+                  size="100"
                   class="tw-block tw-w-full tw-p-4 tw-ps-10 tw-text-sm tw-text-gray-900 tw-border tw-border-gray-300 tw-rounded-lg tw-bg-gray-50 focus:tw-ring-blue-500 focus:tw-border-blue-500 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500"
-                  placeholder="Nhập thông tin tài khoản cần tìm..."
+                  placeholder="Nhập thông tin ca làm việc cần tìm..."
                   required
                 />
                 <button
@@ -50,7 +51,7 @@
           </div>
 
           <div class="flex-1">
-            <button type="button" title="Thêm nhân viên mới">
+            <button type="button" title="Thêm ca làm việc cho nhân viên">
               <font-awesome-icon
                 icon=" fa-plus"
                 bounce
@@ -64,6 +65,7 @@
         <!-- --TW CSS -->
         <!-- list emp -->
         <div
+          v-if="staffShiftListData"
           class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
         >
           <table
@@ -76,10 +78,15 @@
                 <th scope="col" class="tw-px-6 tw-py-3">STT</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Mã nhân viên</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Họ và tên</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Quyền truy cập</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Email</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Số CCCD/CMND</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Trạng thái</th>
+                <th scope="col" class="tw-px-6 tw-py-3">Ngày vào ca</th>
+                <th scope="col" class="tw-px-6 tw-py-3">Ca làm việc</th>
+                <th scope="col" class="tw-px-6 tw-py-3">
+                  Thời gian làm việc
+                  <br />
+                  Bắt đầu - Kết thúc
+                </th>
+                <th scope="col" class="tw-px-6 tw-py-3">Phòng làm việc</th>
+                <th scope="col" class="tw-px-6 tw-py-3">Chuyên khoa</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Ngày tạo</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Ngày chỉnh sửa</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Tools</th>
@@ -87,7 +94,7 @@
             </thead>
             <tbody>
               <tr
-                v-for="(emp, index) in staffListData"
+                v-for="(data, index) in staffShiftListData"
                 :key="index"
                 class="tw-bg-white tw-text-center tw-border-b tw-dark:bg-gray-800 tw-dark:border-gray-700 tw-hover:bg-gray-50 tw-dark:hover:bg-gray-600"
               >
@@ -98,36 +105,42 @@
                 >
                   {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
                 </th>
-                <td>{{ emp.staff_id }}</td>
-                <td>{{ emp.first_name }} {{ emp.last_name }}</td>
-                <td>{{ emp.role_name }}</td>
 
-                <td class="tw-px-6 tw-py-4">{{ emp.email }}</td>
-                <td class="tw-px-6 tw-py-4">{{ emp.citizen_id }}</td>
+                <!-- STAFF_ID -->
+                <td>{{ data.staff_id }}</td>
+
+                <!-- NAME_STAFF -->
+                <td>{{ data.first_name }} {{ data.last_name }}</td>
+                <!-- JOIN IN -->
+
                 <td class="tw-px-6 tw-py-4">
-                  <span class="text-success" v-if="emp.status === '1'"
-                    >Đang hoạt động</span
-                  >
-                  <span class="text-danger" v-if="emp.status === '0'"
-                    >Ngừng hoạt động</span
-                  >
-                  <span class="text-warning" v-if="emp.status === '2'"
-                    >Tạm khóa</span
-                  >
+                  {{ formatDay(data.join_in) }}
                 </td>
-                <td class="px-6 py-4">{{ formatDateTime(emp.created_at) }}</td>
-                <td class="px-6 py-4">{{ formatDateTime(emp.updated_at) }}</td>
 
+                <!-- SHIFT NAME -->
                 <td class="px-6 py-4">
-                  <router-link
-                    :to="{
-                      name: 'admin.emp_details',
-                      params: { id: emp.staff_id },
-                    }"
-                  >
-                    Chi tiết
-                  </router-link>
+                  {{ data.shift_id }} <br />
+                  {{ data.shift_name }}
                 </td>
+
+                <!-- TIME SHIFT -->
+                <td class="px-6 py-4">
+                  {{ data.start_time }} <br />
+                  {{ data.end_time }}
+                </td>
+
+                <!-- WORKED IN DEPARTMENT -->
+                <td class="px-6 py-4">
+                  {{ data.department_id }} <br />
+                  {{ data.department_name }}
+                </td>
+
+                <!-- SPECIALTY WORKED -->
+                <td class="px-6 py-4">
+                  {{ data.specialty_id }} <br />
+                  {{ data.specialty_name }}
+                </td>
+                <td class="px-6 py-4">Chi tiết</td>
               </tr>
             </tbody>
           </table>
@@ -149,40 +162,41 @@
 <!----------------------------------------------------------SCRIP SETUP----------------------------------------------->
 <script setup>
 import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import {
-  handleGetListStaff,
-  staffListData,
+  handleGetListStaffWithShift,
   errorMessage,
   totalPagesData,
+  staffShiftListData,
   itemsPerPageData,
-} from "@/services/staff_managements/handleGetListStaff";
-import { searchStaff } from "@/services/staff_managements/handleSearchStaffAccount";
+} from "@/services/shift_managements/handleGetListStaffByShiftId";
+import { searchDepartments } from "@/services/department_managements/handleSearchDep";
 import PaginationComponent from "@/components/Pagination.vue";
 import formatDate from "@/helper/format-datetime";
+const route = useRoute();
+const shift_id = route.params.shift_id;
 const formatDateTime = formatDate.formatDateTime;
-const formatBirthDat = formatDate.formatDateBirth;
+const formatDay = formatDate.formatDateBirth;
+
 const currentPage = ref(1);
 
 const fetchDataByPage = async (page) => {
   currentPage.value = page;
-  await handleGetListStaff(page);
+  await handleGetListStaffWithShift(shift_id, page);
 };
 
-// Xử lý tìm kiếm tài khoản nhân viên
+// handle search staff
 const searchData = ref("");
+
 const handleSearch = async () => {
   if (searchData.value) {
-    const resultDataSearch = await searchStaff(searchData.value);
-    if (resultDataSearch && resultDataSearch.data.length > 0) {
-      staffListData.value = resultDataSearch.data;
-    } else {
-      errorMessage.value = "Không tìm thấy tài khoản nào phù hợp.";
+    const resultDataSearch = await searchDepartments(searchData.value);
+    console.log(resultDataSearch);
+    if (resultDataSearch) {
+      listDepartmentsData.value = resultDataSearch.data;
     }
-  } else {
-    await fetchDataByPage(1);
   }
 };
-
 onMounted(async () => {
   await fetchDataByPage(1);
 });

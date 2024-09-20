@@ -76,7 +76,7 @@ a:focus {
         class="me-2"
       />
       <router-link :to="{ name: 'admin.shifts' }" href="#admin"
-        >QUẢN LÍ TÀI CA LÀM VIỆC</router-link
+        >QUẢN LÍ CA LÀM VIỆC</router-link
       >
     </li>
 

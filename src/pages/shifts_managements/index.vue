@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Quản lí nhân viên -->
+    <!-- Quản lí ca làm việc tại phòng khám -->
     <div class="container-fluid mt-3">
       <div class="wapper card p-3">
         <div class="d-flex mt-3">
@@ -65,7 +65,16 @@
                 <td class="px-6 py-4">{{ formatDateTime(sh.created_at) }}</td>
                 <td class="px-6 py-4">{{ formatDateTime(sh.updated_at) }}</td>
 
-                <td class="px-6 py-4">Xem</td>
+                <td class="px-6 py-4">
+                  <router-link
+                    :to="{
+                      name: 'admin.staff_shifts',
+                      params: { shift_id: sh.shift_id },
+                    }"
+                  >
+                    Xem</router-link
+                  >
+                </td>
               </tr>
             </tbody>
           </table>

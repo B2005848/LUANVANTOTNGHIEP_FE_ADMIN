@@ -123,6 +123,17 @@ const admin = [
         },
       },
 
+      // Get list staff by shift_id
+      {
+        path: "staff_shitf/:shift_id",
+        name: "admin.staff_shifts",
+        component: () =>
+          import("../pages/shifts_managements/listStaffBy_shitfId.vue"),
+        meta: {
+          title: "CTU CLINIC - Danh sách nhân viên theo ca",
+        },
+      },
+
       //------------------------------------------------------- Router for admin setting page
       {
         path: "settings",
