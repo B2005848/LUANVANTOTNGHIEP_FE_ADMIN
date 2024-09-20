@@ -40,8 +40,9 @@
                 <!-- -------------------SRC IMG STAFF-------------------------------- -->
                 <img
                   class="tw-h-auto tw-max-w-full tw-rounded-lg"
-                  :src="staffDetail.image_avt"
+                  :src="`http://localhost:3000${staffDetail.image_avt}`"
                   alt="Chưa cập nhật"
+                  width="150"
                 />
               </figure>
             </div>
@@ -227,7 +228,7 @@ const formatBirthDay = formatDate.formatDateBirth;
 const route = useRoute();
 const staff_id = route.params.id;
 
-onMounted(() => {
+onMounted(async () => {
   handleGetDetailStaff(staff_id);
   console.log(staff_id);
 });

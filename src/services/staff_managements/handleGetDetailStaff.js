@@ -38,4 +38,20 @@ const handleGetDetailStaff = async (staff_id) => {
   }
 };
 
-export { handleGetDetailStaff, staffDetail, specialtyData, errorMessage };
+const getStaffAvatar = async (avatarId) => {
+  try {
+    const response = await axios.get(`http://localhost:3000${avatarId}`);
+    return response.file; // Hoặc xử lý dữ liệu tùy theo API của bạn
+  } catch (error) {
+    console.error("Có lỗi xảy ra khi lấy hình ảnh:", error);
+    return null; // Hoặc một giá trị khác tùy thuộc vào cách bạn muốn xử lý lỗi
+  }
+};
+
+export {
+  handleGetDetailStaff,
+  staffDetail,
+  specialtyData,
+  getStaffAvatar,
+  errorMessage,
+};
