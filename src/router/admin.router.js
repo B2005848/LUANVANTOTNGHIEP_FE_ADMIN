@@ -113,6 +113,16 @@ const admin = [
         },
       },
 
+      //----------------------------------------------------- Router for admin shift management page
+      {
+        path: "shift_managements",
+        name: "admin.shifts",
+        component: () => import("../pages/shifts_managements/index.vue"),
+        meta: {
+          title: "CTU CLINIC - Quản lí ca làm việc",
+        },
+      },
+
       //------------------------------------------------------- Router for admin setting page
       {
         path: "settings",

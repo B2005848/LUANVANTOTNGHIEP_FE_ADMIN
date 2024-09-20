@@ -30,6 +30,7 @@ a:focus {
 <!-- -----------------------------------TEMPLATE------------------------------ -->
 <template>
   <ul>
+    <!-- ------------------------------------CHART--------------------------------- -->
     <li>
       <font-awesome-icon
         icon=" fa-solid fa-chart-simple"
@@ -40,6 +41,21 @@ a:focus {
         THỐNG KÊ DOANH THU</router-link
       >
     </li>
+
+    <!-- ------------------------------------------------ACCOUNT PATIENT MANAGEMENTS--------------------------------- -->
+    <li>
+      <font-awesome-icon
+        icon="fa-solid fa-bed-pulse"
+        style="color: #094067"
+        size="sm"
+        class="me-2"
+      />
+      <router-link :to="{ name: 'admin.patients' }" href="#admin"
+        >QUẢN LÍ TÀI KHOẢN BỆNH NHÂN</router-link
+      >
+    </li>
+
+    <!-- ------------------------------------------------ACCOUNT STAFF MANAGEMENTS--------------------------------- -->
     <li>
       <font-awesome-icon
         icon="fa-solid fa-user"
@@ -51,15 +67,16 @@ a:focus {
         >QUẢN LÍ TÀI KHOẢN NHÂN VIÊN</router-link
       >
     </li>
+
     <li>
       <font-awesome-icon
-        icon="fa-solid fa-bed-pulse"
+        icon="fa-solid fa-user"
         style="color: #094067"
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.patients' }" href="#admin"
-        >QUẢN LÍ TÀI KHOẢN BỆNH NHÂN</router-link
+      <router-link :to="{ name: 'admin.shifts' }" href="#admin"
+        >QUẢN LÍ TÀI CA LÀM VIỆC</router-link
       >
     </li>
 

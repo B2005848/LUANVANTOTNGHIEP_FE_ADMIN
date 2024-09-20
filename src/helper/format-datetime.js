@@ -8,5 +8,8 @@ const formatDate = {
   formatDateBirth(datatime) {
     return moment.utc(datatime).format("DD/MM/YYYY");
   },
+  formatTime(time) {
+    return moment.utc(time).format("HH:mm");
+  },
 };
 export default formatDate;
