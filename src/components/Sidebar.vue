@@ -51,7 +51,7 @@ a:focus {
         class="me-2"
       />
       <router-link :to="{ name: 'admin.patients' }" href="#admin"
-        >QUẢN LÍ TÀI KHOẢN BỆNH NHÂN</router-link
+        >QUẢN LÍ BỆNH NHÂN</router-link
       >
     </li>
 
@@ -64,13 +64,13 @@ a:focus {
         class="me-2"
       />
       <router-link :to="{ name: 'admin.emp' }" href="#admin"
-        >QUẢN LÍ TÀI KHOẢN NHÂN VIÊN</router-link
+        >QUẢN LÍ NHÂN VIÊN</router-link
       >
     </li>
 
     <li>
       <font-awesome-icon
-        icon="fa-solid fa-user"
+        icon="fa-solid fa-calendar"
         style="color: #094067"
         size="sm"
         class="me-2"

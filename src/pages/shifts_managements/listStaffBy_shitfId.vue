@@ -78,6 +78,7 @@
                 <th scope="col" class="tw-px-6 tw-py-3">STT</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Mã nhân viên</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Họ và tên</th>
+                <th scope="col" class="tw-px-6 tw-py-3">Vai trò</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Ngày vào ca</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Ca làm việc</th>
                 <th scope="col" class="tw-px-6 tw-py-3">
@@ -86,7 +87,6 @@
                   Bắt đầu - Kết thúc
                 </th>
                 <th scope="col" class="tw-px-6 tw-py-3">Phòng làm việc</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Chuyên khoa</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Ngày tạo</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Ngày chỉnh sửa</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Tools</th>
@@ -111,22 +111,24 @@
 
                 <!-- NAME_STAFF -->
                 <td>{{ data.first_name }} {{ data.last_name }}</td>
-                <!-- JOIN IN -->
 
+                <!-- ROLE -->
+                <td>{{ data.role_name }}</td>
+
+                <!-- JOIN IN -->
                 <td class="tw-px-6 tw-py-4">
                   {{ formatDay(data.join_in) }}
                 </td>
 
                 <!-- SHIFT NAME -->
                 <td class="px-6 py-4">
-                  {{ data.shift_id }} <br />
                   {{ data.shift_name }}
                 </td>
 
                 <!-- TIME SHIFT -->
                 <td class="px-6 py-4">
-                  {{ data.start_time }} <br />
-                  {{ data.end_time }}
+                  {{ formatTime(data.start_time) }} -
+                  {{ formatTime(data.end_time) }}
                 </td>
 
                 <!-- WORKED IN DEPARTMENT -->
@@ -135,10 +137,14 @@
                   {{ data.department_name }}
                 </td>
 
-                <!-- SPECIALTY WORKED -->
+                <!-- CREATED AT -->
                 <td class="px-6 py-4">
-                  {{ data.specialty_id }} <br />
-                  {{ data.specialty_name }}
+                  {{ formatDateTime(data.created_at) }}
+                </td>
+
+                <!-- UPDATED AT -->
+                <td class="px-6 py-4">
+                  {{ formatDateTime(data.updated_at) }}
                 </td>
                 <td class="px-6 py-4">Chi tiết</td>
               </tr>
@@ -177,7 +183,7 @@ const route = useRoute();
 const shift_id = route.params.shift_id;
 const formatDateTime = formatDate.formatDateTime;
 const formatDay = formatDate.formatDateBirth;
-
+const formatTime = formatDate.formatTime;
 const currentPage = ref(1);
 
 const fetchDataByPage = async (page) => {
