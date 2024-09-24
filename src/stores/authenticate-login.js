@@ -30,7 +30,7 @@ export const useAuthStore = defineStore("auth", {
       this.staffId = null;
       this.accessToken = null;
       this.refreshToken = null;
-      this.isAuthenticated = false;
+      this.isLogged = false;
       Cookies.remove("accessToken");
       Cookies.remove("refreshToken");
       Cookies.remove("staffId");
@@ -45,9 +45,9 @@ export const useAuthStore = defineStore("auth", {
       if (accessToken && refreshToken) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
-        this.isAuthenticated = true;
+        this.isLogged = true;
       } else {
-        this.isAuthenticated = false;
+        this.isLogged = false;
       }
     },
   },
