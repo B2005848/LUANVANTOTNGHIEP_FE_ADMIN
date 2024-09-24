@@ -20,10 +20,21 @@ export const handleLoginService = () => {
         loginData.value
       );
       if (response.status === 200) {
-        const { accessToken, refreshToken } = response.data;
+        const {
+          accessToken,
+          accessTokenExpiry,
+          refreshTokenExpiry,
+          refreshToken,
+        } = response.data;
 
         // Save status login into store Pinia
-        authStore.login(loginData.value.username, accessToken, refreshToken);
+        authStore.login(
+          loginData.value.username,
+          accessToken,
+          accessTokenExpiry,
+          refreshToken,
+          refreshTokenExpiry
+        );
 
         // navigate to list product page
         router.push({
