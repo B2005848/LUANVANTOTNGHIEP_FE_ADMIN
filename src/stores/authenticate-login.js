@@ -58,16 +58,87 @@ export const useAuthStore = defineStore("auth", {
     },
 
     // Kiểm tra trạng thái xác thực từ cookies
-    checkAuthentication() {
-      const accessToken = Cookies.get("accessToken");
-      const refreshToken = Cookies.get("refreshToken");
+    // checkAuthentication() {
+    //   const accessToken = Cookies.get("accessToken");
+    //   const refreshToken = Cookies.get("refreshToken");
 
-      if (accessToken && refreshToken) {
-        this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
-        this.isLogged = true;
-      } else {
-        this.isLogged = false;
+    //   if (accessToken && refreshToken) {
+    //     this.accessToken = accessToken;
+    //     this.refreshToken = refreshToken;
+    //     this.isLogged = true;
+    //   } else {
+    //     this.isLogged = false;
+    //   }
+    // },
+
+    // ---------------------------Kiểm tra thời hạn của accessToken
+    async isAccessTokenExpired() {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/staff/account/checkExipredAcessToken",
+          {
+            accessToken: this.accessToken,
+          }
+        );
+
+        // Kiểm tra phản hồi từ API
+        if (response.status === 200) {
+          console.log("Access token is valid");
+          return true;
+        }
+        return false;
+      } catch (error) {
+        console.error("Error checking access token:", error);
+        return true; // Nếu có lỗi, coi như token đã hết hạn
+      }
+    },
+
+    //------------------------------Kiểm tra thời hạn của refresh token
+    async isRefreshTokenExpired() {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/staff/account/checkExipredRefreshToken",
+          {
+            refreshToken: this.refreshToken,
+          }
+        );
+
+        // Kiểm tra phản hồi từ API
+        if (response.status === 200) {
+          console.log("Refresh token is valid");
+          return true;
+        }
+        return false;
+      } catch (error) {
+        console.error("Error checking refresh token:", error);
+        return true; // Nếu có lỗi, coi như token đã hết hạn
+      }
+    },
+
+    // --------------------- Làm mới accessToken khi hết hạn
+    async refreshAccessToken() {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/staff/account/refreshAccessToken",
+          {
+            refreshToken: this.refreshToken,
+          }
+        );
+
+        if (response.status === 200) {
+          const { accessToken, accessTokenExpiry } = response.data;
+
+          this.accessToken = accessToken;
+          const accessExpiryDate = new Date(accessTokenExpiry * 1000);
+          Cookies.set("accessToken", accessToken, {
+            expires: accessExpiryDate,
+            secure: true,
+          });
+
+          console.log("Access token refreshed successfully");
+        }
+      } catch (error) {
+        console.error("Error refreshing access token:", error);
       }
     },
   },
