@@ -8,7 +8,7 @@ export const handleGetListDep = () => {
   const getData = async (page = 1) => {
     try {
       const response = await window.axios.get(
-        `http://localhost:3000/api/departments/getList/?page=${page}`
+        `http://localhost:3000/api/departments/getListForAdmin/?page=${page}`
       );
       if (response.status === 200) {
         const { totalPages, listDepartments, itemsPerPage } = response.data;
