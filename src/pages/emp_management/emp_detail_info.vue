@@ -249,9 +249,6 @@
             </div>
             <div class="col-md-8">
               <!-- SHIFTS -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ "Ca sáng " }} <router-link>Xem</router-link>
-              </p>
             </div>
           </div>
         </div>
