@@ -20,7 +20,7 @@ const handleGetDetailStaff = async (staff_id) => {
         response.data.specialty.length > 0 &&
         response.data.specialty.length > 0
       ) {
-        specialtyData.value = response.data.specialty.specialty_name;
+        specialtyData.value = response.data.specialty;
       } else {
         specialtyData.value = "Không có chuyên môn";
       }

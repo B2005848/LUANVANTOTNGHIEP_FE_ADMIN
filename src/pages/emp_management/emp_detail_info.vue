@@ -216,8 +216,6 @@
             <div class="col-md-4">
               <p class="tw-dark:text-white tw-ms-5">Ngày vào làm</p>
               <p class="tw-dark:text-white tw-ms-5">Hợp đồng làm việc</p>
-              <p class="tw-dark:text-white tw-ms-5">Ca làm việc</p>
-              <p class="tw-dark:text-white tw-ms-5">Phòng ban</p>
               <p class="tw-dark:text-white tw-ms-5">Chuyên khoa</p>
             </div>
             <div class="col-md-8">
@@ -228,19 +226,18 @@
               <p class="value tw-text-black-500 tw-font-semibold">
                 {{ "5 năm" }}
               </p>
-              <!-- Shift -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ "Ca sáng" }}
-              </p>
-
-              <!-- Department -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ "Phòng Nội Tổng Hợp" }}
-              </p>
-
               <!-- Specialty -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ "Nội khoa" }}
+              <p
+                v-if="specialtyData"
+                class="value tw-text-black-500 tw-font-semibold"
+              >
+                <span
+                  v-for="(spec, index) in specialtyData"
+                  :key="spec.staff_specialty_id"
+                >
+                  {{ spec.specialty_name
+                  }}<span v-if="index < specialtyData.length - 1">, </span>
+                </span>
               </p>
             </div>
           </div>
@@ -248,14 +245,12 @@
           <!-- Column 2 -->
           <div class="row col-md-6">
             <div class="col-md-4">
-              <p class="tw-dark:text-white tw-ms-5">
-                Số lượng bệnh nhân đã khám
-              </p>
+              <p class="tw-dark:text-white tw-ms-5">Ca làm việc</p>
             </div>
             <div class="col-md-8">
-              <!-- Number of patients -->
+              <!-- SHIFTS -->
               <p class="value tw-text-black-500 tw-font-semibold">
-                {{ "150" }} <router-link>Xem</router-link>
+                {{ "Ca sáng " }} <router-link>Xem</router-link>
               </p>
             </div>
           </div>
@@ -285,7 +280,6 @@ onMounted(async () => {
   handleGetDetailStaff(staff_id);
   console.log(staff_id);
 });
-onMounted;
 </script>
 
 <style scoped>

@@ -75,21 +75,18 @@
               class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
             >
               <tr class="tw-text-center">
-                <th scope="col" class="tw-px-6 tw-py-3">STT</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Mã nhân viên</th>
+                <th scope="col" class="tw-px-4 tw-py-2">STT</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Mã nhân viên</th>
                 <th scope="col" class="tw-px-6 tw-py-3">Họ và tên</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Vai trò</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày vào ca</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ca làm việc</th>
-                <th scope="col" class="tw-px-6 tw-py-3">
-                  Thời gian làm việc
-                  <br />
-                  Bắt đầu - Kết thúc
-                </th>
-                <th scope="col" class="tw-px-6 tw-py-3">Phòng làm việc</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày tạo</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Tools</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Vai trò</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ngày vào ca</th>
+                <th scope="col" class="tw-px-6 tw-py-2">Ngày làm</th>
+                <th scope="col" class="tw-px-6 tw-py-2">Ca làm việc</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Thời gian làm việc</th>
+                <th scope="col" class="tw-px-6 tw-py-2">Phòng làm việc</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Tools</th>
               </tr>
             </thead>
             <tbody>
@@ -101,52 +98,74 @@
                 <!-- STT -->
                 <th
                   scope="row"
-                  class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
+                  class="tw-px-4 tw-py-2 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
                 >
                   {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
                 </th>
 
                 <!-- STAFF_ID -->
-                <td>{{ data.staff_id }}</td>
+                <td class="px-4 py-2">
+                  <router-link
+                    :to="{
+                      name: 'admin.emp_details',
+                      params: { id: data.staff_id },
+                    }"
+                  >
+                    {{ data.staff_id }}</router-link
+                  >
+                </td>
 
                 <!-- NAME_STAFF -->
-                <td>{{ data.first_name }} {{ data.last_name }}</td>
+                <td class="px-6 py-2">
+                  {{ data.first_name }} {{ data.last_name }}
+                </td>
 
                 <!-- ROLE -->
-                <td>{{ data.role_name }}</td>
+                <td class="px-6 py-2">{{ data.role_name }}</td>
 
                 <!-- JOIN IN -->
-                <td class="tw-px-6 tw-py-4">
+                <td class="tw-px-6 tw-2y-3">
                   {{ formatDay(data.join_in) }}
                 </td>
 
+                <td class="tw-px-4 tw-2y-2">
+                  <span
+                    v-if="data.shift_id == 'NT-S' || data.shift_id == 'NT-C'"
+                    >Thứ 2 đến Thứ 7</span
+                  >
+                  <span
+                    v-if="data.shift_id == 'CN-S' || data.shift_id == 'CN-C'"
+                    >Chủ nhật</span
+                  >
+                </td>
+
                 <!-- SHIFT NAME -->
-                <td class="px-6 py-4">
+                <td class="px-4 py-2">
                   {{ data.shift_name }}
                 </td>
 
                 <!-- TIME SHIFT -->
-                <td class="px-6 py-4">
+                <td class="px-4 py-2">
                   {{ formatTime(data.start_time) }} -
                   {{ formatTime(data.end_time) }}
                 </td>
 
                 <!-- WORKED IN DEPARTMENT -->
-                <td class="px-6 py-4">
+                <td class="px-4 py-2">
                   {{ data.department_id }} <br />
                   {{ data.department_name }}
                 </td>
 
                 <!-- CREATED AT -->
-                <td class="px-6 py-4">
+                <td class="px-4 py-2">
                   {{ formatDateTime(data.created_at) }}
                 </td>
 
                 <!-- UPDATED AT -->
-                <td class="px-6 py-4">
+                <td class="px-4 py-2">
                   {{ formatDateTime(data.updated_at) }}
                 </td>
-                <td class="px-6 py-4">Chi tiết</td>
+                <td class="px-4 py-2">Chi tiết</td>
               </tr>
             </tbody>
           </table>

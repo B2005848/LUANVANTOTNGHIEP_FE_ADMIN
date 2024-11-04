@@ -63,7 +63,9 @@
 
         <!-- --TW CSS -->
         <!-- list emp -->
-        <div class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg">
+        <div
+          class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
+        >
           <table
             class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400"
           >
@@ -80,7 +82,7 @@
                 <th scope="col" class="tw-px-4 tw-py-2">Trạng thái</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Tools</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Chi tiết</th>
               </tr>
             </thead>
             <tbody>
@@ -109,7 +111,9 @@
                   <span class="text-danger" v-if="emp.status === '0'"
                     >Ngừng hoạt động</span
                   >
-                  <span class="text-warning" v-if="emp.status === '2'">Tạm khóa</span>
+                  <span class="text-warning" v-if="emp.status === '2'"
+                    >Tạm khóa</span
+                  >
                 </td>
                 <td class="tw-px-4 tw-py-2">
                   {{ formatDateTime(emp.created_at) }}
@@ -125,7 +129,11 @@
                       params: { id: emp.staff_id },
                     }"
                   >
-                    <font-awesome-icon icon="fa-eye" size="lg" style="color: #74c0fc" />
+                    <font-awesome-icon
+                      icon="fa-eye"
+                      size="lg"
+                      style="color: #74c0fc"
+                    />
                   </router-link>
                 </td>
               </tr>
