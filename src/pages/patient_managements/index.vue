@@ -49,12 +49,38 @@
             </form>
           </div>
         </div>
+        <div style="display: flex">
+          Loại trạng thái tài khoản:
+          <span class="text-success tw-me-5 tw-ms-3">
+            <font-awesome-icon
+              class="tw-me-1"
+              title="Đang hoạt động"
+              icon="fa-circle-check"
+              style="--fa-primary-color: #0fffb7; --fa-secondary-color: #2ff9bc"
+            />
+            Đang hoạt động
+          </span>
+          <span class="text-warning tw-me-5">
+            <font-awesome-icon
+              class="tw-me-1"
+              title="Tạm khóa"
+              icon="fa-user-lock"
+              style="--fa-primary-color: #4b511f; --fa-secondary-color: #c1dd31"
+            />Tạm khóa</span
+          >
 
+          <span class="text-danger tw-me-5">
+            <font-awesome-icon
+              class="tw-me-1"
+              title="Ngừng hoạt động"
+              icon=" fa-ban"
+              style="--fa-primary-color: #dd2c2c; --fa-secondary-color: #dd2c2c"
+            />Ngừng hoạt động</span
+          >
+        </div>
         <!-- --TW CSS -->
         <!-- list emp -->
-        <div
-          class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
-        >
+        <div class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg">
           <table
             class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400"
           >
@@ -95,15 +121,27 @@
                   {{ pa.citizen_id || "Chưa cập nhật" }}
                 </td>
                 <td class="px-6 py-4">
-                  <span class="text-success" v-if="pa.status === '1'"
-                    >Đang hoạt động</span
-                  >
-                  <span class="text-danger" v-if="pa.status === '0'"
-                    >Ngừng hoạt động</span
-                  >
-                  <span class="text-warning" v-if="pa.status === '2'"
-                    >Tạm khóa</span
-                  >
+                  <span class="text-success" v-if="pa.status === '1'">
+                    <font-awesome-icon
+                      title="Đang hoạt động"
+                      icon="fa-circle-check"
+                      style="--fa-primary-color: #0fffb7; --fa-secondary-color: #2ff9bc"
+                    />
+                  </span>
+
+                  <span class="text-warning" v-if="pa.status === '2'">
+                    <font-awesome-icon
+                      title="Tạm khóa"
+                      icon="fa-user-lock"
+                      style="--fa-primary-color: #4b511f; --fa-secondary-color: #c1dd31"
+                  /></span>
+
+                  <span class="text-danger" v-if="pa.status === '3'">
+                    <font-awesome-icon
+                      title="Ngừng hoạt động"
+                      icon=" fa-ban"
+                      style="--fa-primary-color: #dd2c2c; --fa-secondary-color: #dd2c2c"
+                  /></span>
                 </td>
                 <td class="px-6 py-4">{{ formatDateTime(pa.created_at) }}</td>
                 <td class="px-6 py-4">{{ formatDateTime(pa.updated_at) }}</td>
@@ -111,8 +149,8 @@
                 <td class="px-6 py-4">
                   <router-link
                     :to="{
-                      name: 'admin.emp_details',
-                      params: { id: pa.patient_id },
+                      name: 'admin.patient_details',
+                      params: { username: pa.patient_id },
                     }"
                   >
                     Chi tiết

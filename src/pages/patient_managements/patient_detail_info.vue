@@ -51,13 +51,13 @@
               <p v-if="data.phone_number">{{ data.phone_number }}</p>
               <p v-if="!data.phone_number">Chưa cập nhật!</p>
 
-              <p v-if="data.contact_addrees">{{ data.contact_addrees }}</p>
-              <p v-if="!data.contact_addrees">Chưa cập nhật!</p>
+              <p v-if="data.address_contac">{{ data.address_contact }}</p>
+              <p v-if="!data.address_contac">Chưa cập nhật!</p>
 
-              <p v-if="data.birth_year">
-                {{ formatDatetime(data.birth_year) }}
+              <p v-if="data.birthday">
+                {{ formatDay(data.birthday) }}
               </p>
-              <p v-if="!data.birth_year">Chưa cập nhật</p>
+              <p v-if="!data.birthday">Chưa cập nhật</p>
 
               <p v-if="data.gender == 1">Nam</p>
               <p v-if="data.gender == 2">Nữ</p>
@@ -68,38 +68,29 @@
                 <font-awesome-icon
                   icon="fa-circle-check"
                   beat
-                  style="
-                    --fa-primary-color: #0fffb7;
-                    --fa-secondary-color: #2ff9bc;
-                  "
+                  style="--fa-primary-color: #0fffb7; --fa-secondary-color: #2ff9bc"
                 />
               </p>
               <p v-if="data.statusAccount == 2" class="text-warning">
                 Tạm khóa
                 <font-awesome-icon
-                  icon=" fa-user-lock"
-                  style="
-                    --fa-primary-color: #4b511f;
-                    --fa-secondary-color: #c1dd31;
-                  "
+                  icon="fa-user-lock"
+                  style="--fa-primary-color: #4b511f; --fa-secondary-color: #c1dd31"
                 />
               </p>
               <p v-if="data.statusAccount == 3" class="text-danger">
                 Ngừng hoạt động
                 <font-awesome-icon
                   icon=" fa-ban"
-                  style="
-                    --fa-primary-color: #dd2c2c;
-                    --fa-secondary-color: #dd2c2c;
-                  "
+                  style="--fa-primary-color: #dd2c2c; --fa-secondary-color: #dd2c2c"
                 />
               </p>
 
               <!-- date created -->
-              <p>03/07/2024</p>
+              <p>{{ formatDateTime(data.created_at) }}</p>
 
               <!-- date updated -->
-              <p>03/07/2024</p>
+              <p>{{ formatDateTime(data.updated_at) }}</p>
             </div>
           </div>
         </div>
@@ -118,10 +109,9 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
-import moment from "moment";
-const formatDatetime = (datetime) => {
-  return moment(datetime).format("DD/MM/YYYY");
-};
+import formatDate from "@/helper/format-datetime";
+const formatDateTime = formatDate.formatDateTime;
+const formatDay = formatDate.formatDateBirth;
 const route = useRoute();
 const username = route.params.username;
 
