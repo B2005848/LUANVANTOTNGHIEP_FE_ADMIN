@@ -63,9 +63,7 @@
 
         <!-- --TW CSS -->
         <!-- list emp -->
-        <div
-          class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
-        >
+        <div class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg">
           <table
             class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400"
           >
@@ -73,16 +71,16 @@
               class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
             >
               <tr class="tw-text-center">
-                <th scope="col" class="tw-px-6 tw-py-3">STT</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Mã nhân viên</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Họ và tên</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Quyền truy cập</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Email</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Số CCCD/CMND</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Trạng thái</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày tạo</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Tools</th>
+                <th scope="col" class="tw-px-4 tw-py-2">STT</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Mã nhân viên</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Họ và tên</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Quyền truy cập</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Email</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Số CCCD/CMND</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Trạng thái</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Tools</th>
               </tr>
             </thead>
             <tbody>
@@ -94,7 +92,7 @@
                 <!-- STT -->
                 <th
                   scope="row"
-                  class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
+                  class="tw-px-4 tw-2y-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
                 >
                   {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
                 </th>
@@ -102,30 +100,32 @@
                 <td>{{ emp.first_name }} {{ emp.last_name }}</td>
                 <td>{{ emp.role_name }}</td>
 
-                <td class="tw-px-6 tw-py-4">{{ emp.email }}</td>
-                <td class="tw-px-6 tw-py-4">{{ emp.citizen_id }}</td>
-                <td class="tw-px-6 tw-py-4">
+                <td class="tw-px-4 tw-2y-4">{{ emp.email }}</td>
+                <td class="tw-px-4 tw-2y-4">{{ emp.citizen_id }}</td>
+                <td class="tw-px-4 tw-2y-4">
                   <span class="text-success" v-if="emp.status === '1'"
                     >Đang hoạt động</span
                   >
                   <span class="text-danger" v-if="emp.status === '0'"
                     >Ngừng hoạt động</span
                   >
-                  <span class="text-warning" v-if="emp.status === '2'"
-                    >Tạm khóa</span
-                  >
+                  <span class="text-warning" v-if="emp.status === '2'">Tạm khóa</span>
                 </td>
-                <td class="px-6 py-4">{{ formatDateTime(emp.created_at) }}</td>
-                <td class="px-6 py-4">{{ formatDateTime(emp.updated_at) }}</td>
+                <td class="tw-px-4 tw-py-2">
+                  {{ formatDateTime(emp.created_at) }}
+                </td>
+                <td class="tw-px-4 tw-py-2">
+                  {{ formatDateTime(emp.updated_at) }}
+                </td>
 
-                <td class="px-6 py-4">
+                <td class="tw-px-4 tw-py-2">
                   <router-link
                     :to="{
                       name: 'admin.emp_details',
                       params: { id: emp.staff_id },
                     }"
                   >
-                    Chi tiết
+                    <font-awesome-icon icon="fa-eye" size="lg" style="color: #74c0fc" />
                   </router-link>
                 </td>
               </tr>

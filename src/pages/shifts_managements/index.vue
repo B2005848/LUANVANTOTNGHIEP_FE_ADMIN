@@ -33,16 +33,14 @@
               class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
             >
               <tr class="tw-text-center">
-                <th scope="col" class="tw-px-6 tw-py-3">STT</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Mã ca</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Mô tả ca làm việc</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Thời gian bắt đầu</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Thời gian kết thúc</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày tạo</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-6 tw-py-3">
-                  Danh sách nhân viên theo ca
-                </th>
+                <th scope="col" class="tw-px-4 tw-py-2">STT</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Mã ca</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Mô tả ca làm việc</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Thời gian bắt đầu</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Thời gian kết thúc</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Danh sách nhân viên theo ca</th>
               </tr>
             </thead>
             <tbody>
@@ -54,26 +52,26 @@
                 <!-- STT -->
                 <th
                   scope="row"
-                  class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
+                  class="tw-px-4 tw-py-2 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
                 >
                   {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
                 </th>
-                <td class="px-6 py-4">{{ sh.shift_id }}</td>
-                <td class="px-6 py-4">{{ sh.shift_name }}</td>
-                <td class="px-6 py-4">{{ formatTime(sh.start_time) }}</td>
-                <td class="px-6 py-4">{{ formatTime(sh.end_time) }}</td>
-                <td class="px-6 py-4">{{ formatDateTime(sh.created_at) }}</td>
-                <td class="px-6 py-4">{{ formatDateTime(sh.updated_at) }}</td>
+                <td class="px-4 py-2">{{ sh.shift_id }}</td>
+                <td class="px-4 py-2">{{ sh.shift_name }}</td>
+                <td class="px-4 py-2">{{ formatTime(sh.start_time) }}</td>
+                <td class="px-4 py-2">{{ formatTime(sh.end_time) }}</td>
+                <td class="px-4 py-2">{{ formatDateTime(sh.created_at) }}</td>
+                <td class="px-4 py-2">{{ formatDateTime(sh.updated_at) }}</td>
 
-                <td class="px-6 py-4">
+                <td class="px-4 py-2">
                   <router-link
                     :to="{
                       name: 'admin.staff_shifts',
                       params: { shift_id: sh.shift_id },
                     }"
                   >
-                    Xem</router-link
-                  >
+                    <font-awesome-icon icon="fa-eye" size="lg" style="color: #74c0fc" />
+                  </router-link>
                 </td>
               </tr>
             </tbody>

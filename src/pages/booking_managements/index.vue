@@ -147,7 +147,9 @@
                 <td class="px-6 py-4">{{ formatDateTime(data.updated_at) }}</td>
 
                 <td class="px-6 py-4">
-                  <a href="">Chi tiết</a>
+                  <a href="">
+                    <font-awesome-icon icon="fa-eye" size="lg" style="color: #74c0fc" />
+                  </a>
                 </td>
               </tr>
             </tbody>

@@ -1,3 +1,5 @@
+import { comment } from "postcss";
+
 const admin = [
   // Router for admin login page (separated from admin routes).
   {
@@ -62,6 +64,27 @@ const admin = [
         meta: {
           title: "CTU CLINIC - Chi tiết bệnh nhân",
         },
+        children: [
+          {
+            path: "appointment_history",
+            name: "admin.patient_detail.appointment_history",
+            component: () =>
+              import("../pages/patient_managements/history_appointment.vue"),
+            meta: {
+              title: "CTU CLINIC - LỊCH SỬ KHÁM BỆNH",
+            },
+          },
+
+          {
+            path: "treatment_history",
+            name: "admin.patient_detail.treatment_history",
+            component: () =>
+              import("../pages/patient_managements/treatment_history.vue"),
+            meta: {
+              title: "CTU CLINIC - QUÁ TRÌNH ĐIỀU TRỊ",
+            },
+          },
+        ],
       },
       // Add a new patient
       {

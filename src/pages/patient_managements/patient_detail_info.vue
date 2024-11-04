@@ -2,6 +2,34 @@
 .avt {
   border-radius: 50%;
 }
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+.btn-router-control {
+  flex: 1;
+  text-align: center;
+  margin: 5px;
+}
+
+.router-control {
+  display: block;
+  padding: 5px 0;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.router-control:hover,
+.router-control:focus {
+  background-color: #0056b3;
+  color: #fff;
+}
 </style>
 <template>
   <div class="container-fuild mt-3">
@@ -24,11 +52,19 @@
             />
           </p>
           <div class="text-center mt-3">
-            <p>{{ data.name }}</p>
-            <p>Mã bệnh nhân: {{ data.username }}</p>
-            <p v-if="data.citizenID">CCCD/CMND: {{ data.citizenID }}</p>
-            <p v-if="!data.citizenID">CCCD/CMND: Chưa cập nhật</p>
-            <a href="">Lịch sử khám bệnh</a>
+            <p>
+              <span style="font-weight: bold">Họ và tên:</span>
+              {{ data.first_name }} {{ data.last_name }}
+            </p>
+            <p>
+              <span style="font-weight: bold">Mã bệnh nhân:</span>
+              {{ data.patient_id }}
+            </p>
+            <p v-if="data.citizen_id">
+              <span style="font-weight: bold">CCCD/CMND:</span>
+              {{ data.citizen_id }}
+            </p>
+            <p v-if="!data.citizen_id">CCCD/CMND: Chưa cập nhật</p>
           </div>
         </div>
         <div class="flex-1 pt-3">
@@ -40,6 +76,7 @@
               <p style="font-weight: bold">Địa chỉ:</p>
               <p style="font-weight: bold">Ngày sinh:</p>
               <p style="font-weight: bold">Giới tính:</p>
+              <p style="font-weight: bold">Nghề nghiệp:</p>
               <p style="font-weight: bold">Trạng thái tài khoản:</p>
               <p style="font-weight: bold">Ngày tạo:</p>
               <p style="font-weight: bold">Ngày cập nhật:</p>
@@ -62,6 +99,9 @@
               <p v-if="data.gender == 1">Nam</p>
               <p v-if="data.gender == 2">Nữ</p>
               <p v-if="!data.gender">Chưa cập nhật!</p>
+
+              <p v-if="data.major">{{ data.major }}</p>
+              <p v-if="!data.major">Chưa cập nhật!</p>
 
               <p v-if="data.statusAccount == 1" class="text-success">
                 Đang hoạt động
@@ -96,11 +136,33 @@
         </div>
       </div>
       <hr />
-      <!-- ----------------------PAYMENT HISTORY------------------------------ -->
-      <div class="row mt-5">
-        <div class="col-md-12">
-          <h3 class="text-center mb-5">Lịch sử khám bệnh</h3>
+      <!-- ----------------------QUÁ TRÌNH ĐIỀU TRỊ------------------------------ -->
+      <div style="margin: 5px">
+        <div
+          class="d-flex p-2"
+          style="
+            justify-content: space-around;
+            background-color: #00afef;
+            flex-direction: row;
+          "
+        >
+          <div class="btn-router-control">
+            <router-link
+              :to="{ name: 'admin.patient_detail.treatment_history' }"
+              class="router-control"
+              ><h3 class="text-center">QUÁ TRÌNH ĐIỀU TRỊ</h3></router-link
+            >
+          </div>
+          <div class="btn-router-control">
+            <router-link
+              :to="{ name: 'admin.patient_detail.appointment_history' }"
+              class="router-control"
+              ><h3 class="text-center">LỊCH SỬ KHÁM BỆNH</h3></router-link
+            >
+          </div>
         </div>
+
+        <router-view></router-view>
       </div>
     </div>
   </div>

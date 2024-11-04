@@ -63,9 +63,7 @@
 
         <!-- --TW CSS -->
         <!-- list emp -->
-        <div
-          class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
-        >
+        <div class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg">
           <table
             class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400"
           >
@@ -73,12 +71,12 @@
               class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
             >
               <tr class="tw-text-center">
-                <th scope="col" class="tw-px-6 tw-py-3">STT</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Mã phòng</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Tên phòng</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày tạo</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Tools</th>
+                <th scope="col" class="tw-px-4 tw-py-2">STT</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Mã phòng</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Tên phòng</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Tools</th>
               </tr>
             </thead>
             <tbody>
@@ -90,16 +88,18 @@
                 <!-- STT -->
                 <th
                   scope="row"
-                  class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
+                  class="tw-px-4 tw-py-2 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
                 >
                   {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
                 </th>
                 <td>{{ dep.department_id }}</td>
                 <td>{{ dep.department_name }}</td>
-                <td class="px-6 py-4">{{ formatDateTime(dep.created_at) }}</td>
-                <td class="px-6 py-4">{{ formatDateTime(dep.updated_at) }}</td>
+                <td class="px-4 py-2">{{ formatDateTime(dep.created_at) }}</td>
+                <td class="px-4 py-2">{{ formatDateTime(dep.updated_at) }}</td>
 
-                <td class="px-6 py-4">Chi tiết</td>
+                <td class="px-4 py-2">
+                  <font-awesome-icon icon="fa-eye" size="lg" style="color: #74c0fc" />
+                </td>
               </tr>
             </tbody>
           </table>
