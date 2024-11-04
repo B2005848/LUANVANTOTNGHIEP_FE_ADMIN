@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Quản lí nhân viên -->
-    <div class="container-fluid mt-3">
+    <div class="mt-3">
       <div class="wapper card p-3">
         <div class="d-flex mt-3">
           <div class="flex-1">
@@ -63,7 +63,9 @@
 
         <!-- --TW CSS -->
         <!-- list emp -->
-        <div class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg">
+        <div
+          class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
+        >
           <table
             class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400"
           >
@@ -71,20 +73,20 @@
               class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
             >
               <tr class="tw-text-center">
-                <th scope="col" class="tw-px-6 tw-py-3">STT</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Mã lịch hẹn</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Mã bệnh nhân (SĐT)</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Bệnh nhân</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Bác sĩ tiếp nhận</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày hẹn</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Lí do khám</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Dịch vụ khám</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Phòng tiếp nhận</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Trạng thái</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày tạo lịch hẹn</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Ngày cập nhật lịch hẹn</th>
-
-                <th scope="col" class="tw-px-6 tw-py-3">Tools</th>
+                <th scope="col" class="tw-px-6 tw-py-4">STT</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Mã lịch hẹn</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Mã bệnh nhân (SĐT)</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Bệnh nhân</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Bác sĩ tiếp nhận</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Ngày hẹn</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Lí do khám</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Dịch vụ khám</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Phòng tiếp nhận</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Trạng thái</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Ngày tạo lịch hẹn</th>
+                <th scope="col" class="tw-px-6 tw-py-4">
+                  Ngày cập nhật lịch hẹn
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -105,7 +107,16 @@
                 <td class="px-6 py-4">{{ data.appointment_id }}</td>
 
                 <!-- MÃ BỆNH NHÂN -->
-                <td class="px-6 py-4">{{ data.patient_id }}</td>
+                <td class="px-6 py-4">
+                  <router-link
+                    :to="{
+                      name: 'admin.patient_details',
+                      params: { username: data.patient_id },
+                    }"
+                  >
+                    {{ data.patient_id }}</router-link
+                  >
+                </td>
 
                 <!-- HỌ TÊN BỆNH NHÂN -->
                 <td class="px-6 py-4">
@@ -139,18 +150,48 @@
 
                 <!-- TRẠNG THÁI ĐẶT HẸN -->
                 <td class="px-6 py-4">
-                  <span class="text-danger" v-if="data.status === 'H'">Đã hủy</span>
-                  <span class="text-success" v-if="data.status === 'S'">Sắp khám</span>
-                  <span v-if="data.status === 'C'">Đã kết thúc</span>
+                  <span v-if="data.status === 'S'" style="font-weight: bold">
+                    <button
+                      @click="confirmAppointment(data.appointment_id)"
+                      style="
+                        background-color: #0000ff;
+                        font-size: 12px;
+                        padding: 10px;
+                        border-radius: 13px;
+                        margin-left: 5px;
+                      "
+                    >
+                      Xác nhận
+                    </button>
+                  </span>
+                  <span
+                    v-if="data.status === 'CO-F'"
+                    style="color: rgb(197, 199, 80)"
+                  >
+                    Đã xác nhận
+                  </span>
+                  <span v-if="data.status === 'C-IN'"> Đã đến </span>
+                  <span v-if="data.status === 'IN-P'" style="color: #63e6be">
+                    Đang thực hiện
+                    <font-awesome-icon
+                      icon="fa-solid fa-spinner"
+                      spin-pulse
+                      size="lg"
+                    />
+                  </span>
+                  <span v-if="data.status === 'CO-P'" style="color: #0000ff">
+                    Đã hoàn thành
+                  </span>
+                  <span v-if="data.status === 'CA'" style="color: red">
+                    Đã hủy
+                  </span>
+                  <span v-if="data.status === 'NO-S'" style="color: #4682b4">
+                    Không đến
+                  </span>
+                  <span v-if="data.status === 'RE-S'"> Đã dời lịch </span>
                 </td>
                 <td class="px-6 py-4">{{ formatDateTime(data.created_at) }}</td>
                 <td class="px-6 py-4">{{ formatDateTime(data.updated_at) }}</td>
-
-                <td class="px-6 py-4">
-                  <a href="">
-                    <font-awesome-icon icon="fa-eye" size="lg" style="color: #74c0fc" />
-                  </a>
-                </td>
               </tr>
             </tbody>
           </table>
@@ -178,6 +219,8 @@ import PaginationComponent from "@/components/Pagination.vue";
 import formatDate from "@/helper/format-datetime";
 const formatDateTime = formatDate.formatDateTime;
 const formatDay = formatDate.formatDateBirth;
+import Swal from "sweetalert2";
+
 const {
   getData,
   listAppointmentsData,
@@ -190,6 +233,29 @@ const currentPage = ref(1);
 const fetchDataByPage = async (page) => {
   currentPage.value = page;
   await getData(page);
+};
+
+const confirmAppointment = async (appointmentId) => {
+  const result = await Swal.fire({
+    title: "Bạn chắc chắn xác nhận lịch hẹn này?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Xác nhận",
+    cancelButtonText: "Hủy",
+  });
+
+  if (result.isConfirmed) {
+    try {
+      await axios.put(
+        "http://localhost:3000/api/appointment/modifyStatus/" + appointmentId,
+        { status: "CO-F" }
+      );
+      Swal.fire("Thành công!", "Lịch hẹn đã được xác nhận.", "success");
+      fetchDataByPage(1); // Reload the appointments to reflect the update
+    } catch (error) {
+      Swal.fire("Lỗi!", "Có lỗi xảy ra khi xác nhận lịch hẹn.", "error");
+    }
+  }
 };
 
 // handle search staff
@@ -240,15 +306,26 @@ onMounted(async () => {
   margin: 0 5px;
 }
 
-.page-link {
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  background-color: #f8f9fa;
-  cursor: pointer;
+.wapper .d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.page-link:hover {
+.btn-search {
   background-color: #007bff;
-  color: white;
+  border-radius: 14px;
+}
+
+.d-flex div:nth-child(2) button {
+  color: #ffffff;
+  font-size: 25px;
+  text-align: center;
+  align-items: center;
+  border: none;
+}
+
+button {
+  cursor: pointer;
 }
 </style>

@@ -196,6 +196,7 @@
         </div>
       </div>
       <!--------------------------------------------------------------------------------------------------WORK INFORMATION: THÔNG TIN CÔNG VIỆC-->
+      <!-- Work Information Section -->
       <div class="container-infor-detail mt-3 card p-5">
         <h4 class="text-center">
           THÔNG TIN CÔNG VIỆC
@@ -205,8 +206,60 @@
               icon="fa-regular fa-pen-to-square"
               size="sm"
               style="color: #74c0fc"
-          /></router-link>
+            />
+          </router-link>
         </h4>
+
+        <div class="info-detail row mt-2">
+          <!-- Column 1 -->
+          <div class="row col-md-6">
+            <div class="col-md-4">
+              <p class="tw-dark:text-white tw-ms-5">Ngày vào làm</p>
+              <p class="tw-dark:text-white tw-ms-5">Hợp đồng làm việc</p>
+              <p class="tw-dark:text-white tw-ms-5">Ca làm việc</p>
+              <p class="tw-dark:text-white tw-ms-5">Phòng ban</p>
+              <p class="tw-dark:text-white tw-ms-5">Chuyên khoa</p>
+            </div>
+            <div class="col-md-8">
+              <!-- Start Date -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ formatDateTime("2021-06-15") }}
+              </p>
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ "5 năm" }}
+              </p>
+              <!-- Shift -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ "Ca sáng" }}
+              </p>
+
+              <!-- Department -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ "Phòng Nội Tổng Hợp" }}
+              </p>
+
+              <!-- Specialty -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ "Nội khoa" }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Column 2 -->
+          <div class="row col-md-6">
+            <div class="col-md-4">
+              <p class="tw-dark:text-white tw-ms-5">
+                Số lượng bệnh nhân đã khám
+              </p>
+            </div>
+            <div class="col-md-8">
+              <!-- Number of patients -->
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ "150" }} <router-link>Xem</router-link>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- END CODE DIV CONTAINER -->
@@ -238,5 +291,25 @@ onMounted;
 <style scoped>
 .value {
   border-bottom: 1px solid rgb(199, 199, 199);
+  padding: 5px 0;
+  margin-bottom: 10px;
+}
+
+.info-detail .col-md-4 p,
+.info-detail .col-md-8 p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.info-detail .col-md-4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info-detail .col-md-8 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>

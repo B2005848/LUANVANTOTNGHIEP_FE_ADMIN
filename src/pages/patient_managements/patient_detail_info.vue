@@ -88,8 +88,8 @@ a {
               <p v-if="data.phone_number">{{ data.phone_number }}</p>
               <p v-if="!data.phone_number">Chưa cập nhật!</p>
 
-              <p v-if="data.address_contac">{{ data.address_contact }}</p>
-              <p v-if="!data.address_contac">Chưa cập nhật!</p>
+              <p v-if="data.address_contact">{{ data.address_contact }}</p>
+              <p v-if="!data.address_contact">Chưa cập nhật!</p>
 
               <p v-if="data.birthday">
                 {{ formatDay(data.birthday) }}
@@ -108,21 +108,30 @@ a {
                 <font-awesome-icon
                   icon="fa-circle-check"
                   beat
-                  style="--fa-primary-color: #0fffb7; --fa-secondary-color: #2ff9bc"
+                  style="
+                    --fa-primary-color: #0fffb7;
+                    --fa-secondary-color: #2ff9bc;
+                  "
                 />
               </p>
               <p v-if="data.statusAccount == 2" class="text-warning">
                 Tạm khóa
                 <font-awesome-icon
                   icon="fa-user-lock"
-                  style="--fa-primary-color: #4b511f; --fa-secondary-color: #c1dd31"
+                  style="
+                    --fa-primary-color: #4b511f;
+                    --fa-secondary-color: #c1dd31;
+                  "
                 />
               </p>
               <p v-if="data.statusAccount == 3" class="text-danger">
                 Ngừng hoạt động
                 <font-awesome-icon
                   icon=" fa-ban"
-                  style="--fa-primary-color: #dd2c2c; --fa-secondary-color: #dd2c2c"
+                  style="
+                    --fa-primary-color: #dd2c2c;
+                    --fa-secondary-color: #dd2c2c;
+                  "
                 />
               </p>
 

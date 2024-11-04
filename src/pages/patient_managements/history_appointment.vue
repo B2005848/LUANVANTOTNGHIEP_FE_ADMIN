@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h3 class="text-center mb-4">Lịch Sử Khám Bệnh</h3>
+    <h3 class="text-center mb-4 tw-mt-4">Thông Tin Lịch Hẹn Khám Bệnh</h3>
     <div
       v-if="appointments.length > 0"
-      class="tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
+      class="tw-relative tw-shadow-md tw-sm:rounded-lg"
     >
       <table
         class="tw-w-full tw-text-sm tw-text-left tw-text-gray-800 tw-dark:text-gray-400"
@@ -12,15 +12,15 @@
           class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
         >
           <tr class="tw-text-center">
-            <th class="tw-px-6 tw-py-3">STT</th>
-            <th class="tw-px-6 tw-py-3">Mã Lịch Hẹn</th>
-            <th class="tw-px-6 tw-py-3">Họ và Tên Bác Sĩ</th>
-            <th class="tw-px-6 tw-py-3">Phòng Khám</th>
-            <th class="tw-px-6 tw-py-3">Dịch Vụ</th>
-            <th class="tw-px-6 tw-py-3">Ngày Hẹn</th>
-            <th class="tw-px-6 tw-py-3">Thời Gian</th>
-            <th class="tw-px-6 tw-py-3">Trạng Thái</th>
-            <th class="tw-px-6 tw-py-3">Thanh Toán</th>
+            <th class="tw-px-d tw-py-2">STT</th>
+            <th class="tw-px-d tw-py-2">Mã Lịch Hẹn</th>
+            <th class="tw-px-d tw-py-2">Họ và Tên Bác Sĩ</th>
+            <th class="tw-px-d tw-py-2">Phòng Khám</th>
+            <th class="tw-px-d tw-py-2">Dịch Vụ</th>
+            <th class="tw-px-d tw-py-2">Ngày Hẹn</th>
+            <th class="tw-px-d tw-py-2">Thời Gian</th>
+            <th class="tw-px-d tw-py-2">Trạng Thái Lịch Hẹn</th>
+            <th class="tw-px-d tw-py-2">Thanh Toán</th>
           </tr>
         </thead>
         <tbody>
@@ -29,23 +29,84 @@
             :key="appointment.appointment_id"
             class="tw-bg-white tw-text-center tw-border-b tw-dark:bg-gray-800 tw-dark:border-gray-700 tw-hover:bg-gray-50 tw-dark:hover:bg-gray-600"
           >
-            <td class="tw-px-6 tw-py-4">{{ index + 1 }}</td>
-            <td class="tw-px-6 tw-py-4">{{ appointment.appointment_id }}</td>
-            <td class="tw-px-6 tw-py-4">
+            <td class="tw-px-4 tw-py-2">{{ index + 1 }}</td>
+            <td class="tw-px-4 tw-py-2">{{ appointment.appointment_id }}</td>
+            <td class="tw-px-4 tw-py-2">
               {{ appointment.first_name }} {{ appointment.last_name }}
             </td>
-            <td class="tw-px-6 tw-py-4">{{ appointment.department_name }}</td>
-            <td class="tw-px-6 tw-py-4">{{ appointment.service_name }}</td>
-            <td class="tw-px-6 tw-py-4">
-              {{ formatDate(appointment.appointment_date) }}
+            <td class="tw-px-4 tw-py-2">{{ appointment.department_name }}</td>
+            <td class="tw-px-4 tw-py-2">{{ appointment.service_name }}</td>
+            <td class="tw-px-4 tw-py-2">
+              {{ formatDay(appointment.appointment_date) }}
             </td>
-            <td class="tw-px-6 tw-py-4">
+            <td class="tw-px-4 tw-py-2">
               {{ formatTime(appointment.start_time) }} -
               {{ formatTime(appointment.end_time) }}
             </td>
-            <td class="tw-px-6 tw-py-4">{{ mapStatus(appointment.status) }}</td>
-            <td class="tw-px-6 tw-py-4">
-              {{ mapPaymentStatus(appointment.payment_status) }}
+            <td class="tw-px-4 tw-py-2">
+              <span v-if="appointment.status === 'S'" style="font-weight: bold">
+                Chờ xác nhận
+                <font-awesome-icon
+                  icon="fa-regular fa-bell"
+                  shake
+                  size="lg"
+                  style="color: #ffd43b"
+                />
+                <button
+                  @click="confirmAppointment(appointment.appointment_id)"
+                  class="tw-ml-2 tw-bg-blue-500 tw-text-white tw-py-1 tw-px-3 tw-rounded tw-hover:bg-blue-700"
+                >
+                  Xác nhận
+                </button>
+              </span>
+              <span
+                v-else-if="appointment.status === 'CO-F'"
+                style="color: #d2691e"
+              >
+                Đã xác nhận
+              </span>
+              <span v-else-if="appointment.status === 'C-IN'"> Đã đến </span>
+              <span
+                v-else-if="appointment.status === 'IN-P'"
+                style="color: #63e6be"
+              >
+                Đang thực hiện
+                <font-awesome-icon
+                  icon="fa-solid fa-spinner"
+                  spin-pulse
+                  size="lg"
+                />
+              </span>
+              <span
+                v-else-if="appointment.status === 'CO-P'"
+                style="color: #0000ff"
+              >
+                Đã hoàn thành
+              </span>
+              <span v-else-if="appointment.status === 'CA'" style="color: red">
+                Đã hủy
+              </span>
+              <span
+                v-else-if="appointment.status === 'NO-S'"
+                style="color: #4682b4"
+              >
+                Không đến
+              </span>
+              <span v-else-if="appointment.status === 'RE-S'">
+                Đã dời lịch
+              </span>
+            </td>
+            <td class="tw-px-4 tw-py-2">
+              <span
+                v-if="appointment.payment_status === 'C'"
+                style="color: #00bfff"
+              >
+                Đã thanh toán
+              </span>
+              <span v-if="appointment.payment_status === 'P'">
+                Chưa thanh toán
+              </span>
+              <span v-if="!appointment.payment_status"> Lỗi giao dịch </span>
             </td>
           </tr>
         </tbody>
@@ -59,12 +120,18 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-
 import axios from "axios";
+import formatDate from "@/helper/format-datetime";
+import Swal from "sweetalert2";
+
+const formatDateTime = formatDate.formatDateTime;
+const formatDay = formatDate.formatDateBirth;
+const formatTime = formatDate.formatTime;
 
 const appointments = ref([]);
 const route = useRoute();
 const username = route.params.username;
+
 const getAppointments = async () => {
   try {
     const response = await axios.get(
@@ -78,29 +145,26 @@ const getAppointments = async () => {
   }
 };
 
-const formatDate = (date) => new Date(date).toLocaleDateString();
-const formatTime = (time) =>
-  new Date(time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-const mapStatus = (status) => {
-  switch (status) {
-    case "H":
-      return "Hoàn thành";
-    case "C":
-      return "Đã hủy";
-    case "S":
-      return "Chờ xử lý";
-    default:
-      return "Không rõ";
-  }
-};
-const mapPaymentStatus = (paymentStatus) => {
-  switch (paymentStatus) {
-    case "P":
-      return "Chưa thanh toán";
-    case "C":
-      return "Đã thanh toán";
-    default:
-      return "Không rõ";
+const confirmAppointment = async (appointmentId) => {
+  const result = await Swal.fire({
+    title: "Bạn chắc chắn xác nhận lịch hẹn này?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Xác nhận",
+    cancelButtonText: "Hủy",
+  });
+
+  if (result.isConfirmed) {
+    try {
+      await axios.put(
+        "http://localhost:3000/api/appointment/modifyStatus/" + appointmentId,
+        { status: "CO-F" }
+      );
+      Swal.fire("Thành công!", "Lịch hẹn đã được xác nhận.", "success");
+      getAppointments(); // Reload the appointments to reflect the update
+    } catch (error) {
+      Swal.fire("Lỗi!", "Có lỗi xảy ra khi xác nhận lịch hẹn.", "error");
+    }
   }
 };
 
@@ -125,5 +189,8 @@ th {
 }
 tr:hover {
   background-color: #f1f1f1;
+}
+button {
+  cursor: pointer;
 }
 </style>
