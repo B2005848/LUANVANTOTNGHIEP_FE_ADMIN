@@ -63,7 +63,9 @@
 
         <!-- --TW CSS -->
         <!-- list emp -->
-        <div class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg">
+        <div
+          class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
+        >
           <table
             class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400"
           >
@@ -76,7 +78,7 @@
                 <th scope="col" class="tw-px-4 tw-py-2">Tên phòng</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Tools</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Thông tin chi tiết</th>
               </tr>
             </thead>
             <tbody>
@@ -98,7 +100,11 @@
                 <td class="px-4 py-2">{{ formatDateTime(dep.updated_at) }}</td>
 
                 <td class="px-4 py-2">
-                  <font-awesome-icon icon="fa-eye" size="lg" style="color: #74c0fc" />
+                  <font-awesome-icon
+                    icon="fa-eye"
+                    size="lg"
+                    style="color: #74c0fc"
+                  />
                 </td>
               </tr>
             </tbody>

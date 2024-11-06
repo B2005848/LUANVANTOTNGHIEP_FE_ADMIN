@@ -51,12 +51,13 @@
 
           <div class="flex-1">
             <button type="button" title="Thêm nhân viên mới">
-              <font-awesome-icon
-                icon=" fa-plus"
-                bounce
-                size="lg"
-                style="color: #74c0fc"
-              />
+              <router-link :to="{ name: 'admin.add.emp' }">
+                <font-awesome-icon
+                  icon=" fa-plus"
+                  bounce
+                  size="lg"
+                  style="color: #74c0fc"
+              /></router-link>
             </button>
           </div>
         </div>

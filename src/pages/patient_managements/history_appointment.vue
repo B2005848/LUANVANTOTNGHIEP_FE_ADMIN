@@ -32,7 +32,14 @@
             <td class="tw-px-4 tw-py-2">{{ index + 1 }}</td>
             <td class="tw-px-4 tw-py-2">{{ appointment.appointment_id }}</td>
             <td class="tw-px-4 tw-py-2">
-              {{ appointment.first_name }} {{ appointment.last_name }}
+              <router-link
+                :to="{
+                  name: 'admin.emp_details',
+                  params: { id: appointment.staff_id },
+                }"
+              >
+                {{ appointment.first_name }} {{ appointment.last_name }}
+              </router-link>
             </td>
             <td class="tw-px-4 tw-py-2">{{ appointment.department_name }}</td>
             <td class="tw-px-4 tw-py-2">{{ appointment.service_name }}</td>

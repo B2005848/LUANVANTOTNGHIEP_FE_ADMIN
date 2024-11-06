@@ -26,6 +26,18 @@ a:hover {
 a:focus {
   color: #5486c4;
 }
+
+/* Sidebar.vue hoặc tệp CSS toàn cục */
+.active-link {
+  color: #5486c4;
+  font-weight: bold;
+}
+
+.exact-active-link {
+  color: #5486c4;
+  font-weight: bold;
+  background-color: #e0f0ff; /* Thêm nền nếu cần */
+}
 </style>
 <!-- -----------------------------------TEMPLATE------------------------------ -->
 <template>
@@ -50,7 +62,7 @@ a:focus {
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.patients' }" href="#admin"
+      <router-link :to="{ name: 'admin.patients' }"
         >QUẢN LÍ BỆNH NHÂN</router-link
       >
     </li>
@@ -63,9 +75,7 @@ a:focus {
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.emp' }" href="#admin"
-        >QUẢN LÍ NHÂN VIÊN</router-link
-      >
+      <router-link :to="{ name: 'admin.emp' }">QUẢN LÍ NHÂN VIÊN</router-link>
     </li>
 
     <li>
@@ -75,7 +85,7 @@ a:focus {
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.shifts' }" href="#admin"
+      <router-link :to="{ name: 'admin.shifts' }"
         >QUẢN LÍ CA LÀM VIỆC</router-link
       >
     </li>
@@ -87,7 +97,7 @@ a:focus {
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.departments' }" href="#admin"
+      <router-link :to="{ name: 'admin.departments' }"
         >QUẢN LÍ PHÒNG KHÁM</router-link
       >
     </li>
@@ -99,7 +109,7 @@ a:focus {
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.services' }" href="#admin"
+      <router-link :to="{ name: 'admin.services' }"
         >QUẢN LÍ DỊCH VỤ</router-link
       >
     </li>
@@ -111,7 +121,7 @@ a:focus {
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.booking' }" href="#admin"
+      <router-link :to="{ name: 'admin.booking' }"
         >QUẢN LÍ LỊCH HẸN</router-link
       >
     </li>
@@ -123,9 +133,7 @@ a:focus {
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.requests' }" href="#admin"
-        >CÁC YÊU CẦU</router-link
-      >
+      <router-link :to="{ name: 'admin.requests' }">CÁC YÊU CẦU</router-link>
     </li>
     <li>
       <font-awesome-icon
@@ -134,9 +142,7 @@ a:focus {
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.settings' }" href="#admin"
-        >CÀI ĐẶT</router-link
-      >
+      <router-link :to="{ name: 'admin.settings' }">CÀI ĐẶT</router-link>
     </li>
   </ul>
 </template>

@@ -44,10 +44,10 @@ a {
             alt=""
             width="200"
           />
-          <p v-if="!data.image_url">
+          <p>
             <img
-              src="https://i.pinimg.com/564x/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg"
-              alt=""
+              :src="`http://localhost:3000${data.image_avt}`"
+              alt="Chưa cập nhật ảnh đại diện"
               width="200"
             />
           </p>
@@ -96,8 +96,22 @@ a {
               </p>
               <p v-if="!data.birthday">Chưa cập nhật</p>
 
-              <p v-if="data.gender == 1">Nam</p>
-              <p v-if="data.gender == 2">Nữ</p>
+              <p v-if="data.gender == 1">
+                Nam
+                <font-awesome-icon
+                  icon="fa-solid fa-mars-stroke"
+                  size="lg"
+                  style="color: #74c0fc"
+                />
+              </p>
+              <p v-if="data.gender == 0">
+                Nữ
+                <font-awesome-icon
+                  :icon="['fas', 'venus']"
+                  size="lg"
+                  style="color: #b197fc"
+                />
+              </p>
               <p v-if="!data.gender">Chưa cập nhật!</p>
 
               <p v-if="data.major">{{ data.major }}</p>
@@ -170,9 +184,8 @@ a {
             >
           </div>
         </div>
-
-        <router-view></router-view>
       </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>

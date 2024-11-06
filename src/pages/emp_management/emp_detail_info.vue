@@ -221,10 +221,10 @@
             <div class="col-md-8">
               <!-- Start Date -->
               <p class="value tw-text-black-500 tw-font-semibold">
-                {{ formatDateTime("2021-06-15") }}
+                {{ formatBirthDay(staffDetail.created_at) }}
               </p>
               <p class="value tw-text-black-500 tw-font-semibold">
-                {{ "5 năm" }}
+                {{ staffDetail.work_contract }} năm
               </p>
               <!-- Specialty -->
               <p

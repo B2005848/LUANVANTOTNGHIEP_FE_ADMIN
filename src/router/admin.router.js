@@ -46,6 +46,15 @@ const admin = [
           title: "CTU CLINIC - Chi tiết nhân viên",
         },
       },
+      // Add a new employee
+      {
+        path: "addemployee",
+        name: "admin.add.emp",
+        component: () => import("../pages/emp_management/add.new.emp.vue"),
+        meta: {
+          title: "CTU CLINIC - Thêm nhân viên nhân mới",
+        },
+      },
       // --------------------------------------Router for admin patients managements page
       {
         path: "patients_managements",
