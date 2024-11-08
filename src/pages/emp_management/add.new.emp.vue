@@ -268,7 +268,6 @@
         </div>
 
         <!-- Chuyên khoa của nhân viên -->
-        <!-- Chuyên khoa của nhân viên -->
         <div class="row mb-3">
           <div class="col-md-12">
             <label class="form-label">Chuyên Khoa:</label>
@@ -277,7 +276,7 @@
               class="btn btn-outline-primary ms-3"
               @click="showSpecialtyModal = true"
             >
-              Chọn Chuyên Khoa
+              Chọn
             </button>
 
             <!-- Hiển thị danh sách chuyên khoa đã chọn -->
@@ -535,14 +534,29 @@ const onDistrictChange = () => {
 
 // Thêm nhân viên mới
 const addEmployee = async () => {
+  // Tạo dữ liệu cho tài khoản từ các trường form
+  const accountData = {
+    staff_id: employeeData.value.staff_id,
+    password: "123", //Mặc khẩu mặc định
+    role_id: employeeData.value.role_name,
+    first_name: employeeData.value.first_name,
+    last_name: employeeData.value.last_name,
+    birthday: employeeData.value.birthday,
+    citizen_id: employeeData.value.citizen_id,
+    gender: employeeData.value.gender,
+    phone_number: employeeData.value.phone_number,
+    email: employeeData.value.email,
+    address_contact: employeeData.value.address_contact,
+  };
   // Cấu trúc địa chỉ chi tiết
   employeeData.value.address_contact = `${employeeData.value.street}, ${selectedWard.value.name}, ${selectedDistrict.value.name}, ${selectedCity.value.name}`;
   try {
-    const response = await axios.post(
-      "http://localhost:3000/api/staff/add",
-      employeeData.value
+    const responseCreateAccount = await axios.post(
+      "http://localhost:3000/api/staff/account/createAccount",
+      accountData
     );
-    if (response.data.success) {
+    if (responseCreateAccount.data.success) {
+      const responseAddSpecialties = await axios.post("");
       Swal.fire("Thành công!", "Nhân viên mới đã được thêm.", "success");
     } else {
       Swal.fire("Lỗi!", "Đã xảy ra lỗi khi thêm nhân viên.", "error");
