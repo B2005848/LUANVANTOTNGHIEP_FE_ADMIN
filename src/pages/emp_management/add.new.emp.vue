@@ -79,7 +79,6 @@
           <div class="col-md-6">
             <!-- Do ngôn ngữ trình duyệt -->
             <label for="birthday" class="form-label">Ngày Sinh</label>
-            <input type="date" />
             <VueDatePicker
               v-model="employeeData.birthday"
               locale="vi"
@@ -239,13 +238,20 @@
             <label for="role_name" class="form-label"
               >Vị trí làm việc (Phân quyền)</label
             >
-            <input
-              type="text"
-              v-model="employeeData.role_name"
-              class="form-control"
-              id="role_name"
-              required
-            />
+            <div class="role-options">
+              <div v-for="role in roles" :key="role.role_id">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  v-model="employeeData.role_name"
+                  :id="role.role_id"
+                  :value="role.role_id"
+                />
+                <label class="form-check-label" :for="role.role_id">
+                  {{ role.role_name }} - {{ role.description }}
+                </label>
+              </div>
+            </div>
           </div>
           <div class="col-md-6">
             <label for="work_contract" class="form-label"
@@ -262,50 +268,135 @@
         </div>
 
         <!-- Chuyên khoa của nhân viên -->
+        <!-- Chuyên khoa của nhân viên -->
         <div class="row mb-3">
           <div class="col-md-12">
-            <label for="specialty" class="form-label">Chuyên Khoa</label>
-            <select
-              multiple
-              v-model="employeeData.specialty"
-              class="form-select"
-              id="specialty"
-              required
+            <label class="form-label">Chuyên Khoa:</label>
+            <button
+              type="button"
+              class="btn btn-outline-primary ms-3"
+              @click="showSpecialtyModal = true"
             >
-              <option
-                v-for="spec in specialties"
-                :key="spec.staff_specialty_id"
-                :value="spec.staff_specialty_id"
+              Chọn Chuyên Khoa
+            </button>
+
+            <!-- Hiển thị danh sách chuyên khoa đã chọn -->
+            <div v-if="employeeData.specialty.length" class="mt-2">
+              <span
+                class="badge bg-info me-2"
+                v-for="spec in selectedSpecialtyNames"
+                :key="spec"
               >
-                {{ spec.specialty_name }}
-              </option>
-            </select>
+                {{ spec }}
+              </span>
+            </div>
+
+            <!-- Modal chọn chuyên khoa -->
+            <div
+              v-if="showSpecialtyModal"
+              class="modal"
+              tabindex="-1"
+              role="dialog"
+              style="display: block"
+            >
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Chọn Chuyên Khoa</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      @click="showSpecialtyModal = false"
+                      aria-label="Close"
+                    >
+                      <span class="ms-3" aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Bảng chuyên khoa với checkbox -->
+                    <div class="table-wrapper">
+                      <table class="table table-bordered table-sm">
+                        <thead>
+                          <tr>
+                            <th>Chọn</th>
+                            <th>Tên Chuyên Khoa</th>
+                            <th>Mô Tả</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="spec in specialties"
+                            :key="spec.specialty_id"
+                          >
+                            <td>
+                              <input
+                                type="checkbox"
+                                :value="spec.specialty_id"
+                                v-model="employeeData.specialty"
+                              />
+                            </td>
+                            <td>{{ spec.specialty_name }}</td>
+                            <td>{{ spec.description }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click="confirmSpecialtySelection"
+                    >
+                      Xác Nhận
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      @click="showSpecialtyModal = false"
+                    >
+                      Hủy
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Đăng kí ca làm việc cho nhân viên -->
         <div class="row mb-3">
           <div class="col-md-12">
-            <label for="specialty" class="form-label"
-              >Thời gian ca làm việc</label
+            <label for="shifts" class="form-label">Thời gian ca làm việc</label>
+            <div
+              v-for="shift in shifts"
+              :key="shift.shift_id"
+              class="form-check mb-3"
             >
-            <select
-              multiple
-              v-model="employeeData.specialty"
-              class="form-select"
-              id="specialty"
-              required
-            >
-              <option
-                v-for="spec in specialties"
-                :key="spec.staff_specialty_id"
-                :value="spec.staff_specialty_id"
-              >
-                {{ spec.specialty_name }}
-              </option>
-            </select>
+              <input
+                class="form-check-input mb-3"
+                type="checkbox"
+                :id="shift.shift_id"
+                :value="shift.shift_id"
+                @change="toggleShiftSelection(shift.shift_id)"
+                :checked="employeeData.shifts.includes(shift.shift_id)"
+              />
+              <label class="form-check-label" :for="shift.shift_id">
+                <span v-if="shift.shift_id == 'CN-S'">Chủ nhật buổi sáng</span>
+                <span v-if="shift.shift_id == 'CN-C'">Chủ nhật buổi chiều</span>
+                <span v-if="shift.shift_id == 'NT-S'"
+                  >Thứ 2 - Thứ 7 buổi sáng</span
+                >
+                <span v-if="shift.shift_id == 'NT-C'"
+                  >Thứ 2 - Thứ 7 buổi chiều</span
+                >
+                ({{ formatTime(shift.start_time) }} đến
+                {{ formatTime(shift.end_time) }})
+              </label>
+            </div>
           </div>
         </div>
+
         <!-- Nút thêm nhân viên -->
         <button type="submit" class="btn btn-primary w-100 mt-3">
           Thêm Nhân Viên
@@ -316,12 +407,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import { faTemperature4 } from "@fortawesome/free-solid-svg-icons";
+import formatDate from "@/helper/format-datetime";
+const formatTime = formatDate.formatTime;
 // Dữ liệu nhân viên
 const employeeData = ref({
   staff_id: "",
@@ -340,6 +432,7 @@ const employeeData = ref({
   role_name: "",
   statusAccount: "1",
   specialty: [],
+  shifts: [],
 });
 
 // Dữ liệu địa chỉ
@@ -348,10 +441,86 @@ const selectedCity = ref(null);
 const selectedDistrict = ref(null);
 const selectedWard = ref(null);
 
-const specialties = ref([
-  { staff_specialty_id: 11, specialty_name: "Y học tổng quát" },
-  { staff_specialty_id: 19, specialty_name: "Ngoại khoa" },
-]);
+//Load dữ liệu vị trí làm việc Roles
+const roles = ref([]); // Biến lưu trữ danh sách vai trò
+
+// Hàm tải danh sách role từ API
+const loadRoles = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/api/roles/");
+    if (response.data.status === 200) {
+      roles.value = response.data.dataInfo; // Gán danh sách vai trò vào biến roles
+    } else {
+      Swal.fire("Lỗi!", "Không thể tải danh sách vai trò.", "error");
+    }
+  } catch (error) {
+    Swal.fire("Lỗi!", "Không thể kết nối với server để lấy vai trò.", "error");
+    console.error("Error loading roles:", error);
+  }
+};
+
+//Load dữ liệu ca làm việc Shifts
+const toggleShiftSelection = (shiftId) => {
+  const index = employeeData.value.shifts.indexOf(shiftId);
+  if (index === -1) {
+    employeeData.value.shifts.push(shiftId); // Thêm nếu chưa có
+  } else {
+    employeeData.value.shifts.splice(index, 1); // Xóa nếu đã có
+  }
+
+  console.log("Selected Shifts:", employeeData.value.shifts);
+};
+const shifts = ref([]);
+// Hàm xử lý chọn/bỏ chọn ca làm việc
+const loadShifts = async () => {
+  try {
+    const response = await axios.get(
+      "http://localhost:3000/api/shifts/getList/?page=1"
+    );
+    if (response) {
+      shifts.value = response.data.shiftList;
+    } else {
+      Swal.fire("Lỗi!", "Không thể tải danh sách ca làm việc.", "error");
+    }
+  } catch (error) {
+    Swal.fire(
+      "Lỗi!",
+      "Không thể kết nối với server để lấy ca làm việc.",
+      "error"
+    );
+    console.error("Error loading shifts:", error);
+  }
+};
+
+// ------CHUYEN KHOA
+const showSpecialtyModal = ref(false);
+const specialties = ref([]);
+
+const loadSpecialties = async () => {
+  try {
+    const response = await axios.get(
+      "http://localhost:3000/api/specialties/all"
+    );
+    if (response.data.message === "Specialties retrieved successfully") {
+      specialties.value = response.data.listSpecialties;
+      console.log("Danh sách chuyên khoa:", specialties.value);
+    }
+  } catch (error) {
+    console.error("Lỗi khi tải danh sách chuyên khoa:", error);
+  }
+};
+
+// Hàm xác nhận chuyên khoa đã chọn
+const confirmSpecialtySelection = () => {
+  showSpecialtyModal.value = false;
+};
+
+// Hiển thị tên chuyên khoa đã chọn
+const selectedSpecialtyNames = computed(() => {
+  return specialties.value
+    .filter((spec) => employeeData.value.specialty.includes(spec.specialty_id))
+    .map((spec) => spec.specialty_name);
+});
 
 // Xử lý thay đổi khi chọn thành phố
 const onCityChange = () => {
@@ -393,6 +562,10 @@ onMounted(() => {
   ]).then(() => {
     console.log(addressData.value);
   });
+
+  loadRoles();
+  loadShifts();
+  loadSpecialties();
 });
 </script>
 
@@ -407,7 +580,26 @@ onMounted(() => {
   gap: 15px;
   align-items: center;
 }
+
 .form-check-input {
   margin-right: 5px;
+}
+
+.role-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.table-wrapper {
+  max-height: 300px; /* Giới hạn chiều cao của bảng */
+  overflow-y: auto; /* Cuộn dọc khi bảng vượt quá chiều cao */
+}
+
+.table {
+  font-size: 0.9rem; /* Làm nhỏ kích thước chữ trong bảng */
+}
+
+.modal-lg {
+  max-width: 80%;
 }
 </style>

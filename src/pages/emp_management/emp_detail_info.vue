@@ -216,7 +216,14 @@
             <div class="col-md-4">
               <p class="tw-dark:text-white tw-ms-5">Ngày vào làm</p>
               <p class="tw-dark:text-white tw-ms-5">Hợp đồng làm việc</p>
-              <p class="tw-dark:text-white tw-ms-5">Chuyên khoa</p>
+              <p
+                v-if="
+                  staffDetail.role_id !== 'LT' && staffDetail.role_id !== 'TN'
+                "
+                class="tw-dark:text-white tw-ms-5"
+              >
+                Chuyên khoa
+              </p>
             </div>
             <div class="col-md-8">
               <!-- Start Date -->
@@ -228,7 +235,11 @@
               </p>
               <!-- Specialty -->
               <p
-                v-if="specialtyData"
+                v-if="
+                  staffDetail.role_id !== 'LT' &&
+                  staffDetail.role_id !== 'TN' &&
+                  specialtyData
+                "
                 class="value tw-text-black-500 tw-font-semibold"
               >
                 <span
