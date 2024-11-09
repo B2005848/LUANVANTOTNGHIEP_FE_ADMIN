@@ -95,7 +95,6 @@
               class="form-control"
               id="citizen_id"
               required
-              maxlength="13"
             />
           </div>
         </div>
@@ -364,6 +363,39 @@
           </div>
         </div>
 
+        <!-- Đăng kí ca làm việc cho nhân viên -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label for="shifts" class="form-label">Sắp xếp ca làm việc</label>
+            <div
+              v-for="shift in shifts"
+              :key="shift.shift_id"
+              class="form-check mb-3"
+            >
+              <input
+                class="form-check-input mb-3"
+                type="checkbox"
+                :id="shift.shift_id"
+                :value="shift.shift_id"
+                @change="toggleShiftSelection(shift.shift_id)"
+                :checked="employeeData.shifts.includes(shift.shift_id)"
+              />
+              <label class="form-check-label" :for="shift.shift_id">
+                <span v-if="shift.shift_id == 'CN-S'">Chủ nhật buổi sáng</span>
+                <span v-if="shift.shift_id == 'CN-C'">Chủ nhật buổi chiều</span>
+                <span v-if="shift.shift_id == 'NT-S'"
+                  >Thứ 2 - Thứ 7 buổi sáng</span
+                >
+                <span v-if="shift.shift_id == 'NT-C'"
+                  >Thứ 2 - Thứ 7 buổi chiều</span
+                >
+                ({{ formatTime(shift.start_time) }} đến
+                {{ formatTime(shift.end_time) }})
+              </label>
+            </div>
+          </div>
+        </div>
+
         <!-- Nút thêm nhân viên -->
         <button type="submit" class="btn btn-primary w-100 mt-3">
           Thêm Nhân Viên
@@ -375,12 +407,12 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import moment from "moment";
 import axios from "axios";
 import Swal from "sweetalert2";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-
+import formatDate from "@/helper/format-datetime";
+const formatTime = formatDate.formatTime;
 // Dữ liệu nhân viên
 const employeeData = ref({
   staff_id: "", // Employee ID (phone number)
@@ -399,6 +431,7 @@ const employeeData = ref({
   work_contract: 0, // Contract duration (in years)
   statusAccount: "1", // Account status (active)
   specialty: [], // List of specialties (array)
+  shifts: [], // List of selected shifts (array)
   street: "", // Street address (added here)
 });
 
@@ -423,6 +456,39 @@ const loadRoles = async () => {
   } catch (error) {
     Swal.fire("Lỗi!", "Không thể kết nối với server để lấy vai trò.", "error");
     console.error("Error loading roles:", error);
+  }
+};
+
+//Load dữ liệu ca làm việc Shifts
+const toggleShiftSelection = (shiftId) => {
+  const index = employeeData.value.shifts.indexOf(shiftId);
+  if (index === -1) {
+    employeeData.value.shifts.push(shiftId); // Thêm nếu chưa có
+  } else {
+    employeeData.value.shifts.splice(index, 1); // Xóa nếu đã có
+  }
+
+  console.log("Selected Shifts:", employeeData.value.shifts);
+};
+const shifts = ref([]);
+// Hàm xử lý chọn/bỏ chọn ca làm việc
+const loadShifts = async () => {
+  try {
+    const response = await axios.get(
+      "http://localhost:3000/api/shifts/getList/?page=1"
+    );
+    if (response) {
+      shifts.value = response.data.shiftList;
+    } else {
+      Swal.fire("Lỗi!", "Không thể tải danh sách ca làm việc.", "error");
+    }
+  } catch (error) {
+    Swal.fire(
+      "Lỗi!",
+      "Không thể kết nối với server để lấy ca làm việc.",
+      "error"
+    );
+    console.error("Error loading shifts:", error);
   }
 };
 
@@ -470,58 +536,34 @@ const onDistrictChange = () => {
 // Thêm nhân viên mới
 const addEmployee = async () => {
   // Cấu trúc địa chỉ chi tiết
+
   employeeData.value.address_contact = `${employeeData.value.street || ""}, ${
     selectedWard.value?.name || ""
   }, ${selectedDistrict.value?.name || ""}, ${
     selectedCity.value?.name || ""
   }`.trim();
   // Tạo dữ liệu cho tài khoản, và thông tin chi tiết từ các trường form
-  const accountData = [
-    {
-      staff_id: employeeData.value.staff_id,
-      password: "123@", //Mặc khẩu mặc định
-      role_id: employeeData.value.role_id,
-      first_name: employeeData.value.first_name,
-      last_name: employeeData.value.last_name,
-      birthday: moment(employeeData.value.birthday, "DD/MM/YYYY").format(
-        "DD/MM/YYYY"
-      ), // Chuyển đổi định dạng ngày bằng moment
-      citizen_id: employeeData.value.citizen_id,
-      gender: employeeData.value.gender,
-      phone_number: employeeData.value.phone_number,
-      email: employeeData.value.email,
-      address_contact: employeeData.value.address_contact,
-      work_contract: employeeData.value.work_contract,
-      nation: employeeData.value.nation,
-      religion: employeeData.value.religion,
-      nationality: employeeData.value.nationality,
-    },
-  ];
+  const accountData = {
+    staff_id: employeeData.value.staff_id,
+    password: "123@", //Mặc khẩu mặc định
+    role_id: employeeData.value.role_id,
+    first_name: employeeData.value.first_name,
+    last_name: employeeData.value.last_name,
+    birthday: employeeData.value.birthday,
+    citizen_id: employeeData.value.citizen_id,
+    gender: employeeData.value.gender,
+    phone_number: employeeData.value.phone_number,
+    email: employeeData.value.email,
+    address_contact: employeeData.value.address_contact,
+  };
   try {
     const responseCreateAccount = await axios.post(
       "http://localhost:3000/api/staff/account/createAccount",
       accountData
     );
-
-    if (
-      responseCreateAccount.data.message === "create accounts success" &&
-      responseCreateAccount.data.data[0].status
-    ) {
-      const specialtyData = {
-        specialtyIds: employeeData.value.specialty, // Đóng gói thành đối tượng với trường specialtyIds
-      };
-      const responseAddSpecialties = await axios.post(
-        `http://localhost:3000/api/handle/staff/addSpecialtiesForStaff/${accountData[0].staff_id}`,
-        specialtyData
-      );
-
-      if (
-        responseAddSpecialties.status === 200 &&
-        responseAddSpecialties.data.message ===
-          "Chuyên khoa đã được thêm cho nhân viên."
-      ) {
-        Swal.fire("Thành công!", "Nhân viên mới đã được thêm.", "success");
-      }
+    const responseAddSpecialties = await axios.post("");
+    if (responseCreateAccount.data.success) {
+      Swal.fire("Thành công!", "Nhân viên mới đã được thêm.", "success");
     } else {
       Swal.fire("Lỗi!", "Đã xảy ra lỗi khi thêm nhân viên.", "error");
     }
@@ -542,6 +584,7 @@ onMounted(() => {
   });
 
   loadRoles();
+  loadShifts();
   loadSpecialties();
 });
 </script>
