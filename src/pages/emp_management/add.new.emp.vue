@@ -82,6 +82,7 @@
             <VueDatePicker
               v-model="employeeData.birthday"
               locale="vi"
+              format="dd/MM/yyyy"
               :enable-time-picker="false"
               placeholder="Chọn ngày sinh"
             />
@@ -193,7 +194,6 @@
         </div>
 
         <!-- Thông tin bổ sung -->
-
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="nation" class="form-label">Dân Tộc</label>
@@ -243,7 +243,7 @@
                 <input
                   class="form-check-input"
                   type="radio"
-                  v-model="employeeData.role_name"
+                  v-model="employeeData.role_id"
                   :id="role.role_id"
                   :value="role.role_id"
                 />
@@ -366,7 +366,7 @@
         <!-- Đăng kí ca làm việc cho nhân viên -->
         <div class="row mb-3">
           <div class="col-md-12">
-            <label for="shifts" class="form-label">Thời gian ca làm việc</label>
+            <label for="shifts" class="form-label">Sắp xếp ca làm việc</label>
             <div
               v-for="shift in shifts"
               :key="shift.shift_id"
@@ -415,23 +415,24 @@ import formatDate from "@/helper/format-datetime";
 const formatTime = formatDate.formatTime;
 // Dữ liệu nhân viên
 const employeeData = ref({
-  staff_id: "",
-  first_name: "",
-  last_name: "",
-  birthday: "",
-  citizen_id: "",
-  phone_number: "",
-  gender: "0",
-  email: "",
-  address_contact: "",
-  nation: "",
-  religion: "",
-  nationality: "",
-  work_contract: 0,
-  role_name: "",
-  statusAccount: "1",
-  specialty: [],
-  shifts: [],
+  staff_id: "", // Employee ID (phone number)
+  role_id: "", // Role ID
+  first_name: "", // First name
+  last_name: "", // Last name
+  birthday: "", // Birthday (format may need adjustment)
+  citizen_id: "", // National ID
+  phone_number: "", // Phone number
+  gender: "0", // Gender (0 for female, 1 for male)
+  email: "", // Email address
+  address_contact: "", // Full address (constructed later)
+  nation: "", // Ethnicity
+  religion: "", // Religion
+  nationality: "", // Nationality
+  work_contract: 0, // Contract duration (in years)
+  statusAccount: "1", // Account status (active)
+  specialty: [], // List of specialties (array)
+  shifts: [], // List of selected shifts (array)
+  street: "", // Street address (added here)
 });
 
 // Dữ liệu địa chỉ
@@ -534,11 +535,18 @@ const onDistrictChange = () => {
 
 // Thêm nhân viên mới
 const addEmployee = async () => {
-  // Tạo dữ liệu cho tài khoản từ các trường form
+  // Cấu trúc địa chỉ chi tiết
+
+  employeeData.value.address_contact = `${employeeData.value.street || ""}, ${
+    selectedWard.value?.name || ""
+  }, ${selectedDistrict.value?.name || ""}, ${
+    selectedCity.value?.name || ""
+  }`.trim();
+  // Tạo dữ liệu cho tài khoản, và thông tin chi tiết từ các trường form
   const accountData = {
     staff_id: employeeData.value.staff_id,
-    password: "123", //Mặc khẩu mặc định
-    role_id: employeeData.value.role_name,
+    password: "123@", //Mặc khẩu mặc định
+    role_id: employeeData.value.role_id,
     first_name: employeeData.value.first_name,
     last_name: employeeData.value.last_name,
     birthday: employeeData.value.birthday,
@@ -548,15 +556,13 @@ const addEmployee = async () => {
     email: employeeData.value.email,
     address_contact: employeeData.value.address_contact,
   };
-  // Cấu trúc địa chỉ chi tiết
-  employeeData.value.address_contact = `${employeeData.value.street}, ${selectedWard.value.name}, ${selectedDistrict.value.name}, ${selectedCity.value.name}`;
   try {
     const responseCreateAccount = await axios.post(
       "http://localhost:3000/api/staff/account/createAccount",
       accountData
     );
+    const responseAddSpecialties = await axios.post("");
     if (responseCreateAccount.data.success) {
-      const responseAddSpecialties = await axios.post("");
       Swal.fire("Thành công!", "Nhân viên mới đã được thêm.", "success");
     } else {
       Swal.fire("Lỗi!", "Đã xảy ra lỗi khi thêm nhân viên.", "error");
@@ -597,6 +603,11 @@ onMounted(() => {
 
 .form-check-input {
   margin-right: 5px;
+}
+
+.form-check-input:hover,
+.form-check-label:hover {
+  cursor: pointer;
 }
 
 .role-options {
