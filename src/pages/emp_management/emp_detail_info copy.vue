@@ -53,23 +53,19 @@
           <!-- col-1 -->
           <div class="row col-md-6">
             <div class="col-md-4">
-              <p class="tw-dark:text-white tw-ms-5">Mã nhân viên:</p>
-              <p class="tw-dark:text-white tw-ms-5">Họ và tên:</p>
-              <p class="tw-dark:text-white tw-ms-5">Ngày sinh:</p>
-              <p class="tw-dark:text-white tw-ms-5">Số CCCD/CMND:</p>
-              <p class="tw-dark:text-white tw-ms-5">Giới tính:</p>
-              <p class="tw-dark:text-white tw-ms-5">Địa chỉ liên hệ:</p>
-              <p class="tw-dark:text-white tw-ms-5">Ngày cấp tài khoản:</p>
+              <p class="tw-dark:text-white tw-ms-5">Mã nhân viên</p>
+              <p class="tw-dark:text-white tw-ms-5">Họ và tên</p>
+              <p class="tw-dark:text-white tw-ms-5">Ngày sinh</p>
+              <p class="tw-dark:text-white tw-ms-5">Số CCCD/CMND</p>
+              <p class="tw-dark:text-white tw-ms-5">Giới tính</p>
+              <p class="tw-dark:text-white tw-ms-5">Địa chỉ liên hệ</p>
+              <p class="tw-dark:text-white tw-ms-5">Ngày cấp tài khoản</p>
             </div>
             <div class="col-md-8">
               <!-- Staff id  -->
-
-              <input
-                type="text"
-                :value="staffDetail.staff_id"
-                :disabled="!isEditingInfoBasic"
-                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
-              />
+              <p class="value tw-text-black-500 tw-font-semibold">
+                {{ staffDetail.staff_id }}
+              </p>
 
               <!-- Name -->
               <p class="value tw-text-black-500 tw-font-semibold">
@@ -118,13 +114,13 @@
           <!-- col-2 -->
           <div class="row col-md-6">
             <div class="col-md-4">
-              <p class="tw-dark:text-white tw-ms-5">Quyền truy cập:</p>
-              <p class="tw-dark:text-white tw-ms-5">Số điện thoại:</p>
-              <p class="tw-dark:text-white tw-ms-5">Dân tộc:</p>
-              <p class="tw-dark:text-white tw-ms-5">Tôn giáo:</p>
-              <p class="tw-dark:text-white tw-ms-5">Quốc tịch:</p>
-              <p class="tw-dark:text-white tw-ms-5">Trạng thái tài khoản:</p>
-              <p class="tw-dark:text-white tw-ms-5">Ngày sửa đổi:</p>
+              <p class="tw-dark:text-white tw-ms-5">Quyền truy cập</p>
+              <p class="tw-dark:text-white tw-ms-5">Số điện thoại</p>
+              <p class="tw-dark:text-white tw-ms-5">Dân tộc</p>
+              <p class="tw-dark:text-white tw-ms-5">Tôn giáo</p>
+              <p class="tw-dark:text-white tw-ms-5">Quốc tịch</p>
+              <p class="tw-dark:text-white tw-ms-5">Trạng thái tài khoản</p>
+              <p class="tw-dark:text-white tw-ms-5">Ngày sửa đổi</p>
             </div>
             <div class="col-md-8">
               <!-- Role id -->
@@ -218,15 +214,15 @@
           <!-- Column 1 -->
           <div class="row col-md-6">
             <div class="col-md-4">
-              <p class="tw-dark:text-white tw-ms-5">Ngày vào làm:</p>
-              <p class="tw-dark:text-white tw-ms-5">Hợp đồng làm việc:</p>
+              <p class="tw-dark:text-white tw-ms-5">Ngày vào làm</p>
+              <p class="tw-dark:text-white tw-ms-5">Hợp đồng làm việc</p>
               <p
                 v-if="
                   staffDetail.role_id !== 'LT' && staffDetail.role_id !== 'TN'
                 "
                 class="tw-dark:text-white tw-ms-5"
               >
-                Chuyên khoa:
+                Chuyên khoa
               </p>
             </div>
             <div class="col-md-8">
@@ -381,9 +377,6 @@ const fetchShifts = async () => {
     console.error("Lỗi khi tải dữ liệu ca làm việc:", error);
   }
 };
-
-const isEditingInfoBasic = ref(false);
-
 onMounted(async () => {
   handleGetDetailStaff(staff_id);
   fetchShifts();
