@@ -50,17 +50,6 @@
               </div>
             </form>
           </div>
-
-          <div class="flex-1">
-            <button type="button" title="Thêm ca làm việc cho nhân viên">
-              <font-awesome-icon
-                icon="fa-plus"
-                bounce
-                size="lg"
-                style="color: #74c0fc"
-              />
-            </button>
-          </div>
         </div>
 
         <!-- list emp -->

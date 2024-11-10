@@ -52,6 +52,17 @@
           </div>
         </div>
 
+        <!-- Hiển thị số 5 hợp đồng -->
+        <div class="mb-3">
+          <label class="form-label">Hợp đồng làm việc</label>
+          <input
+            type="text"
+            :value="`${staffInfo.work_contract} năm`"
+            class="form-control"
+            disabled
+          />
+        </div>
+
         <!-- Ngày Bắt Đầu và Kết Thúc -->
         <div class="mb-3 row">
           <div class="col-md-6">
@@ -64,6 +75,9 @@
               format="dd/MM/yyyy"
               :enable-time-picker="false"
               placeholder="Chọn ngày bắt đầu vào ca"
+              text-input
+              @change="updateEndDate"
+              @update-month-year="updateEndDate"
             />
           </div>
           <div class="col-md-6">
@@ -75,7 +89,9 @@
               locale="vi"
               format="dd/MM/yyyy"
               :enable-time-picker="false"
-              placeholder="Chọn ngày kết thúc ca"
+              placeholder="= Ngày bắt đầu + số năm hợp đồng"
+              text-input
+              disabled
             />
           </div>
         </div>
@@ -104,7 +120,7 @@
 
         <!-- Phòng Ban (Hiển thị tự động khi chọn chuyên khoa) -->
         <div class="mb-3">
-          <label class="form-label">Phòng Ban</label>
+          <label class="form-label">Phòng Làm Việc</label>
           <input
             type="text"
             :value="departmentName"
@@ -151,6 +167,18 @@ const staffShiftData = ref({
   specialty_id: "",
   department_id: "",
 });
+
+const updateEndDate = () => {
+  if (staffInfo.value.work_contract) {
+    const startDate = new Date(staffShiftData.value.shift_date);
+    const endDate = new Date(
+      startDate.setFullYear(
+        startDate.getFullYear() + staffInfo.value.work_contract
+      )
+    );
+    staffShiftData.value.shift_end_date = endDate.toISOString().split("T")[0]; // Cập nhật ngày kết thúc
+  }
+};
 
 // Hàm gọi API lấy dữ liệu các ca làm việc tại phòng khám
 const loadShifts = async () => {
@@ -236,7 +264,7 @@ onMounted(() => {
 
 <style scoped>
 .container {
-  max-width: 600px;
+  max-width: 100%;
   margin: 0 auto;
 }
 </style>

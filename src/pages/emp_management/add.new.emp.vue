@@ -94,6 +94,7 @@
               format="dd/MM/yyyy"
               :enable-time-picker="false"
               placeholder="Chọn ngày sinh"
+              text-input
             />
           </div>
           <div class="col-md-6">
