@@ -253,6 +253,20 @@
               required
             />
           </div>
+
+          <div class="col-md-6">
+            <label
+              class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white"
+              for="file_input"
+              >Ảnh hồ sơ</label
+            >
+            <input
+              class="tw-block tw-w-full tw-text-sm tw-text-gray-900 tw-border tw-border-gray-300 tw-rounded-lg tw-cursor-pointer tw-bg-gray-50 dark:tw-text-gray-400 tw-focus:outline-none dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400"
+              id="file_input"
+              type="file"
+              @change="handleFileChange"
+            />
+          </div>
         </div>
 
         <hr />
@@ -495,6 +509,15 @@ const onDistrictChange = () => {
 };
 
 // Thêm nhân viên mới
+// Lưu ảnh tạm thời
+const file = ref(null);
+const handleFileChange = (event) => {
+  const selectedFile = event.target.files[0];
+  if (selectedFile) {
+    file.value = selectedFile;
+  }
+};
+
 const addEmployee = async () => {
   // Cấu trúc địa chỉ chi tiết
   employeeData.value.address_contact = `${employeeData.value.street || ""}, ${
@@ -534,6 +557,40 @@ const addEmployee = async () => {
       responseCreateAccount.data.message === "create accounts success" &&
       responseCreateAccount.data.data[0].status
     ) {
+      const staffId = employeeData.value.staff_id;
+      // Kiểm tra có ảnh không, nếu có thì upload trước khi thêm nhân viên
+      if (file.value) {
+        try {
+          // Tạo formData để gửi ảnh
+          const formData = new FormData();
+          formData.append("avatar", file.value);
+          formData.append("staffId", accountData[0].staff_id);
+          // Gửi ảnh lên API
+          const uploadResponse = await axios.post(
+            "http://localhost:3000/api/file/uploadAvtStaff", // API upload ảnh
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+
+          // Kiểm tra phản hồi từ API
+          if (uploadResponse.status === 200) {
+            Swal.fire("Thành công!", "Ảnh hồ sơ đã được tải lên.", "success");
+            // Lưu đường dẫn ảnh trong employeeData nếu cần
+            employeeData.value.avatar = uploadResponse.data.filePath; // Dự kiến là trả về đường dẫn ảnh
+          } else {
+            Swal.fire("Lỗi!", "Không thể tải ảnh lên.", "error");
+            return;
+          }
+        } catch (error) {
+          Swal.fire("Lỗi!", "Đã có lỗi xảy ra khi tải ảnh.", "error");
+          console.error("Lỗi upload ảnh:", error);
+          return;
+        }
+      }
       const specialtyData = {
         specialtyIds: employeeData.value.specialty, // Đóng gói thành đối tượng với trường specialtyIds
       };
@@ -594,7 +651,7 @@ onMounted(() => {
 
 <style scoped>
 .container-fluid {
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
