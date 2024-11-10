@@ -98,7 +98,7 @@ a:focus {
         class="me-2"
       />
       <router-link :to="{ name: 'admin.departments' }"
-        >QUẢN LÍ PHÒNG KHÁM</router-link
+        >QUẢN LÍ PHÒNG LÀM VIỆC</router-link
       >
     </li>
 

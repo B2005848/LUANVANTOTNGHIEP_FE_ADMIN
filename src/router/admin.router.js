@@ -166,6 +166,16 @@ const admin = [
         },
       },
 
+      {
+        path: "create_shift_for_staff/:staff_id",
+        name: "admin.create_staff_shift",
+        component: () =>
+          import("../pages/shifts_managements/create_shift_staffId.vue"),
+        meta: {
+          title: "CTU CLINIC - Thêm ca làm việc cho nhân viên",
+        },
+      },
+
       //------------------------------------------------------- Router for admin setting page
       {
         path: "settings",

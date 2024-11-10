@@ -31,7 +31,7 @@
         <div class="avatar row">
           <!-- title-col -->
           <div class="col-md-2">
-            <p class="tw-dark:text-white tw-ms-5">Ảnh chân dung</p>
+            <p class="tw-dark:text-white tw-ms-5">Ảnh hồ sơ</p>
           </div>
 
           <div class="col-md-4">
@@ -244,7 +244,7 @@
               >
                 <span
                   v-for="(spec, index) in specialtyData"
-                  :key="spec.staff_specialty_id"
+                  :key="spec.specialty_id"
                 >
                   {{ spec.specialty_name
                   }}<span v-if="index < specialtyData.length - 1">, </span>
@@ -252,16 +252,90 @@
               </p>
             </div>
           </div>
+        </div>
 
-          <!-- Column 2 -->
-          <div class="row col-md-6">
-            <div class="col-md-4">
-              <p class="tw-dark:text-white tw-ms-5">Ca làm việc</p>
-            </div>
-            <div class="col-md-8">
-              <!-- SHIFTS -->
-              <router-link>Xem</router-link>
-            </div>
+        <!-- Thông tin ca làm việc -->
+        <div class="col-md-12 tw-text-center tw-mt-5">
+          <p class="tw-dark:text-white tw-ms-5">Thông tin ca làm việc</p>
+          <!-- Hiển thị danh sách ca làm việc -->
+          <div
+            v-if="shiftStaffList"
+            class="tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
+          >
+            <table
+              class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400"
+            >
+              <thead
+                class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
+              >
+                <tr class="tw-text-center">
+                  <th scope="col" class="tw-px-1 tw-py-1">STT</th>
+
+                  <th scope="col" class="tw-px-4 tw-py-2">Ngày vào ca</th>
+                  <th scope="col" class="tw-px-4 tw-py-2">Ca làm việc</th>
+                  <th scope="col" class="tw-px-4 tw-py-2">
+                    Thời gian làm việc
+                  </th>
+                  <th scope="col" class="tw-px-6 tw-py-2">Phòng làm việc</th>
+                  <th scope="col" class="tw-px-6 tw-py-2">
+                    Chuyên khoa làm việc
+                  </th>
+                  <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
+                  <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
+                  <th scope="col" class="tw-px-4 tw-py-2">Tools</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(shift, index) in shiftStaffList"
+                  :key="index"
+                  class="tw-bg-white tw-text-center tw-border-b tw-dark:bg-gray-800 tw-dark:border-gray-700 tw-hover:bg-gray-50 tw-dark:hover:bg-gray-600"
+                >
+                  <!-- STT -->
+                  <th
+                    scope="row"
+                    class="tw-px-4 tw-py-2 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
+                  >
+                    {{ index + 1 }}
+                  </th>
+
+                  <!-- JOIN IN -->
+                  <td class="tw-px-6 tw-2y-3">
+                    {{ formatDay(shift.shift_date) }}
+                  </td>
+
+                  <!-- SHIFT NAME -->
+                  <td class="tw-px-4 tw-py-2">{{ shift.shift_name }}</td>
+
+                  <!-- TIME SHIFT -->
+                  <td class="px-4 py-2">
+                    {{ formatTime(shift.start_time) }} -
+                    {{ formatTime(shift.end_time) }}
+                  </td>
+
+                  <!-- WORKED IN DEPARTMENT -->
+                  <td class="px-6 py-2">{{ shift.department_name }}</td>
+
+                  <!-- WORKED IN SPECIALTIES -->
+                  <td class="px-6 py-2">{{ shift.specialty_name }}</td>
+
+                  <!-- CREATED AT -->
+                  <td class="px-4 py-2">
+                    {{ formatDateTime(shift.created_at) }}
+                  </td>
+
+                  <!-- UPDATED AT -->
+                  <td class="px-4 py-2">
+                    {{ formatDateTime(shift.updated_at) }}
+                  </td>
+
+                  <!-- TOOLS -->
+                  <td class="px-6 py-2">
+                    <router-link to="#">Cập nhật</router-link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -282,12 +356,31 @@ import {
 import formatDate from "@/helper/format-datetime";
 const formatDateTime = formatDate.formatDateTime;
 const formatBirthDay = formatDate.formatDateBirth;
+const formatDay = formatDate.formatDateBirth;
+const formatTime = formatDate.formatTime;
 const route = useRoute();
 const staff_id = route.params.id;
-
+const shiftStaffList = ref([]);
+// Hàm gọi API để lấy thông tin ca làm việc của nhân viên
+const fetchShifts = async () => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/handle/staff/getStaffShifts/${staff_id}`
+    );
+    if (response.status === 200) {
+      console.log(response.data.shiftStaffList);
+      shiftStaffList.value = response.data.shiftStaffList; // Lưu dữ liệu trả về vào shiftStaffList
+    } else {
+      console.log(response.data.message);
+    }
+  } catch (error) {
+    console.error("Lỗi khi tải dữ liệu ca làm việc:", error);
+  }
+};
 onMounted(async () => {
   handleGetDetailStaff(staff_id);
-  console.log(staff_id);
+  fetchShifts();
+  console.log(shiftStaffList);
 });
 </script>
 

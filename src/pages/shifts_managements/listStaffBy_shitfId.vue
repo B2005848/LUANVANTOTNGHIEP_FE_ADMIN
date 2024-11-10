@@ -1,12 +1,13 @@
 <template>
   <div>
-    <!-- Quản lí nhân viên -->
+    <!-- Quản lý nhân viên -->
     <div class="container-fluid mt-3">
       <div class="wapper card p-3">
         <div class="d-flex mt-3">
           <div class="flex-1">
-            <h3 class="">DANH SÁCH NHÂN VIÊN THEO CA LÀM VIỆC</h3>
-            <h5>Ca: {{}}</h5>
+            <h3 class="text-xl font-semibold">
+              DANH SÁCH NHÂN VIÊN THEO CA LÀM VIỆC
+            </h3>
           </div>
           <div class="d-flex">
             <form class="tw-max-w-md tw-mx-auto">
@@ -27,7 +28,7 @@
                       stroke-linejoin="round"
                       stroke-width="2"
                       d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
+                    ></path>
                   </svg>
                 </div>
                 <input
@@ -53,7 +54,7 @@
           <div class="flex-1">
             <button type="button" title="Thêm ca làm việc cho nhân viên">
               <font-awesome-icon
-                icon=" fa-plus"
+                icon="fa-plus"
                 bounce
                 size="lg"
                 style="color: #74c0fc"
@@ -62,7 +63,6 @@
           </div>
         </div>
 
-        <!-- --TW CSS -->
         <!-- list emp -->
         <div
           v-if="staffShiftListData"
@@ -75,15 +75,18 @@
               class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
             >
               <tr class="tw-text-center">
-                <th scope="col" class="tw-px-4 tw-py-2">STT</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Mã nhân viên</th>
-                <th scope="col" class="tw-px-6 tw-py-3">Họ và tên</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Vai trò</th>
+                <th scope="col" class="tw-px-1 tw-py-1">STT</th>
+                <th scope="col" class="tw-px-2 tw-py-2">Mã nhân viên</th>
+                <th scope="col" class="tw-px-6 tw-py-2">Họ và tên</th>
+                <th scope="col" class="tw-px-2 tw-py-2">Vai trò</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày vào ca</th>
-                <th scope="col" class="tw-px-6 tw-py-2">Ngày làm</th>
-                <th scope="col" class="tw-px-6 tw-py-2">Ca làm việc</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ngày làm</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Ca làm việc</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Thời gian làm việc</th>
                 <th scope="col" class="tw-px-6 tw-py-2">Phòng làm việc</th>
+                <th scope="col" class="tw-px-6 tw-py-2">
+                  Chuyên khoa làm việc
+                </th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Tools</th>
@@ -104,14 +107,13 @@
                 </th>
 
                 <!-- STAFF_ID -->
-                <td class="px-4 py-2">
+                <td class="px-2 py-2">
                   <router-link
                     :to="{
                       name: 'admin.emp_details',
                       params: { id: data.staff_id },
                     }"
-                  >
-                    {{ data.staff_id }}</router-link
+                    >{{ data.staff_id }}</router-link
                   >
                 </td>
 
@@ -121,7 +123,7 @@
                 </td>
 
                 <!-- ROLE -->
-                <td class="px-6 py-2">{{ data.role_name }}</td>
+                <td class="px-4 py-2">{{ data.role_name }}</td>
 
                 <!-- JOIN IN -->
                 <td class="tw-px-6 tw-2y-3">
@@ -140,9 +142,7 @@
                 </td>
 
                 <!-- SHIFT NAME -->
-                <td class="px-4 py-2">
-                  {{ data.shift_name }}
-                </td>
+                <td class="px-6 py-2">{{ data.shift_name }}</td>
 
                 <!-- TIME SHIFT -->
                 <td class="px-4 py-2">
@@ -151,9 +151,15 @@
                 </td>
 
                 <!-- WORKED IN DEPARTMENT -->
-                <td class="px-4 py-2">
+                <td class="px-6 py-2">
                   {{ data.department_id }} <br />
                   {{ data.department_name }}
+                </td>
+
+                <!-- WORKED IN SPECIALTIES -->
+                <td class="px-6 py-2">
+                  {{ data.specialty_id }} <br />
+                  {{ data.specialty_name }}
                 </td>
 
                 <!-- CREATED AT -->
@@ -165,7 +171,10 @@
                 <td class="px-4 py-2">
                   {{ formatDateTime(data.updated_at) }}
                 </td>
-                <td class="px-4 py-2">Chi tiết</td>
+
+                <td class="px-6 py-2">
+                  <router-link> Cập nhật</router-link>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -184,7 +193,6 @@
   </div>
 </template>
 
-<!----------------------------------------------------------SCRIP SETUP----------------------------------------------->
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
@@ -198,6 +206,7 @@ import {
 import { searchDepartments } from "@/services/department_managements/handleSearchDep";
 import PaginationComponent from "@/components/Pagination.vue";
 import formatDate from "@/helper/format-datetime";
+
 const route = useRoute();
 const shift_id = route.params.shift_id;
 const formatDateTime = formatDate.formatDateTime;
@@ -222,12 +231,12 @@ const handleSearch = async () => {
     }
   }
 };
+
 onMounted(async () => {
   await fetchDataByPage(1);
 });
 </script>
 
-<!------------------------------------------------------CSS SCOPED------------------------------------------>
 <style scoped>
 .wapper .d-flex {
   display: flex;

@@ -401,11 +401,12 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import moment from "moment";
+import { useRouter } from "vue-router";
 import axios from "axios";
 import Swal from "sweetalert2";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-
+const router = useRouter();
 // Dữ liệu nhân viên
 const employeeData = ref({
   staff_id: "", // Employee ID (phone number)
@@ -556,6 +557,10 @@ const addEmployee = async () => {
           if (result.isConfirmed) {
             console.log("Đã thêm thành công");
           } else if (result.dismiss === Swal.DismissReason.cancel) {
+            router.push({
+              name: "admin.create_staff_shift",
+              params: { staff_id: employeeData.value.staff_id },
+            });
             console.log(
               `Chuẩn bị sắp xếp ca làm việc cho nhân viên mới này ${employeeData.value.staff_id}`
             );
