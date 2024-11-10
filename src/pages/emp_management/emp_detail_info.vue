@@ -260,6 +260,7 @@
             </div>
             <div class="col-md-8">
               <!-- SHIFTS -->
+              <router-link>Xem</router-link>
             </div>
           </div>
         </div>

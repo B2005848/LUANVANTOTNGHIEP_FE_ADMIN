@@ -7,12 +7,13 @@
         <div class="row mb-3">
           <div class="col-md-12">
             <label for="staff_id" class="form-label"
-              >Mã Nhân Viên (Số điện thoại của nhân viên)</label
-            >
+              >Mã Nhân Viên (Tên tài khoản đăng nhập)
+              <sup style="color: red">*</sup>
+            </label>
             <input
               type="text"
               v-model="employeeData.staff_id"
-              placeholder="Ví dụ 034415xxxx"
+              placeholder="Email hoặc số điện thoại"
               class="form-control"
               id="staff_id"
               required
@@ -23,7 +24,9 @@
         <!-- Thông tin cá nhân khác -->
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="first_name" class="form-label">Họ và tên đệm</label>
+            <label for="first_name" class="form-label"
+              >Họ và tên đệm <sup style="color: red">*</sup>
+            </label>
             <input
               type="text"
               v-model="employeeData.first_name"
@@ -34,7 +37,9 @@
             />
           </div>
           <div class="col-md-6">
-            <label for="last_name" class="form-label">Tên</label>
+            <label for="last_name" class="form-label"
+              >Tên <sup style="color: red">*</sup>
+            </label>
             <input
               type="text"
               v-model="employeeData.last_name"
@@ -49,7 +54,9 @@
         <!-- Gender -->
         <div class="row mb-3">
           <div class="col-md-6">
-            <label class="form-label d-block">Giới Tính</label>
+            <label class="form-label d-block"
+              >Giới Tính <sup style="color: red">*</sup>
+            </label>
             <div class="gender-options">
               <div class="form-check form-check-inline">
                 <input
@@ -78,7 +85,9 @@
         <div class="row mb-3">
           <div class="col-md-6">
             <!-- Do ngôn ngữ trình duyệt -->
-            <label for="birthday" class="form-label">Ngày Sinh</label>
+            <label for="birthday" class="form-label"
+              >Ngày Sinh <sup style="color: red">*</sup>
+            </label>
             <VueDatePicker
               v-model="employeeData.birthday"
               locale="vi"
@@ -88,7 +97,9 @@
             />
           </div>
           <div class="col-md-6">
-            <label for="citizen_id" class="form-label">CCCD/CMND</label>
+            <label for="citizen_id" class="form-label"
+              >CCCD/CMND <sup style="color: red">*</sup>
+            </label>
             <input
               type="text"
               v-model="employeeData.citizen_id"
@@ -102,7 +113,9 @@
 
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="phone_number" class="form-label">Số Điện Thoại</label>
+            <label for="phone_number" class="form-label"
+              >Số Điện Thoại <sup style="color: red">*</sup>
+            </label>
             <input
               type="tel"
               v-model="employeeData.phone_number"
@@ -112,7 +125,9 @@
             />
           </div>
           <div class="col-md-6">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label"
+              >Email <sup style="color: red">*</sup>
+            </label>
             <input
               type="email"
               v-model="employeeData.email"
@@ -126,7 +141,9 @@
         <!-- Địa chỉ chi tiết -->
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="city" class="form-label">Thành Phố / Tỉnh</label>
+            <label for="city" class="form-label"
+              >Thành Phố / Tỉnh <sup style="color: red">*</sup>
+            </label>
             <select
               v-model="selectedCity"
               @change="onCityChange"
@@ -144,7 +161,9 @@
             </select>
           </div>
           <div class="col-md-6">
-            <label for="district" class="form-label">Quận / Huyện</label>
+            <label for="district" class="form-label"
+              >Quận / Huyện <sup style="color: red">*</sup>
+            </label>
             <select
               v-model="selectedDistrict"
               @change="onDistrictChange"
@@ -165,7 +184,9 @@
 
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="ward" class="form-label">Xã / Phường</label>
+            <label for="ward" class="form-label"
+              >Xã / Phường <sup style="color: red">*</sup>
+            </label>
             <select
               v-model="selectedWard"
               class="form-select"
@@ -182,7 +203,9 @@
             </select>
           </div>
           <div class="col-md-6">
-            <label for="street" class="form-label">Số Nhà, Tên Đường</label>
+            <label for="street" class="form-label"
+              >Số Nhà, Tên Đường <sup style="color: red">*</sup>
+            </label>
             <input
               type="text"
               v-model="employeeData.street"
@@ -237,8 +260,8 @@
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="role_name" class="form-label"
-              >Vị trí làm việc (Phân quyền)</label
-            >
+              >Vị trí làm việc (Phân quyền) <sup style="color: red">*</sup>
+            </label>
             <div class="role-options">
               <div v-for="role in roles" :key="role.role_id">
                 <input
@@ -256,8 +279,8 @@
           </div>
           <div class="col-md-6">
             <label for="work_contract" class="form-label"
-              >Hợp Đồng Làm Việc (năm)</label
-            >
+              >Hợp Đồng Làm Việc (năm) <sup style="color: red">*</sup>
+            </label>
             <input
               type="number"
               v-model="employeeData.work_contract"
@@ -271,7 +294,9 @@
         <!-- Chuyên khoa của nhân viên -->
         <div class="row mb-3">
           <div class="col-md-12">
-            <label class="form-label">Chuyên Khoa:</label>
+            <label class="form-label"
+              >Chuyên Khoa: <sup style="color: red">*</sup>
+            </label>
             <button
               type="button"
               class="btn btn-outline-primary ms-3"
@@ -520,7 +545,22 @@ const addEmployee = async () => {
         responseAddSpecialties.data.message ===
           "Chuyên khoa đã được thêm cho nhân viên."
       ) {
-        Swal.fire("Thành công!", "Nhân viên mới đã được thêm.", "success");
+        Swal.fire({
+          title: "Thành công!",
+          text: "Nhân viên mới đã được thêm",
+          icon: "success",
+          showCancelButton: true,
+          confirmButtonText: "OK",
+          cancelButtonText: "Sắp xếp ca làm việc",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            console.log("Đã thêm thành công");
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            console.log(
+              `Chuẩn bị sắp xếp ca làm việc cho nhân viên mới này ${employeeData.value.staff_id}`
+            );
+          }
+        });
       }
     } else {
       Swal.fire("Lỗi!", "Đã xảy ra lỗi khi thêm nhân viên.", "error");
