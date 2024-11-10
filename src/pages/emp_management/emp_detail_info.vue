@@ -63,19 +63,20 @@
             </div>
             <div class="col-md-8">
               <!-- Staff id  -->
-
               <input
                 type="text"
                 :value="staffDetail.staff_id"
-                :disabled="!isEditingInfoBasic"
+                disabled
                 class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
               />
 
               <!-- Name -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ staffDetail.first_name }} {{ staffDetail.last_name }}
-              </p>
-
+              <input
+                type="text"
+                :value="staffDetail.first_name + ' ' + staffDetail.last_name"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
               <!-- Birthday -->
               <p class="value tw-text-black-500 tw-font-semibold">
                 {{ formatBirthDay(staffDetail.birthday) }}
