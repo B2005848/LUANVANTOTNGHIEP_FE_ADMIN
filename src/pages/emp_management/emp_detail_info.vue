@@ -19,32 +19,59 @@
       <div class="container-infor-detail mt-5 card p-5">
         <h4 class="text-center">
           THÔNG TIN CHUNG
-          <router-link :to="{ name: 'admin.emp' }">
+          <button
+            v-if="!isEditingInfoBasic"
+            @click="isEditingInfoBasic = !isEditingInfoBasic"
+            type="button"
+            title="Chỉnh sửa thông tin cơ bản nhân viên"
+          >
             <font-awesome-icon
               class="ms-3"
               icon="fa-regular fa-pen-to-square"
               size="sm"
               style="color: #74c0fc"
-          /></router-link>
+            />
+          </button>
+          <button
+            v-if="isEditingInfoBasic"
+            @click="isEditingInfoBasic = false"
+            type="button"
+            class="text-center title-btn-cancle"
+          >
+            <font-awesome-icon
+              icon="fa-regular fa-rectangle-xmark"
+              size="sm"
+              class="ms-3"
+              style="color: #ff1414"
+            />
+          </button>
         </h4>
 
-        <div class="avatar row">
+        <div class="avatar row mt-2">
           <!-- title-col -->
-          <div class="col-md-2">
-            <p class="tw-dark:text-white tw-ms-5">Ảnh hồ sơ</p>
-          </div>
-
-          <div class="col-md-4">
-            <div>
-              <figure class="tw-max-w-lg">
-                <!-- -------------------SRC IMG STAFF-------------------------------- -->
-                <img
-                  class="tw-h-auto tw-max-w-full tw-rounded-lg"
-                  :src="`http://localhost:3000${staffDetail.image_avt}`"
-                  alt="Chưa cập nhật"
-                  width="150"
+          <div class="row col-md-6">
+            <div class="col-md-4">
+              <p class="tw-dark:text-white tw-ms-5">Ảnh hồ sơ</p>
+            </div>
+            <div class="col-md-8">
+              <div>
+                <input
+                  v-if="isEditingInfoBasic"
+                  class="form-control tw-block tw-w-full tw-text-sm tw-text-gray-900 tw-border tw-border-gray-300 tw-rounded-lg tw-cursor-pointer tw-bg-gray-50 dark:tw-text-gray-400 tw-focus:outline-none dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400"
+                  id="file_input"
+                  type="file"
                 />
-              </figure>
+                <figure class="tw-max-w-lg">
+                  <!-- -------------------SRC IMG STAFF-------------------------------- -->
+                  <img
+                    v-if="!isEditingInfoBasic"
+                    class="tw-h-auto tw-max-w-full tw-rounded-lg"
+                    :src="`http://localhost:3000${staffDetail.image_avt}`"
+                    alt="Chưa cập nhật"
+                    width="150"
+                  />
+                </figure>
+              </div>
             </div>
           </div>
         </div>
@@ -77,43 +104,79 @@
                 :disabled="!isEditingInfoBasic"
                 class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
               />
+
               <!-- Birthday -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ formatBirthDay(staffDetail.birthday) }}
-              </p>
+              <input
+                type="text"
+                :value="formatBirthDay(staffDetail.birthday)"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
 
               <!-- Citizen ID -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ staffDetail.citizen_id }}
-              </p>
+              <input
+                type="text"
+                :value="staffDetail.citizen_id"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
 
               <!-- Gender -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                <span v-if="staffDetail.gender == 0"
-                  >Nữ
-                  <font-awesome-icon
-                    icon=" fa-venus"
-                    style="color: #b197fc"
-                    size="lg"
-                /></span>
-                <span v-if="staffDetail.gender == 1"
-                  >Nam
-                  <font-awesome-icon
-                    icon=" fa-mars"
-                    style="color: #74c0fc"
-                    size="lg"
-                /></span>
-              </p>
+              <input
+                v-if="staffDetail.gender == 0"
+                type="text"
+                value="Nữ"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
+              <input
+                v-if="staffDetail.gender == 1"
+                type="text"
+                value="Nam"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
+
+              <!-- edit gender -->
+              <div
+                v-if="!staffDetail.gender"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              >
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="female"
+                    value="0"
+                  />
+                  <label class="form-check-label" for="female">Nữ</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="male"
+                    value="1"
+                  />
+                  <label class="form-check-label" for="male">Nam</label>
+                </div>
+              </div>
 
               <!-- Contact address -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ staffDetail.address_contact }}
-              </p>
+              <input
+                type="text"
+                :value="staffDetail.address_contact"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
 
               <!-- date hire or join in -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ formatDateTime(staffDetail.created_at) }}
-              </p>
+              <input
+                type="text"
+                :value="formatDateTime(staffDetail.created_at)"
+                disabled
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
             </div>
           </div>
           <!-- col-2 -->
@@ -129,75 +192,94 @@
             </div>
             <div class="col-md-8">
               <!-- Role id -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ staffDetail.role_name }}
-              </p>
+              <input
+                type="text"
+                :value="staffDetail.role_name"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
 
               <!-- number-phone -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ staffDetail.phone_number }}
-              </p>
+              <input
+                type="text"
+                :value="staffDetail.phone_number"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
 
               <!-- Nation: Dân tộc -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ staffDetail.nation || "Chưa cập nhật !" }}
-              </p>
+              <input
+                type="text"
+                :value="staffDetail.nation || 'Chưa cập nhật'"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
 
               <!-- Religion: Tôn giáo -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ staffDetail.religion || "Chưa cập nhật !" }}
-              </p>
+              <input
+                type="text"
+                :value="staffDetail.religion || 'Chưa cập nhật'"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
 
               <!-- Nationality: Quốc tịch -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ staffDetail.nationality || "Chưa cập nhật !" }}
-              </p>
+              <input
+                type="text"
+                :value="staffDetail.nationality || 'Chưa cập nhật'"
+                :disabled="!isEditingInfoBasic"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
 
               <!-- Status account -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                <!-- status = 1: Hoạt động -->
-                <span
-                  class="text-success"
-                  v-if="staffDetail.statusAccount === '1'"
-                  >Đang hoạt động
-                  <font-awesome-icon
-                    class="tw-ms-4"
-                    icon="fa-solid fa-signal"
-                    size="lg"
-                    style="color: #63e6be"
-                /></span>
+              <!-- status = 1: Hoạt động -->
 
-                <!-- status = 0: Ngừng hoạt động -->
-                <span
-                  class="text-danger"
-                  v-if="staffDetail.statusAccount === '0'"
-                  >Ngừng hoạt động<font-awesome-icon
-                    class="tw-ms-4"
-                    icon="fa-solid fa-ban"
-                    size="lg"
-                    style="color: #f41f1f"
-                  />
-                </span>
+              <input
+                v-if="staffDetail.statusAccount === '1'"
+                type="text"
+                value="Đang hoạt động"
+                :disabled="!isEditingInfoBasic"
+                class="value text-success form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
+              <!-- status = 0: Ngừng hoạt động -->
 
-                <!-- status = 2: Tạm khóa -->
-                <span
-                  class="text-warning"
-                  v-if="staffDetail.statusAccount === '2'"
-                  >Tạm khóa
-                  <font-awesome-icon
-                    class="tw-ms-4"
-                    size="lg"
-                    icon="fa-lock"
-                    style="color: #ffd43b"
-                /></span>
-              </p>
+              <input
+                v-if="staffDetail.statusAccount === '0'"
+                type="text"
+                value="Ngừng hoạt động"
+                :disabled="!isEditingInfoBasic"
+                class="value text-danger form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
+              <!-- status = 2: Tạm khóa -->
+
+              <input
+                v-if="staffDetail.statusAccount === '2'"
+                type="text"
+                value="Tạm khóa"
+                :disabled="!isEditingInfoBasic"
+                class="value text-warning form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
 
               <!-- date modify -->
-              <p class="value tw-text-black-500 tw-font-semibold">
-                {{ formatDateTime(staffDetail.updated_at) }}
-              </p>
+              <input
+                type="text"
+                disabled
+                :value="formatDateTime(staffDetail.updated_at)"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+              />
             </div>
           </div>
+        </div>
+
+        <div @click="handleSaveInfoBasic" class="mt-5 text-center btn-save">
+          <button
+            v-if="isEditingInfoBasic"
+            type="button"
+            class="title-btnSave"
+            title="Lưu"
+          >
+            LƯU
+          </button>
         </div>
       </div>
       <!--------------------------------------------------------------------------------------------------WORK INFORMATION: THÔNG TIN CÔNG VIỆC-->
@@ -359,6 +441,8 @@ import {
   errorMessage,
 } from "@/services/staff_managements/handleGetDetailStaff";
 import formatDate from "@/helper/format-datetime";
+import Swal from "sweetalert2";
+import { Result } from "postcss";
 const formatDateTime = formatDate.formatDateTime;
 const formatBirthDay = formatDate.formatDateBirth;
 const formatDay = formatDate.formatDateBirth;
@@ -383,8 +467,29 @@ const fetchShifts = async () => {
   }
 };
 
+// Cập nhật thông tin cơ bản của nhân viên
 const isEditingInfoBasic = ref(false);
 
+const handleSaveInfoBasic = async () => {
+  try {
+    Swal.fire({
+      title: "Lưu ý",
+      text: "Bạn có chắc chắn cập nhật thông tin cho nhân viên này",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Lưu",
+      cancelButtonText: "Hủy",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Đã lưu thành công");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        isEditingInfoBasic.value = false;
+      }
+    });
+  } catch (error) {
+    console.error("Lỗi khi cập nhật thông tin nhân viên:", error);
+  }
+};
 onMounted(async () => {
   handleGetDetailStaff(staff_id);
   fetchShifts();
@@ -394,7 +499,6 @@ onMounted(async () => {
 
 <style scoped>
 .value {
-  border-bottom: 1px solid rgb(199, 199, 199);
   padding: 5px 0;
   margin-bottom: 10px;
 }
@@ -415,5 +519,19 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.btn-save {
+  margin: 0 auto;
+  background-color: rgb(0, 255, 102);
+  width: 70%;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.title-btnSave {
+  color: #fff;
+  font-weight: bold;
+  padding: 5px 0px 5px 0px;
 }
 </style>

@@ -557,7 +557,6 @@ const addEmployee = async () => {
       responseCreateAccount.data.message === "create accounts success" &&
       responseCreateAccount.data.data[0].status
     ) {
-      const staffId = employeeData.value.staff_id;
       // Kiểm tra có ảnh không, nếu có thì upload trước khi thêm nhân viên
       if (file.value) {
         try {
