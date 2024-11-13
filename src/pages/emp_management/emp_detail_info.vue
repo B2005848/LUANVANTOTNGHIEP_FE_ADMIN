@@ -1,7 +1,8 @@
 <template>
   <div v-if="staffDetail" class="card container-fuild p-3">
     <div v-if="errorMessage">{{ errorMessage }}</div>
-    <div class="mb-5">
+    <!-- Với trạng thái tài khoản 0: Ngừng hoạt động thì có thể xóa -->
+    <div class="d-flex tw-justify-between">
       <!-- control -->
       <div class="me-3">
         <h3 class="tw-text-xl tw-font-medium tw-dark:text-white">
@@ -15,6 +16,20 @@
           Thông tin nhân viên
         </h3>
       </div>
+      <div style="">
+        <button @click="handleDelete">
+          Xóa nhân viên này
+          <font-awesome-icon
+            icon="fa-regular fa-trash-can"
+            bounce
+            size="2xl"
+            style="color: #fb2848"
+          />
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-5">
       <!-------------------------------------------------------------------------------------- THÔNG TIN CHUNG -->
       <div class="container-infor-detail mt-5 card p-5">
         <h4 class="text-center">
@@ -342,6 +357,7 @@
                 />
               </span>
 
+              <!-- Edit status account -->
               <select
                 class="value form-control ps-3 tw-font-semibold"
                 name="listStausAccount"
@@ -514,7 +530,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import {
   handleGetDetailStaff,
   staffDetail,
@@ -531,6 +547,7 @@ const formatBirthDay = formatDate.formatDateBirth;
 const formatDay = formatDate.formatDateBirth;
 const formatTime = formatDate.formatTime;
 const route = useRoute();
+const router = useRouter();
 const staff_id = route.params.id;
 // Hàm gọi API để lấy thông tin ca làm việc của nhân viên
 const shiftStaffList = ref([]);
@@ -567,6 +584,41 @@ const fetchRoles = async () => {
     console.error("Lỗi khi tải dữ liệu roles", error);
   }
 };
+
+// Xóa nhân viên khi tài khoản ngừng hoạt động
+const handleDelete = async () => {
+  try {
+    const result = await Swal.fire({
+      title: "Lưu ý",
+      text: "Bạn có chắc chắn xóa nhân viên này?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Xóa",
+      cancelButtonText: "Hủy",
+    });
+
+    if (result.isConfirmed) {
+      const response = await axios.delete(
+        `http://localhost:3000/api/handle/staff/${staff_id}`
+      );
+
+      if (response.status === 200) {
+        Swal.fire("Đã xóa thành công", "", "success");
+        router.push({
+          name: "admin.emp",
+        });
+      }
+    }
+  } catch (error) {
+    Swal.fire(
+      "Lỗi!",
+      "Không thể xóa nhân viên này vì còn hạn hợp đồng",
+      "error"
+    );
+    console.error("Lỗi khi xóa nhân viên", error);
+  }
+};
+
 // CẬP NHẬT THÔNG TIN NHÂN VIÊN
 const isEditingInfoBasic = ref(false);
 // cập nhật ảnh thay đổi
