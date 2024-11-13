@@ -168,7 +168,6 @@
                 format="dd/MM/yyyy"
                 :enable-time-picker="false"
                 :placeholder="formatBirthDay(staffDetail.birthday)"
-                text-input
               />
               <!-- Citizen ID -->
               <input
@@ -594,7 +593,6 @@ const infoDetailData = ref({
 });
 const handleSaveInfoBasic = async () => {
   console.log("DỮ LIỆU MẶC ĐỊNH", staffDetail);
-
   try {
     const result = await Swal.fire({
       title: "Lưu ý",
@@ -634,20 +632,22 @@ const handleSaveInfoBasic = async () => {
       );
 
       // Tạo formData để cập nhật ảnh
-      const formData = new FormData();
-      formData.append("avatar", infoDetailData.value.image_avt);
-      formData.append("staffId", staff_id);
-      const responseUpdateAvt = await axios.post(
-        "http://localhost:3000/api/file/uploadAvtStaff",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+      if (infoDetailData.value.image_avt) {
+        const formData = new FormData();
+        formData.append("avatar", infoDetailData.value.image_avt);
+        formData.append("staffId", staff_id);
+        const responseUpdateAvt = await axios.post(
+          "http://localhost:3000/api/file/uploadAvtStaff",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        if (responseUpdateAvt.status === 200) {
+          Swal.fire("Thành công!", "Ảnh hồ sơ đã được tải lên.", "success");
         }
-      );
-      if (responseUpdateAvt.status === 200) {
-        Swal.fire("Thành công!", "Ảnh hồ sơ đã được tải lên.", "success");
       }
       if (response.status === 200) {
         Swal.fire("Đã lưu thông tin thành công", "", "success");

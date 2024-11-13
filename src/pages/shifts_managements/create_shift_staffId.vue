@@ -1,11 +1,16 @@
 <template>
   <div class="container mt-4">
     <div class="card p-4">
-      <h4 class="text-center">Thêm Ca Làm Việc Cho Nhân Viên</h4>
-      <form @submit.prevent="addStaffShift" class="mt-4">
+      <h3 class="text-center">Thêm Ca Làm Việc Cho Nhân Viên</h3>
+      <div class="text-center mt-4">
+        <p style="color: red; font-weight: bold">Lưu ý</p>
+        <p>Một nhân viên có thể có nhiều ca làm việc.</p>
+        <p>Mỗi ca chỉ một chuyên khoa và một phòng làm việc.</p>
+      </div>
+      <form @submit.prevent="addStaffShift" class="mt-2">
         <!-- Hiển thị Mã Nhân Viên -->
         <div class="mb-3">
-          <label class="form-label">Mã Nhân Viên</label>
+          <label class="form-label tw-font-bold">Mã Nhân Viên</label>
           <input
             type="text"
             :value="staffInfo.staff_id"
@@ -16,7 +21,7 @@
 
         <!-- Hiển thị Tên Nhân Viên -->
         <div class="mb-3">
-          <label class="form-label">Tên Nhân Viên</label>
+          <label class="form-label tw-font-bold">Tên Nhân Viên</label>
           <input
             type="text"
             :value="`${staffInfo.first_name} ${staffInfo.last_name}`"
@@ -27,7 +32,7 @@
 
         <!-- Chọn Loại Ca -->
         <div class="mb-3">
-          <label class="form-label"
+          <label class="form-label tw-font-bold"
             >Chọn Ca Làm Việc <sup style="color: red">*</sup></label
           >
           <div v-for="shift in shifts" :key="shift.shift_id" class="form-check">
@@ -54,7 +59,7 @@
 
         <!-- Hiển thị số 5 hợp đồng -->
         <div class="mb-3">
-          <label class="form-label">Hợp đồng làm việc</label>
+          <label class="form-label tw-font-bold">Hợp đồng làm việc</label>
           <input
             type="text"
             :value="`${staffInfo.work_contract} năm`"
@@ -66,7 +71,7 @@
         <!-- Ngày Bắt Đầu và Kết Thúc -->
         <div class="mb-3 row">
           <div class="col-md-6">
-            <label for="shift_date" class="form-label"
+            <label for="shift_date" class="form-label tw-font-bold"
               >Ngày Bắt Đầu <sup style="color: red">*</sup></label
             >
             <VueDatePicker
@@ -76,12 +81,13 @@
               :enable-time-picker="false"
               placeholder="Chọn ngày bắt đầu vào ca"
               text-input
-              @change="updateEndDate"
+              @update:model-value="updateEndDate"
               @update-month-year="updateEndDate"
+              required
             />
           </div>
           <div class="col-md-6">
-            <label for="shift_end_date" class="form-label"
+            <label for="shift_end_date" class="form-label tw-font-bold"
               >Ngày Kết Thúc <sup style="color: red">*</sup></label
             >
             <VueDatePicker
@@ -98,7 +104,7 @@
 
         <!-- Chọn Chuyên Khoa -->
         <div class="mb-3">
-          <label for="specialty_id" class="form-label"
+          <label for="specialty_id" class="form-label tw-font-bold"
             >Chuyên Khoa <sup style="color: red">*</sup></label
           >
           <select
@@ -120,7 +126,7 @@
 
         <!-- Phòng Ban (Hiển thị tự động khi chọn chuyên khoa) -->
         <div class="mb-3">
-          <label class="form-label">Phòng Làm Việc</label>
+          <label class="form-label tw-font-bold">Phòng Làm Việc</label>
           <input
             type="text"
             :value="departmentName"
@@ -139,17 +145,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { ref, onMounted, nextTick } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import Swal from "sweetalert2";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import formatDate from "@/helper/format-datetime";
 const formatTime = formatDate.formatTime;
-
 // Lấy `staff_id` từ URL
 const route = useRoute();
+const router = useRouter();
+
 const staff_id = route.params.staff_id;
 
 // Dữ liệu chi tiết nhân viên và chuyên khoa
@@ -168,15 +175,15 @@ const staffShiftData = ref({
   department_id: "",
 });
 
-const updateEndDate = () => {
-  if (staffInfo.value.work_contract) {
+const updateEndDate = async () => {
+  if (staffInfo.value.work_contract && staffShiftData.value.shift_date) {
     const startDate = new Date(staffShiftData.value.shift_date);
-    const endDate = new Date(
-      startDate.setFullYear(
-        startDate.getFullYear() + staffInfo.value.work_contract
-      )
-    );
-    staffShiftData.value.shift_end_date = endDate.toISOString().split("T")[0]; // Cập nhật ngày kết thúc
+    const endDate = new Date(startDate);
+    endDate.setFullYear(endDate.getFullYear() + staffInfo.value.work_contract);
+    staffShiftData.value.shift_end_date = endDate.toISOString().split("T")[0];
+
+    // Sử dụng $nextTick để đảm bảo cập nhật giao diện
+    await nextTick();
   }
 };
 
@@ -247,11 +254,24 @@ const addStaffShift = async () => {
       Swal.fire("Thành công!", "Ca làm việc đã được thêm.", "success");
     }
   } catch (error) {
-    Swal.fire(
-      "Lỗi!",
-      "Lỗi server, không thể thêm ca làm việc ngay bây giờ.",
-      "error"
-    );
+    Swal.fire({
+      title: "Lỗi!",
+      text: "Lỗi trùng ca làm việc, Kiểm tra ca làm việc của nhân viên này bị trùng thời gian cho các chuyên khoa hay không",
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonText: "Tạo lại",
+      cancelButtonText: "Xem chi tiết ca làm việc",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("Chuẩn bị tạo lại ca do bị trùng");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        router.push({
+          name: "admin.emp_details",
+          params: { id: staff_id },
+        });
+        console.log(`Xem thông tin ca làm việc của nhân viên: ${staff_id}`);
+      }
+    });
   }
 };
 
