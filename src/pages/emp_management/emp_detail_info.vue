@@ -34,6 +34,7 @@
       <div class="container-infor-detail mt-5 card p-5">
         <h4 class="text-center">
           THÔNG TIN CHUNG
+          <!-- btn edit -->
           <button
             v-if="!isEditingInfoBasic"
             @click="isEditingInfoBasic = !isEditingInfoBasic"
@@ -47,6 +48,8 @@
               style="color: #74c0fc"
             />
           </button>
+
+          <!-- btn cancle -->
           <button
             v-if="isEditingInfoBasic"
             @click="isEditingInfoBasic = false"
@@ -66,7 +69,7 @@
           <!-- title-col -->
           <div class="row col-md-6">
             <div class="col-md-4">
-              <p class="tw-dark:text-white tw-ms-5">Ảnh hồ sơ</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">Ảnh hồ sơ</p>
             </div>
             <div class="col-md-8">
               <div>
@@ -94,7 +97,7 @@
 
           <div class="row col-md-6">
             <div class="col-md-4">
-              <p class="tw-dark:text-white tw-ms-5">Email:</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">Email:</p>
             </div>
             <div class="col-md-8">
               <input
@@ -112,13 +115,21 @@
           <!-- col-1 -->
           <div class="row col-md-6">
             <div class="col-md-4">
-              <p class="tw-dark:text-white tw-ms-5">Mã nhân viên:</p>
-              <p class="tw-dark:text-white tw-ms-5">Họ và tên:</p>
-              <p class="tw-dark:text-white tw-ms-5">Ngày sinh:</p>
-              <p class="tw-dark:text-white tw-ms-5">Số CCCD/CMND:</p>
-              <p class="tw-dark:text-white tw-ms-5">Giới tính:</p>
-              <p class="tw-dark:text-white tw-ms-5">Địa chỉ liên hệ:</p>
-              <p class="tw-dark:text-white tw-ms-5">Ngày cấp tài khoản:</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
+                Mã nhân viên:
+              </p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">Họ và tên:</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">Ngày sinh:</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
+                Số CCCD/CMND:
+              </p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">Giới tính:</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
+                Địa chỉ liên hệ:
+              </p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
+                Ngày cấp tài khoản:
+              </p>
             </div>
             <div class="col-md-8">
               <!-- Staff id  -->
@@ -258,13 +269,19 @@
           <!-- col-2 -->
           <div class="row col-md-6">
             <div class="col-md-4">
-              <p class="tw-dark:text-white tw-ms-5">Quyền truy cập:</p>
-              <p class="tw-dark:text-white tw-ms-5">Số điện thoại:</p>
-              <p class="tw-dark:text-white tw-ms-5">Dân tộc:</p>
-              <p class="tw-dark:text-white tw-ms-5">Tôn giáo:</p>
-              <p class="tw-dark:text-white tw-ms-5">Quốc tịch:</p>
-              <p class="tw-dark:text-white tw-ms-5">Tài khoản:</p>
-              <p class="tw-dark:text-white tw-ms-5">Ngày sửa đổi:</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
+                Quyền truy cập:
+              </p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
+                Số điện thoại:
+              </p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">Dân tộc:</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">Tôn giáo:</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">Quốc tịch:</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">Tài khoản:</p>
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
+                Ngày sửa đổi:
+              </p>
             </div>
             <div class="col-md-8">
               <!-- Role id -->
@@ -391,52 +408,121 @@
         </div>
       </div>
       <!--------------------------------------------------------------------------------------------------WORK INFORMATION: THÔNG TIN CÔNG VIỆC-->
+
       <!-- Work Information Section -->
       <div class="container-infor-detail mt-3 card p-5">
         <h4 class="text-center">
           THÔNG TIN CÔNG VIỆC
-          <router-link :to="{ name: 'admin.emp' }">
+          <!-- btn edit -->
+          <button
+            v-if="!isEditingInfoWork"
+            @click="isEditingInfoWork = !isEditingInfoWork"
+            type="button"
+            title="Chỉnh sửa thông tin cơ bản nhân viên"
+          >
             <font-awesome-icon
               class="ms-3"
               icon="fa-regular fa-pen-to-square"
               size="sm"
               style="color: #74c0fc"
             />
-          </router-link>
+          </button>
+
+          <!-- btn cancle -->
+          <button
+            v-if="isEditingInfoWork"
+            @click="isEditingInfoWork = false"
+            type="button"
+            class="text-center title-btn-cancle"
+          >
+            <font-awesome-icon
+              icon="fa-regular fa-rectangle-xmark"
+              size="sm"
+              class="ms-3"
+              style="color: #ff1414"
+            />
+          </button>
         </h4>
 
         <div class="info-detail row mt-2">
-          <!-- Column 1 -->
           <div class="row col-md-12">
-            <div class="col-md-4">
-              <p class="tw-dark:text-white tw-ms-5">
-                Ngày vào làm: {{ formatBirthDay(staffDetail.created_at) }}
-              </p>
-              <p class="tw-dark:text-white tw-ms-5">
-                Hợp đồng làm việc: {{ staffDetail.work_contract }} năm
-              </p>
+            <div class="d-flex" style="justify-content: space-evenly">
+              <!-- Column 1 -->
+              <div>
+                <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
+                  Ngày vào làm:
+                </p>
+                <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
+                  Hợp đồng làm việc(năm):
+                </p>
 
-              <div
-                v-if="
-                  staffDetail.role_id !== 'LT' &&
-                  staffDetail.role_id !== 'TN' &&
-                  staffDetail.role_id !== 'AD'
-                "
-                class="d-flex tw-dark:text-white tw-ms-5"
-              >
-                <div>Chuyên khoa làm việc:</div>
-                <div>
-                  <ul class="tw-dark:text-white tw-ms-5">
-                    <li
-                      style="list-style: decimal"
-                      v-for="spec in specialtyData"
+                <p
+                  v-if="
+                    staffDetail.role_id !== 'LT' &&
+                    staffDetail.role_id !== 'TN' &&
+                    staffDetail.role_id !== 'AD'
+                  "
+                  class="tw-dark:text-white tw-ms-5 tw-font-bold"
+                >
+                  Chuyên khoa làm việc:
+                </p>
+              </div>
+
+              <div>
+                <input
+                  disabled
+                  class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+                  type="text"
+                  :placeholder="formatBirthDay(staffDetail.created_at)"
+                />
+
+                <input
+                  :disabled="!isEditingInfoWork"
+                  class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+                  type="number"
+                  :placeholder="staffDetail.work_contract + ' năm'"
+                />
+
+                <span
+                  v-if="
+                    staffDetail.role_id !== 'LT' &&
+                    staffDetail.role_id !== 'TN' &&
+                    staffDetail.role_id !== 'AD'
+                  "
+                >
+                  <select
+                    v-if="isEditingInfoWork"
+                    v-model="infoDetailWork.specialtyIds"
+                    multiple
+                    class="form-select form-control tw-text-black-500 tw-font-semibold"
+                  >
+                    <option
+                      v-for="spec in availableSpecialties"
                       :key="spec.specialty_id"
-                      class="specialty-item mb-2"
+                      :value="spec.specialty_id"
+                      class="form-control"
                     >
                       {{ spec.specialty_name }}
-                    </li>
-                  </ul>
-                </div>
+                    </option>
+                  </select>
+                  <p
+                    v-if="
+                      staffDetail.role_id !== 'LT' &&
+                      staffDetail.role_id !== 'TN' &&
+                      staffDetail.role_id !== 'AD' &&
+                      !isEditingInfoWork
+                    "
+                    class="tw-dark:text-white tw-ms-5"
+                  >
+                    <span
+                      v-for="(spec, index) in specialtyData"
+                      :key="spec.specialty_id"
+                    >
+                      {{ spec.specialty_name
+                      }}<span v-if="index < specialtyData.length - 1">, </span>
+                    </span>
+                  </p></span
+                >
               </div>
             </div>
           </div>
@@ -716,10 +802,106 @@ const handleSaveInfoBasic = async () => {
     Swal.fire("Lỗi", "Có lỗi xảy ra khi cập nhật thông tin", "error");
   }
 };
+
+// CẬP NHẬT THÔNG TIN NHÂN VIÊN
+const isEditingInfoWork = ref(false);
+const availableSpecialties = ref([]);
+const infoDetailWork = ref({
+  work_contract: null,
+  specialtyIds: [],
+});
+// Fetch các chuyên khoa có sẵn
+const fetchAvailableSpecialties = async () => {
+  try {
+    const response = await axios.get(
+      "http://localhost:3000/api/specialties/all"
+    );
+    if (response.status === 200) {
+      availableSpecialties.value = response.data.listSpecialties; // Đưa dữ liệu vào biến
+    }
+  } catch (error) {
+    console.error("Lỗi khi tải danh sách chuyên khoa:", error);
+  }
+};
+
+const handleSaveInfoWork = async () => {
+  console.log("DỮ LIỆU MẶC ĐỊNH", staffDetail);
+  try {
+    const result = await Swal.fire({
+      title: "Lưu ý",
+      text: "Bạn có chắc chắn cập nhật thông tin cho nhân viên này?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Lưu",
+      cancelButtonText: "Hủy",
+    });
+
+    if (result.isConfirmed) {
+      // Chuẩn bị dữ liệu cập nhật từ `infoDetailData`
+      const updateData = {
+        first_name:
+          infoDetailData.value.first_name || staffDetail.value.first_name,
+        last_name:
+          infoDetailData.value.last_name || staffDetail.value.last_name,
+        citizen_id:
+          infoDetailData.value.citizen_id || staffDetail.value.citizen_id,
+        birthday: infoDetailData.value.birthday || staffDetail.value.birthday,
+        gender: infoDetailData.value.gender || staffDetail.value.gender,
+        email: infoDetailData.value.email || staffDetail.value.email,
+        address_contact:
+          infoDetailData.value.address_contact ||
+          staffDetail.value.address_contact,
+        nation: infoDetailData.value.nation || staffDetail.value.nation,
+        religion: infoDetailData.value.religion || staffDetail.value.religion,
+        nationality:
+          infoDetailData.value.nationality || staffDetail.value.nationality,
+        status: infoDetailData.value.status || staffDetail.value.statusAccount,
+      };
+
+      // Gửi yêu cầu PATCH tới API
+      const response = await axios.patch(
+        `http://localhost:3000/api/handle/staff/${staff_id}`,
+        updateData
+      );
+
+      // Tạo formData để cập nhật ảnh
+      if (infoDetailData.value.image_avt) {
+        const formData = new FormData();
+        formData.append("avatar", infoDetailData.value.image_avt);
+        formData.append("staffId", staff_id);
+        const responseUpdateAvt = await axios.post(
+          "http://localhost:3000/api/file/uploadAvtStaff",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        if (responseUpdateAvt.status === 200) {
+          Swal.fire("Thành công!", "Ảnh hồ sơ đã được tải lên.", "success");
+        }
+      }
+      if (response.status === 200) {
+        Swal.fire("Đã lưu thông tin thành công", "", "success");
+        location.reload();
+        isEditingInfoBasic.value = false; // Tắt chế độ chỉnh sửa
+      } else {
+        Swal.fire("Lỗi", "Không thể cập nhật thông tin nhân viên", "error");
+      }
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      isEditingInfoBasic.value = false;
+    }
+  } catch (error) {
+    console.error("Lỗi khi cập nhật thông tin nhân viên:", error);
+    Swal.fire("Lỗi", "Có lỗi xảy ra khi cập nhật thông tin", "error");
+  }
+};
 onMounted(async () => {
   handleGetDetailStaff(staff_id);
   fetchShifts();
   fetchRoles();
+  fetchAvailableSpecialties();
   selectedRole.value = staffDetail.role_id;
   console.log(shiftStaffList);
 });
