@@ -166,6 +166,16 @@ const admin = [
         },
       },
 
+      // modify shift by shift_id
+      {
+        path: "modify/:shift_id",
+        name: "admin.shift.modify",
+        component: () => import("../pages/shifts_managements/modify_shift.vue"),
+        meta: {
+          title: "CTU CLINIC - Cập nhật ca làm việc",
+        },
+      },
+
       {
         path: "create_shift_for_staff/:staff_id",
         name: "admin.create_staff_shift",

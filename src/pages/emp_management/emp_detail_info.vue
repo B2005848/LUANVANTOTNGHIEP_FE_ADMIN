@@ -21,7 +21,6 @@
           Xóa nhân viên này
           <font-awesome-icon
             icon="fa-regular fa-trash-can"
-            bounce
             size="2xl"
             style="color: #fb2848"
           />
@@ -444,93 +443,124 @@
           </button>
         </h4>
 
-        <div class="info-detail row mt-2">
-          <div class="row col-md-12">
-            <div class="d-flex" style="justify-content: space-evenly">
-              <!-- Column 1 -->
-              <div>
-                <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
-                  Ngày vào làm:
-                </p>
-                <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
-                  Hợp đồng làm việc(năm):
-                </p>
-
-                <p
-                  v-if="
-                    staffDetail.role_id !== 'LT' &&
-                    staffDetail.role_id !== 'TN' &&
-                    staffDetail.role_id !== 'AD'
-                  "
-                  class="tw-dark:text-white tw-ms-5 tw-font-bold"
-                >
-                  Chuyên khoa làm việc:
-                </p>
-              </div>
-
-              <div>
-                <input
-                  disabled
-                  class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
-                  type="text"
-                  :placeholder="formatBirthDay(staffDetail.created_at)"
-                />
-
-                <input
-                  :disabled="!isEditingInfoWork"
-                  class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
-                  type="number"
-                  :placeholder="staffDetail.work_contract + ' năm'"
-                />
-
-                <span
-                  v-if="
-                    staffDetail.role_id !== 'LT' &&
-                    staffDetail.role_id !== 'TN' &&
-                    staffDetail.role_id !== 'AD'
-                  "
-                >
-                  <select
-                    v-if="isEditingInfoWork"
-                    v-model="infoDetailWork.specialtyIds"
-                    multiple
-                    class="form-select form-control tw-text-black-500 tw-font-semibold"
-                  >
-                    <option
-                      v-for="spec in availableSpecialties"
-                      :key="spec.specialty_id"
-                      :value="spec.specialty_id"
-                      class="form-control"
-                    >
-                      {{ spec.specialty_name }}
-                    </option>
-                  </select>
-                  <p
-                    v-if="
-                      staffDetail.role_id !== 'LT' &&
-                      staffDetail.role_id !== 'TN' &&
-                      staffDetail.role_id !== 'AD' &&
-                      !isEditingInfoWork
-                    "
-                    class="tw-dark:text-white tw-ms-5"
-                  >
-                    <span
-                      v-for="(spec, index) in specialtyData"
-                      :key="spec.specialty_id"
-                    >
-                      {{ spec.specialty_name
-                      }}<span v-if="index < specialtyData.length - 1">, </span>
-                    </span>
-                  </p></span
-                >
-              </div>
+        <div class="mt-2">
+          <div class="row">
+            <!-- Column 1 -->
+            <div class="col-md-3">
+              <p class="tw-dark:text-white tw-ms-5 tw-font-bold">
+                Ngày vào làm:
+              </p>
+              <p
+                v-if="!isEditingInfoWork"
+                class="tw-dark:text-white tw-ms-5 tw-font-bold"
+              >
+                Hợp đồng làm việc(năm):
+              </p>
+              <p
+                v-if="isEditingInfoWork"
+                class="tw-dark:text-white tw-ms-5 tw-font-bold"
+              >
+                Gia hạn hợp đồng(năm):
+              </p>
+              <p
+                v-if="
+                  staffDetail.role_id !== 'LT' &&
+                  staffDetail.role_id !== 'TN' &&
+                  staffDetail.role_id !== 'AD'
+                "
+                class="tw-dark:text-white tw-ms-5 tw-font-bold"
+              >
+                Chuyên khoa làm việc:
+              </p>
             </div>
+            <!-- end col -1 -->
+            <!-- Column 2 -->
+            <div class="col-md-9">
+              <input
+                disabled
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+                type="text"
+                :placeholder="formatBirthDay(staffDetail.created_at)"
+              />
+
+              <!-- Số năm hợp đồng -->
+              <input
+                :disabled="!isEditingInfoWork"
+                v-model="infoDetailWork.workContract"
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+                type="number"
+                :placeholder="staffDetail.work_contract + ' năm'"
+              />
+
+              <!-- Giá trị chuyên khoa -->
+              <div
+                v-if="
+                  staffDetail.role_id !== 'LT' &&
+                  staffDetail.role_id !== 'TN' &&
+                  staffDetail.role_id !== 'AD' &&
+                  isEditingInfoWork
+                "
+                class="tw-text-black-500 tw-font-semibold checkbox-container"
+              >
+                <div
+                  v-for="spec in availableSpecialties"
+                  :key="spec.specialty_id"
+                  class="form-check"
+                >
+                  <input
+                    type="checkbox"
+                    class="form-check-input small-checkbox"
+                    :id="`specialty-${spec.specialty_id}`"
+                    :value="spec.specialty_id"
+                    v-model="infoDetailWork.specialtyIds"
+                  />
+                  <label
+                    class="form-check-label"
+                    :for="`specialty-${spec.specialty_id}`"
+                  >
+                    {{ spec.specialty_name }}
+                  </label>
+                </div>
+              </div>
+              <p
+                v-if="
+                  staffDetail.role_id !== 'LT' &&
+                  staffDetail.role_id !== 'TN' &&
+                  staffDetail.role_id !== 'AD' &&
+                  !isEditingInfoWork
+                "
+                class="value form-control ps-3 tw-text-black-500 tw-font-semibold"
+                style="background-color: #e9ecef"
+              >
+                <span
+                  v-for="(spec, index) in specialtyData"
+                  :key="spec.specialty_id"
+                >
+                  {{ spec.specialty_name
+                  }}<span v-if="index < specialtyData.length - 1">, </span>
+                </span>
+              </p>
+            </div>
+            <!-- end col 2 -->
           </div>
         </div>
 
+        <div @click="handleSaveInfoWork" class="mt-5 text-center btn-save">
+          <button
+            v-if="isEditingInfoWork"
+            type="button"
+            class="title-btnSave"
+            title="Lưu"
+          >
+            LƯU
+          </button>
+        </div>
+        <hr />
+        <!-------------------------------------------------------------------------------------------------------------------------------------------------------------->
         <!-- Thông tin ca làm việc -->
         <div class="col-md-12 tw-text-center tw-mt-5">
-          <p class="tw-dark:text-white tw-ms-5">Thông tin ca làm việc</p>
+          <h5 class="tw-dark:text-white tw-ms-5 tw-mb-5">THÔNG TIN LÀM VIỆC</h5>
+
           <!-- Hiển thị danh sách ca làm việc -->
           <div
             v-if="shiftStaffList"
@@ -551,8 +581,6 @@
                   <th scope="col" class="tw-px-6 tw-py-2">Phòng làm việc</th>
                   <th scope="col" class="tw-px-6 tw-py-2">Chuyên khoa</th>
                   <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
-                  <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
-                  <th scope="col" class="tw-px-4 tw-py-2">Tools</th>
                 </tr>
               </thead>
               <tbody>
@@ -592,16 +620,6 @@
                   <!-- CREATED AT -->
                   <td class="px-4 py-2">
                     {{ formatDateTime(shift.created_at) }}
-                  </td>
-
-                  <!-- UPDATED AT -->
-                  <td class="px-4 py-2">
-                    {{ formatDateTime(shift.updated_at) }}
-                  </td>
-
-                  <!-- TOOLS -->
-                  <td class="px-6 py-2">
-                    <router-link to="#">Cập nhật</router-link>
                   </td>
                 </tr>
               </tbody>
@@ -803,13 +821,10 @@ const handleSaveInfoBasic = async () => {
   }
 };
 
-// CẬP NHẬT THÔNG TIN NHÂN VIÊN
+// CẬP NHẬT THÔNG TIN CÔNG VIỆC NHÂN VIÊN
 const isEditingInfoWork = ref(false);
 const availableSpecialties = ref([]);
-const infoDetailWork = ref({
-  work_contract: null,
-  specialtyIds: [],
-});
+
 // Fetch các chuyên khoa có sẵn
 const fetchAvailableSpecialties = async () => {
   try {
@@ -823,13 +838,16 @@ const fetchAvailableSpecialties = async () => {
     console.error("Lỗi khi tải danh sách chuyên khoa:", error);
   }
 };
-
+const infoDetailWork = ref({
+  workContract: null,
+  specialtyIds: [],
+});
 const handleSaveInfoWork = async () => {
   console.log("DỮ LIỆU MẶC ĐỊNH", staffDetail);
   try {
     const result = await Swal.fire({
       title: "Lưu ý",
-      text: "Bạn có chắc chắn cập nhật thông tin cho nhân viên này?",
+      text: "Bạn có chắc chắn cập nhật thông tin công việc cho nhân viên này?",
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Lưu",
@@ -839,49 +857,17 @@ const handleSaveInfoWork = async () => {
     if (result.isConfirmed) {
       // Chuẩn bị dữ liệu cập nhật từ `infoDetailData`
       const updateData = {
-        first_name:
-          infoDetailData.value.first_name || staffDetail.value.first_name,
-        last_name:
-          infoDetailData.value.last_name || staffDetail.value.last_name,
-        citizen_id:
-          infoDetailData.value.citizen_id || staffDetail.value.citizen_id,
-        birthday: infoDetailData.value.birthday || staffDetail.value.birthday,
-        gender: infoDetailData.value.gender || staffDetail.value.gender,
-        email: infoDetailData.value.email || staffDetail.value.email,
-        address_contact:
-          infoDetailData.value.address_contact ||
-          staffDetail.value.address_contact,
-        nation: infoDetailData.value.nation || staffDetail.value.nation,
-        religion: infoDetailData.value.religion || staffDetail.value.religion,
-        nationality:
-          infoDetailData.value.nationality || staffDetail.value.nationality,
-        status: infoDetailData.value.status || staffDetail.value.statusAccount,
+        workContract:
+          infoDetailWork.value.workContract || staffDetail.value.work_contract,
+        specialtyIds: infoDetailWork.value.specialtyIds || specialtyData,
       };
 
       // Gửi yêu cầu PATCH tới API
       const response = await axios.patch(
-        `http://localhost:3000/api/handle/staff/${staff_id}`,
+        `http://localhost:3000/api/handle/staff/updateStaffInfoWork/${staff_id}`,
         updateData
       );
 
-      // Tạo formData để cập nhật ảnh
-      if (infoDetailData.value.image_avt) {
-        const formData = new FormData();
-        formData.append("avatar", infoDetailData.value.image_avt);
-        formData.append("staffId", staff_id);
-        const responseUpdateAvt = await axios.post(
-          "http://localhost:3000/api/file/uploadAvtStaff",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        if (responseUpdateAvt.status === 200) {
-          Swal.fire("Thành công!", "Ảnh hồ sơ đã được tải lên.", "success");
-        }
-      }
       if (response.status === 200) {
         Swal.fire("Đã lưu thông tin thành công", "", "success");
         location.reload();
@@ -893,8 +879,12 @@ const handleSaveInfoWork = async () => {
       isEditingInfoBasic.value = false;
     }
   } catch (error) {
-    console.error("Lỗi khi cập nhật thông tin nhân viên:", error);
-    Swal.fire("Lỗi", "Có lỗi xảy ra khi cập nhật thông tin", "error");
+    console.error("Lỗi khi cập nhật thông tin công viên nhân viên:", error);
+    Swal.fire(
+      "Kiểm tra lại",
+      `Các chuyên khoa hiện tại mà nhân viên có!`,
+      "error"
+    );
   }
 };
 onMounted(async () => {
@@ -949,5 +939,22 @@ onMounted(async () => {
   color: #fff;
   font-weight: bold;
   padding: 5px 0px 5px 0px;
+}
+
+/* Container cho các checkbox với thanh cuộn */
+.checkbox-container {
+  max-height: 200px; /* Chiều cao tối đa cho vùng chứa */
+  overflow-y: auto; /* Cho phép cuộn dọc khi vượt quá chiều cao */
+}
+
+/* Kích thước checkbox nhỏ lại */
+.small-checkbox {
+  transform: scale(0.8); /* Điều chỉnh kích thước checkbox */
+  margin-right: 10px; /* Thêm khoảng cách giữa checkbox và nhãn */
+}
+
+/* Điều chỉnh khoảng cách giữa các checkbox */
+.form-check {
+  margin-bottom: 8px; /* Khoảng cách giữa các checkbox */
 }
 </style>

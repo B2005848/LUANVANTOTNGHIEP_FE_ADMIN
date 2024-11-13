@@ -5,7 +5,7 @@
       <div class="wapper card p-3">
         <div class="d-flex mt-3">
           <div class="flex-1">
-            <h3 class="">Danh sách tài khoản bệnh nhân</h3>
+            <h3 class="">DANH SÁCH BỆNH NHÂN</h3>
           </div>
           <div class="d-flex">
             <form class="tw-max-w-md tw-mx-auto">
@@ -80,7 +80,9 @@
         </div>
         <!-- --TW CSS -->
         <!-- list emp -->
-        <div class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg">
+        <div
+          class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
+        >
           <table
             class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400"
           >
@@ -125,7 +127,10 @@
                     <font-awesome-icon
                       title="Đang hoạt động"
                       icon="fa-circle-check"
-                      style="--fa-primary-color: #0fffb7; --fa-secondary-color: #2ff9bc"
+                      style="
+                        --fa-primary-color: #0fffb7;
+                        --fa-secondary-color: #2ff9bc;
+                      "
                     />
                   </span>
 
@@ -133,14 +138,20 @@
                     <font-awesome-icon
                       title="Tạm khóa"
                       icon="fa-user-lock"
-                      style="--fa-primary-color: #4b511f; --fa-secondary-color: #c1dd31"
+                      style="
+                        --fa-primary-color: #4b511f;
+                        --fa-secondary-color: #c1dd31;
+                      "
                   /></span>
 
                   <span class="text-danger" v-if="pa.status === '3'">
                     <font-awesome-icon
                       title="Ngừng hoạt động"
                       icon=" fa-ban"
-                      style="--fa-primary-color: #dd2c2c; --fa-secondary-color: #dd2c2c"
+                      style="
+                        --fa-primary-color: #dd2c2c;
+                        --fa-secondary-color: #dd2c2c;
+                      "
                   /></span>
                 </td>
                 <td class="px-4 py-2">{{ formatDateTime(pa.created_at) }}</td>
@@ -153,7 +164,11 @@
                       params: { username: pa.patient_id },
                     }"
                   >
-                    <font-awesome-icon icon="fa-eye" size="lg" style="color: #74c0fc" />
+                    <font-awesome-icon
+                      icon="fa-eye"
+                      size="lg"
+                      style="color: #74c0fc"
+                    />
                   </router-link>
                 </td>
               </tr>

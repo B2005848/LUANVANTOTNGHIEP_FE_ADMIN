@@ -5,18 +5,7 @@
       <div class="wapper card p-3">
         <div class="d-flex mt-3">
           <div class="flex-1">
-            <h3 class="">Danh sách ca làm việc</h3>
-          </div>
-
-          <div class="flex-1">
-            <button type="button" title="Thêm ca làm việc mới">
-              <font-awesome-icon
-                icon=" fa-plus"
-                bounce
-                size="lg"
-                style="color: #74c0fc"
-              />
-            </button>
+            <h3 class="">DANH SÁCH KHUNG GIỜ HOẠT ĐỘNG</h3>
           </div>
         </div>
 
@@ -40,7 +29,8 @@
                 <th scope="col" class="tw-px-4 tw-py-2">Thời gian kết thúc</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Danh sách nhân viên theo ca</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Danh sách nhân viên</th>
+                <th scope="col" class="tw-px-4 tw-py-2">Chỉnh sửa</th>
               </tr>
             </thead>
             <tbody>
@@ -70,7 +60,27 @@
                       params: { shift_id: sh.shift_id },
                     }"
                   >
-                    <font-awesome-icon icon="fa-eye" size="lg" style="color: #74c0fc" />
+                    <font-awesome-icon
+                      icon="fa-eye"
+                      size="lg"
+                      style="color: #74c0fc"
+                    />
+                  </router-link>
+                </td>
+
+                <td>
+                  <router-link
+                    :to="{
+                      name: 'admin.shift.modify',
+                      params: { shift_id: sh.shift_id },
+                    }"
+                  >
+                    <font-awesome-icon
+                      class="ms-3"
+                      icon="fa-regular fa-pen-to-square"
+                      size="xl"
+                      style="color: #74c0fc"
+                    />
                   </router-link>
                 </td>
               </tr>

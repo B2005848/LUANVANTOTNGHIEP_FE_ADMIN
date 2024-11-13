@@ -5,7 +5,7 @@
       <div class="wapper card p-3">
         <div class="d-flex mt-3">
           <div class="flex-1">
-            <h3 class="">Danh sách tài khoản nhân viên</h3>
+            <h3 class="">DANH SÁCH NHÂN VIÊN</h3>
           </div>
           <div class="d-flex">
             <form class="tw-max-w-md tw-mx-auto">
