@@ -559,7 +559,24 @@
         <!-------------------------------------------------------------------------------------------------------------------------------------------------------------->
         <!-- Thông tin ca làm việc -->
         <div class="col-md-12 tw-text-center tw-mt-5">
-          <h5 class="tw-dark:text-white tw-ms-5 tw-mb-5">THÔNG TIN LÀM VIỆC</h5>
+          <h5 class="tw-dark:text-white tw-ms-5 tw-mb-5">
+            LỊCH LÀM VIỆC
+            <span v-if="shiftStaffList.length === 0">
+              <button type="button" title="Thêm nhân viên mới">
+                <router-link
+                  :to="{
+                    name: 'admin.create_staff_shift',
+                    params: { staff_id: staff_id },
+                  }"
+                >
+                  <font-awesome-icon
+                    icon=" fa-plus"
+                    size="lg"
+                    style="color: #74c0fc"
+                /></router-link>
+              </button>
+            </span>
+          </h5>
 
           <!-- Hiển thị danh sách ca làm việc -->
           <div
@@ -663,8 +680,9 @@ const fetchShifts = async () => {
     if (response.status === 200) {
       console.log(response.data.shiftStaffList);
       shiftStaffList.value = response.data.shiftStaffList; // Lưu dữ liệu trả về vào shiftStaffList
-    } else {
+    } else if (response.status === 404) {
       console.log(response.data.message);
+      shiftStaffList.value = [];
     }
   } catch (error) {
     console.error("Lỗi khi tải dữ liệu ca làm việc:", error);

@@ -78,7 +78,6 @@
                 </th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
                 <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Tools</th>
               </tr>
             </thead>
             <tbody>
@@ -159,10 +158,6 @@
                 <!-- UPDATED AT -->
                 <td class="px-4 py-2">
                   {{ formatDateTime(data.updated_at) }}
-                </td>
-
-                <td class="px-6 py-2">
-                  <router-link> Cập nhật</router-link>
                 </td>
               </tr>
             </tbody>

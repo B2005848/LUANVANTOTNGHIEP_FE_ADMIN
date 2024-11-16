@@ -24,7 +24,7 @@
               v-if="isEditing"
               @click="isEditing = false"
               type="button"
-              title="Chỉnh sửa thông tin phòng làm việc"
+              title="Hủy"
             >
               <font-awesome-icon
                 icon="fa-regular fa-rectangle-xmark"
@@ -51,7 +51,7 @@
                 type="text"
                 class="form-control"
                 :placeholder="departmentId"
-                :disabled="!isEditing"
+                disabled
               />
             </div>
           </div>
@@ -60,6 +60,7 @@
               <label class="form-label fw-bold">Tên Phòng:</label>
               <input
                 type="text"
+                v-model="infoData.department_name"
                 class="form-control"
                 :placeholder="departmentDetails.department_name"
                 :disabled="!isEditing"
@@ -72,6 +73,7 @@
           <label class="form-label fw-bold">Mô tả :</label>
           <input
             type="text"
+            v-model="infoData.description"
             class="form-control"
             :placeholder="departmentDetails.description"
             :disabled="!isEditing"
@@ -169,6 +171,7 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
 import PaginationComponent from "@/components/Pagination.vue";
+import Swal from "sweetalert2";
 const currentPage = ref(1);
 
 const route = useRoute();
@@ -181,9 +184,12 @@ const employees = ref([]);
 const fetchDepartmentDetails = async () => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/departments//${departmentId}`
+      `http://localhost:3000/api/departments/${departmentId}`
     );
     departmentDetails.value = response.data.data;
+    infoData.value.department_name =
+      departmentDetails.value.department_name || "";
+    infoData.value.description = departmentDetails.value.description || "";
   } catch (error) {
     console.error("Lỗi khi lấy thông tin chi tiết phòng:", error);
   }
@@ -204,11 +210,12 @@ const fetchListStaffByDepartmentId = async (page = 1) => {
       `http://localhost:3000/api/departments/liststaff/${departmentId}?page=${page}`
     );
     if (response.status === 200) {
-      employees.value = response.data.listStaffByDep;
+      employees.value = response.data.listStaffByDep || [];
       itemsPerPageData.value = response.data.itemsPerPage;
       totalPagesData.value = response.data.totalPages;
     }
   } catch (error) {
+    employees.value = [];
     errorMessage.value =
       error.response?.data?.message || "Get list staff by department ID FAILS";
     console.log(error.response.data.message);
@@ -217,8 +224,52 @@ const fetchListStaffByDepartmentId = async (page = 1) => {
 
 // 3. Hàm chỉnh sửa thông tin phòng khám
 const isEditing = ref(false);
+const infoData = ref({
+  department_name: "",
+  description: "",
+});
+const modifyDepartment = async () => {
+  try {
+    const result = await Swal.fire({
+      title: "Lưu ý",
+      text: "Bạn có chắc chắn cập nhật thông tin phòng làm việc này?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Lưu",
+      cancelButtonText: "Hủy",
+    });
 
-const modifyDepartment = async () => {};
+    if (result.isConfirmed) {
+      const updateData = {
+        department_name:
+          infoData.value.department_name ||
+          departmentDetails.value.department_name,
+        description:
+          infoData.value.description || departmentDetails.value.description,
+      };
+
+      const response = await axios.patch(
+        `http://localhost:3000/api/departments/modify/${departmentId}`,
+        updateData
+      );
+
+      if (response.status === 200) {
+        Swal.fire("Đã lưu thông tin thành công", "", "success");
+        location.reload();
+        isEditing.value = false;
+      } else {
+        Swal.fire(
+          "Lỗi",
+          "Không thể cập nhật thông tin phòng làm việc",
+          "error"
+        );
+      }
+    }
+  } catch (error) {
+    console.error("Lỗi khi cập nhật thông tin phòng làm việc:", error);
+    Swal.fire("Lỗi", "Có lỗi xảy ra khi cập nhật thông tin", "error");
+  }
+};
 
 onMounted(() => {
   fetchDepartmentDetails();
