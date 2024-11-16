@@ -4,7 +4,36 @@
     <div class="container mt-4">
       <div class="card p-4">
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Chi Tiết Phòng Làm Việc</h2>
+          <h2>
+            Chi Tiết Phòng Làm Việc
+            <button
+              v-if="!isEditing"
+              @click="isEditing = !isEditing"
+              type="button"
+              title="Chỉnh sửa thông tin phòng làm việc"
+            >
+              <font-awesome-icon
+                class="ms-3"
+                icon="fa-regular fa-pen-to-square"
+                size="sm"
+                style="color: #74c0fc"
+              />
+            </button>
+
+            <button
+              v-if="isEditing"
+              @click="isEditing = false"
+              type="button"
+              title="Chỉnh sửa thông tin phòng làm việc"
+            >
+              <font-awesome-icon
+                icon="fa-regular fa-rectangle-xmark"
+                size="sm"
+                class="ms-3"
+                style="color: #ff1414"
+              />
+            </button>
+          </h2>
           <button
             class="btn btn-secondary"
             @click="$router.push({ name: 'admin.departments' })"
@@ -18,29 +47,48 @@
           <div class="col-md-6">
             <div class="mb-3">
               <label class="form-label fw-bold">Mã Phòng:</label>
-              <p class="form-control">{{ departmentId }}</p>
+              <input
+                type="text"
+                class="form-control"
+                :placeholder="departmentId"
+                :disabled="!isEditing"
+              />
             </div>
           </div>
           <div class="col-md-6">
             <div class="mb-3">
               <label class="form-label fw-bold">Tên Phòng:</label>
-              <p class="form-control">
-                <!-- {{ departmentDetails.department_name }} -->
-                Phòng Khám Tổng Quát
-              </p>
+              <input
+                type="text"
+                class="form-control"
+                :placeholder="departmentDetails.department_name"
+                :disabled="!isEditing"
+              />
             </div>
           </div>
         </div>
 
         <div class="mb-6">
           <label class="form-label fw-bold">Mô tả :</label>
-          <p class="form-control">
-            <!-- {{ departmentDetails.description }} -->
-            Nơi mà các bệnh nhân có thể kiểm tra sức khỏe định kì một cách tổng
-            quát và nhanh chóng.
-          </p>
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="departmentDetails.description"
+            :disabled="!isEditing"
+          />
         </div>
 
+        <div @click="modifyDepartment" class="mt-5 text-center btn-save">
+          <button
+            v-if="isEditing"
+            type="button"
+            class="title-btnSave"
+            title="Lưu"
+          >
+            LƯU
+          </button>
+        </div>
+        <hr />
         <!-- Thông tin nhân viên trong phòng -->
         <h3 class="mt-4">Danh Sách Nhân Viên</h3>
         <p>Đây là danh sách nhân viên làm việc tại phòng này</p>
@@ -77,7 +125,15 @@
                   >
                     {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
                   </th>
-                  <td>{{ emp.staff_id }}</td>
+                  <td>
+                    <router-link
+                      :to="{
+                        name: 'admin.emp_details',
+                        params: { id: emp.staff_id },
+                      }"
+                      >{{ emp.staff_id }}</router-link
+                    >
+                  </td>
                   <td>{{ emp.first_name + " " + emp.last_name }}</td>
 
                   <td>
@@ -125,9 +181,9 @@ const employees = ref([]);
 const fetchDepartmentDetails = async () => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/departments/${departmentId}`
+      `http://localhost:3000/api/departments//${departmentId}`
     );
-    departmentDetails.value = response.data.department;
+    departmentDetails.value = response.data.data;
   } catch (error) {
     console.error("Lỗi khi lấy thông tin chi tiết phòng:", error);
   }
@@ -159,6 +215,11 @@ const fetchListStaffByDepartmentId = async (page = 1) => {
   }
 };
 
+// 3. Hàm chỉnh sửa thông tin phòng khám
+const isEditing = ref(false);
+
+const modifyDepartment = async () => {};
+
 onMounted(() => {
   fetchDepartmentDetails();
   fetchListStaffByDepartmentId();
@@ -182,5 +243,25 @@ onMounted(() => {
 .table td {
   text-align: center;
   vertical-align: middle;
+}
+
+.btn-save {
+  margin: 0 auto;
+  background-color: rgb(0, 255, 102);
+  width: 70%;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-save:hover {
+  background-color: rgb(153, 239, 187);
+  transform: scale(1.05);
+}
+
+.title-btnSave {
+  color: #fff;
+  font-weight: bold;
+  padding: 5px 0px 5px 0px;
 }
 </style>
