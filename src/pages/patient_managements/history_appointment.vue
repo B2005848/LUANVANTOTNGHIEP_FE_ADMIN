@@ -120,7 +120,9 @@
       </table>
     </div>
 
-    <div v-else class="text-center mt-4">Không có lịch sử khám bệnh</div>
+    <div v-else class="text-center mt-3 text-muted">
+      Không có lịch sử khám bệnh
+    </div>
   </div>
 </template>
 

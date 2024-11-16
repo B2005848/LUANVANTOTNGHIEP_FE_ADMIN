@@ -43,6 +43,7 @@ const onPageChange = (page) => {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  z-index: 1;
 }
 
 .page-item {
@@ -50,14 +51,30 @@ const onPageChange = (page) => {
 }
 
 .page-link {
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  background-color: #f8f9fa;
+  padding: 8px 12px;
+  border: 1px solid #007bff; /* Viền màu xanh dương */
+  background-color: #e0f7fa; /* Màu nền nhạt (xanh dương nhạt) */
+  color: #007bff; /* Màu chữ xanh dương */
+  font-weight: 500;
   cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .page-link:hover {
-  background-color: #007bff;
-  color: white;
+  background-color: #007bff; /* Màu nền khi hover (xanh dương đậm) */
+  color: white; /* Chữ trắng khi hover */
+}
+
+.page-item.active .page-link {
+  background-color: #007bff; /* Màu nền khi trang hiện tại */
+  color: white; /* Chữ trắng khi trang hiện tại */
+  font-weight: bold;
+  border-color: #007bff;
+}
+
+.page-link:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
 }
 </style>

@@ -112,7 +112,18 @@ const admin = [
         name: "admin.departments",
         component: () => import("../pages/departments_managements/index.vue"),
         meta: {
-          title: "CTU CLINIC - Quản lí phòng khám bệnh",
+          title: "CTU CLINIC - Quản lí phòng làm việc",
+        },
+      },
+
+      //Router for admin department details
+      {
+        path: "department_details/:id",
+        name: "admin.department_details",
+        component: () =>
+          import("../pages/departments_managements/department_details.vue"),
+        meta: {
+          title: "CTU CLICNIC - Chi tiết phòng làm việc",
         },
       },
 

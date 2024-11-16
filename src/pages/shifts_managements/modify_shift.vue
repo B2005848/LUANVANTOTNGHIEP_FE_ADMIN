@@ -97,8 +97,16 @@
               </div>
             </div>
 
-            <div class="form-group mb-3">
-              <button type="submit" class="btn btn-primary">CẬP NHẬT</button>
+            <div class="form-group mb-3 row">
+              <div style="background-color: lightgrey" class="col-md-6">
+                <router-link :to="{ name: 'admin.shifts' }" class="btn">
+                  HỦY
+                </router-link>
+              </div>
+
+              <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">CẬP NHẬT</button>
+              </div>
             </div>
           </form>
         </div>
@@ -113,6 +121,7 @@ import axios from "axios";
 import { useRouter, useRoute } from "vue-router";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+import Swal from "sweetalert2";
 // Lưu trữ dữ liệu của ca làm việc
 const shiftData = ref({
   shift_name: "",
@@ -145,17 +154,34 @@ const fetchShiftData = async () => {
 // Hàm cập nhật thông tin ca làm việc
 const updateShift = async () => {
   try {
-    const response = await axios.patch(
-      `http://localhost:3000/api/shifts/${shift_id}`,
-      shiftData.value
-    );
-    if (response.status === 200) {
-      alert("Ca làm việc đã được cập nhật thành công!");
-      router.push({ name: "admin.shifts" }); // Chuyển hướng về trang danh sách ca làm việc
-    }
+    Swal.fire({
+      title: "Chú ý",
+      showCancelButton: true,
+      cancelButtonText: "HỦY",
+      confirmButtonText: "LƯU",
+      text: "Bạn có chắc chắn cập nhật thông tin cho ca làm việc này",
+      icon: "warning",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        console.log("Chuẩn bị cập nhật dữ liệu ca làm việc.....", shiftData);
+        Swal.fire();
+        const response = await axios.patch(
+          `http://localhost:3000/api/shifts/${shift_id}`,
+          shiftData.value
+        );
+        if (response.status === 200) {
+          Swal.fire({
+            title: "Saved",
+            text: "Đã cập nhật thành công.",
+            icon: "success",
+          });
+          router.push({ name: "admin.shifts" }); // Chuyển hướng về trang danh sách ca làm việc
+        }
+      }
+    });
   } catch (error) {
     console.error("Lỗi khi cập nhật ca làm việc:", error);
-    alert("Có lỗi xảy ra khi cập nhật ca làm việc.");
+    Swal.fire("Lỗi Server", "Vui lòng thử lại sau", "error");
   }
 };
 
