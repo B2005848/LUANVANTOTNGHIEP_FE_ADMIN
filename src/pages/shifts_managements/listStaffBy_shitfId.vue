@@ -111,7 +111,7 @@
                 </td>
 
                 <!-- ROLE -->
-                <td class="px-4 py-2">{{ data.role_name }}</td>
+                <td class="px-6 py-2">{{ data.role_name }}</td>
 
                 <!-- JOIN IN -->
                 <td class="tw-px-6 tw-2y-3">

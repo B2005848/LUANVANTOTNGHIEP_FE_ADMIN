@@ -171,7 +171,7 @@ const updateShift = async () => {
         );
         if (response.status === 200) {
           Swal.fire({
-            title: "Saved",
+            title: "Đã lưu",
             text: "Đã cập nhật thành công.",
             icon: "success",
           });

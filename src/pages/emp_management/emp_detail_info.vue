@@ -561,7 +561,7 @@
         <div class="col-md-12 tw-text-center tw-mt-5">
           <h5 class="tw-dark:text-white tw-ms-5 tw-mb-5">
             LỊCH LÀM VIỆC
-            <span v-if="shiftStaffList.length === 0">
+            <span>
               <button type="button" title="Thêm nhân viên mới">
                 <router-link
                   :to="{
