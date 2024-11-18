@@ -221,8 +221,8 @@ const updateDepartment = async () => {
     );
 
     // Kiểm tra nếu dữ liệu trả về có phòng ban
-    if (response.data && response.data.data.length > 0) {
-      const department = response.data.data[0]; // Lấy phòng ban đầu tiên từ kết quả trả về
+    if (response.data && response.data.data) {
+      const department = response.data.data; // Lấy phòng ban đầu tiên từ kết quả trả về
 
       // Cập nhật `department_id` và `department_name` cho ca làm việc
       staffShiftData.value.department_id = department.department_id;

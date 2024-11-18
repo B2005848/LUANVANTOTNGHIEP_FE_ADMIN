@@ -136,6 +136,16 @@ const admin = [
           title: "CTU CLINIC - Quản lí dịch vụ",
         },
       },
+      {
+        path: "addnewservice",
+        name: "admin.addnewservice",
+        component: () =>
+          import("../pages/service_managements/addnew.services.vue"),
+        meta: {
+          title: "CTU CLINIC - Thêm dịch vụ mới",
+        },
+      },
+
       //-------------------------------------------------- Router for admin booking managements page
       {
         path: "booking_managements",
