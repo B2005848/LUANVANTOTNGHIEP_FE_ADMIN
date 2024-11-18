@@ -90,16 +90,32 @@
               class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
             >
               <tr class="tw-text-center">
-                <th scope="col" class="tw-px-4 tw-py-2">STT</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Mã bệnh nhân</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Họ và tên</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Ngày sinh</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Email</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Số CCCD/CMND</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Trạng thái</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Hồ sơ bệnh án</th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">STT</th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Mã bệnh nhân
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Họ và tên
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Ngày sinh
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">Email</th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Số CCCD/CMND
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Trạng thái
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Ngày tạo
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Ngày chỉnh sửa
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Hồ sơ bệnh án
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -111,18 +127,34 @@
                 <!-- STT -->
                 <th
                   scope="row"
-                  class="tw-px-4 tw-2y-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
+                  class="tw-px-4 tw-py-2 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white tw-border-x"
                 >
                   {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
                 </th>
-                <td>{{ pa.patient_id }}</td>
-                <td>{{ pa.first_name }} {{ pa.last_name }}</td>
-                <td class="px-4 py-2">{{ formatBirthDay(pa.birthday) }}</td>
-                <td class="px-4 py-2">{{ pa.email }}</td>
-                <td class="px-4 py-2">
+
+                <!-- Patient ID -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">{{ pa.patient_id }}</td>
+
+                <!-- Full Name -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  {{ pa.first_name }} {{ pa.last_name }}
+                </td>
+
+                <!-- Birth Date -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  {{ formatBirthDay(pa.birthday) }}
+                </td>
+
+                <!-- Email -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">{{ pa.email }}</td>
+
+                <!-- Citizen ID -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
                   {{ pa.citizen_id || "Chưa cập nhật" }}
                 </td>
-                <td class="px-4 py-2">
+
+                <!-- Status -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
                   <span class="text-success" v-if="pa.status === '1'">
                     <font-awesome-icon
                       title="Đang hoạt động"
@@ -142,22 +174,33 @@
                         --fa-primary-color: #4b511f;
                         --fa-secondary-color: #c1dd31;
                       "
-                  /></span>
+                    />
+                  </span>
 
                   <span class="text-danger" v-if="pa.status === '3'">
                     <font-awesome-icon
                       title="Ngừng hoạt động"
-                      icon=" fa-ban"
+                      icon="fa-ban"
                       style="
                         --fa-primary-color: #dd2c2c;
                         --fa-secondary-color: #dd2c2c;
                       "
-                  /></span>
+                    />
+                  </span>
                 </td>
-                <td class="px-4 py-2">{{ formatDateTime(pa.created_at) }}</td>
-                <td class="px-4 py-2">{{ formatDateTime(pa.updated_at) }}</td>
 
-                <td class="px-4 py-2">
+                <!-- Created At -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  {{ formatDateTime(pa.created_at) }}
+                </td>
+
+                <!-- Updated At -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  {{ formatDateTime(pa.updated_at) }}
+                </td>
+
+                <!-- Patient Record Details -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
                   <router-link
                     :to="{
                       name: 'admin.patient_details',

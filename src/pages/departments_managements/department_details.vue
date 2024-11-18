@@ -46,7 +46,7 @@
         <div class="row mt-4">
           <div class="col-md-6">
             <div class="mb-3">
-              <label class="form-label fw-bold">Mã Phòng:</label>
+              <label class="form-label fw-bold">Mã Phòng</label>
               <input
                 type="text"
                 class="form-control"
@@ -57,7 +57,7 @@
           </div>
           <div class="col-md-6">
             <div class="mb-3">
-              <label class="form-label fw-bold">Tên Phòng:</label>
+              <label class="form-label fw-bold">Tên Phòng</label>
               <input
                 type="text"
                 v-model="infoData.department_name"
@@ -70,7 +70,7 @@
         </div>
 
         <div class="mb-6">
-          <label class="form-label fw-bold">Mô tả :</label>
+          <label class="form-label fw-bold">Mô tả</label>
           <input
             type="text"
             v-model="infoData.description"
@@ -94,7 +94,7 @@
         <!-- Thông tin nhân viên trong phòng -->
         <h3 class="mt-4">Danh Sách Nhân Viên</h3>
         <p>Đây là danh sách nhân viên làm việc tại phòng này</p>
-
+        <router-link>Xem các dịch vụ ở phòng làm việc này</router-link>
         <!-- -------  TABLE---------------- -->
         <div class="table-responsive mt-3">
           <div

@@ -62,7 +62,6 @@
           </div>
         </div>
 
-        <!-- --TW CSS -->
         <!-- list emp -->
         <div
           class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
@@ -74,16 +73,32 @@
               class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
             >
               <tr class="tw-text-center">
-                <th scope="col" class="tw-px-4 tw-py-2">STT</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Mã nhân viên</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Họ và tên</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Quyền truy cập</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Email</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Số CCCD/CMND</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Trạng thái</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Chi tiết</th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">STT</th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Mã nhân viên
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Họ và tên
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Quyền truy cập
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">Email</th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Số CCCD/CMND
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Trạng thái
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Ngày tạo
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Ngày chỉnh sửa
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Chi tiết
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -95,17 +110,32 @@
                 <!-- STT -->
                 <th
                   scope="row"
-                  class="tw-px-4 tw-2y-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
+                  class="tw-px-4 tw-py-2 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white tw-border-x"
                 >
                   {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
                 </th>
-                <td>{{ emp.staff_id }}</td>
-                <td>{{ emp.first_name }} {{ emp.last_name }}</td>
-                <td>{{ emp.role_name }}</td>
 
-                <td class="tw-px-4 tw-2y-4">{{ emp.email }}</td>
-                <td class="tw-px-4 tw-2y-4">{{ emp.citizen_id }}</td>
-                <td class="tw-px-4 tw-2y-4">
+                <!-- Mã nhân viên -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">{{ emp.staff_id }}</td>
+
+                <!-- Họ và tên -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  {{ emp.first_name }} {{ emp.last_name }}
+                </td>
+
+                <!-- Quyền truy cập -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">{{ emp.role_name }}</td>
+
+                <!-- Email -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">{{ emp.email }}</td>
+
+                <!-- Số CCCD/CMND -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  {{ emp.citizen_id }}
+                </td>
+
+                <!-- Trạng thái -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
                   <span class="text-success" v-if="emp.status === '1'"
                     >Đang hoạt động</span
                   >
@@ -116,14 +146,19 @@
                     >Tạm khóa</span
                   >
                 </td>
-                <td class="tw-px-4 tw-py-2">
+
+                <!-- Ngày tạo -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
                   {{ formatDateTime(emp.created_at) }}
                 </td>
-                <td class="tw-px-4 tw-py-2">
+
+                <!-- Ngày chỉnh sửa -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
                   {{ formatDateTime(emp.updated_at) }}
                 </td>
 
-                <td class="tw-px-4 tw-py-2">
+                <!-- Chi tiết -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
                   <router-link
                     :to="{
                       name: 'admin.emp_details',

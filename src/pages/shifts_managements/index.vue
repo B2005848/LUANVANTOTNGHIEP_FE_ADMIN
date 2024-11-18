@@ -11,6 +11,7 @@
 
         <!-- --TW CSS -->
         <!-- list shifts -->
+        <!-- list shifts -->
         <div
           v-if="shiftsListData"
           class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
@@ -22,15 +23,29 @@
               class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
             >
               <tr class="tw-text-center">
-                <th scope="col" class="tw-px-4 tw-py-2">STT</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Mã ca</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Mô tả ca làm việc</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Thời gian bắt đầu</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Thời gian kết thúc</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Ngày tạo</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Ngày chỉnh sửa</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Danh sách nhân viên</th>
-                <th scope="col" class="tw-px-4 tw-py-2">Chỉnh sửa</th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">STT</th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">Mã ca</th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Mô tả ca làm việc
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Thời gian bắt đầu
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Thời gian kết thúc
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Ngày tạo
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Ngày chỉnh sửa
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Danh sách nhân viên
+                </th>
+                <th scope="col" class="tw-px-4 tw-py-2 tw-border-x">
+                  Chỉnh sửa
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -42,18 +57,39 @@
                 <!-- STT -->
                 <th
                   scope="row"
-                  class="tw-px-4 tw-py-2 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
+                  class="tw-px-4 tw-py-2 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white tw-border-x"
                 >
                   {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
                 </th>
-                <td class="px-4 py-2">{{ sh.shift_id }}</td>
-                <td class="px-4 py-2">{{ sh.shift_name }}</td>
-                <td class="px-4 py-2">{{ formatTime(sh.start_time) }}</td>
-                <td class="px-4 py-2">{{ formatTime(sh.end_time) }}</td>
-                <td class="px-4 py-2">{{ formatDateTime(sh.created_at) }}</td>
-                <td class="px-4 py-2">{{ formatDateTime(sh.updated_at) }}</td>
 
-                <td class="px-4 py-2">
+                <!-- Mã ca -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">{{ sh.shift_id }}</td>
+
+                <!-- Mô tả ca làm việc -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">{{ sh.shift_name }}</td>
+
+                <!-- Thời gian bắt đầu -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  {{ formatTime(sh.start_time) }}
+                </td>
+
+                <!-- Thời gian kết thúc -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  {{ formatTime(sh.end_time) }}
+                </td>
+
+                <!-- Ngày tạo -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  {{ formatDateTime(sh.created_at) }}
+                </td>
+
+                <!-- Ngày chỉnh sửa -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  {{ formatDateTime(sh.updated_at) }}
+                </td>
+
+                <!-- Danh sách nhân viên -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
                   <router-link
                     :to="{
                       name: 'admin.staff_shifts',
@@ -68,7 +104,8 @@
                   </router-link>
                 </td>
 
-                <td>
+                <!-- Chỉnh sửa -->
+                <td class="tw-px-4 tw-py-2 tw-border-x">
                   <router-link
                     :to="{
                       name: 'admin.shift.modify',

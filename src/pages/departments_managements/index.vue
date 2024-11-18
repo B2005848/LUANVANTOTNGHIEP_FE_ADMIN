@@ -35,7 +35,7 @@
                   id="default-search"
                   size="100"
                   class="tw-block tw-w-full tw-p-4 tw-ps-10 tw-text-sm tw-text-gray-900 tw-border tw-border-gray-300 tw-rounded-lg tw-bg-gray-50 focus:tw-ring-blue-500 focus:tw-border-blue-500 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500"
-                  placeholder="Nhập thông tin phòng khám cần tìm..."
+                  placeholder="Nhập thông tin phòng cần tìm..."
                   required
                 />
                 <button
@@ -66,12 +66,12 @@
         </div>
 
         <!-- --TW CSS -->
-        <!-- list emp -->
+        <!-- list department -->
         <div
           class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
         >
           <table
-            class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400"
+            class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400 tw-border-x tw-border-gray-300 tw-dark:border-gray-700"
           >
             <thead
               class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-200 tw-dark:bg-gray-700 tw-dark:text-gray-400"
@@ -98,12 +98,29 @@
                 >
                   {{ (currentPage - 1) * itemsPerPageData + index + 1 }}
                 </th>
-                <td>{{ dep.department_id }}</td>
-                <td>{{ dep.department_name }}</td>
-                <td class="px-4 py-2">{{ formatDateTime(dep.created_at) }}</td>
-                <td class="px-4 py-2">{{ formatDateTime(dep.updated_at) }}</td>
-
-                <td class="px-4 py-2">
+                <td
+                  class="tw-border-x tw-border-gray-300 tw-dark:border-gray-700"
+                >
+                  {{ dep.department_id }}
+                </td>
+                <td
+                  class="tw-border-x tw-border-gray-300 tw-dark:border-gray-700"
+                >
+                  {{ dep.department_name }}
+                </td>
+                <td
+                  class="tw-border-x tw-border-gray-300 tw-dark:border-gray-700 px-4 py-2"
+                >
+                  {{ formatDateTime(dep.created_at) }}
+                </td>
+                <td
+                  class="tw-border-x tw-border-gray-300 tw-dark:border-gray-700 px-4 py-2"
+                >
+                  {{ formatDateTime(dep.updated_at) }}
+                </td>
+                <td
+                  class="tw-border-x tw-border-gray-300 tw-dark:border-gray-700 px-4 py-2"
+                >
                   <router-link
                     :to="{
                       name: 'admin.department_details',
@@ -114,7 +131,8 @@
                       icon="fa-eye"
                       size="lg"
                       style="color: #74c0fc"
-                  /></router-link>
+                    />
+                  </router-link>
                 </td>
               </tr>
             </tbody>
