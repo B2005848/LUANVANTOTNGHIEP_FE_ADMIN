@@ -136,6 +136,8 @@ const admin = [
           title: "CTU CLINIC - Quản lí dịch vụ",
         },
       },
+
+      // Thêm một dịch vụ mới
       {
         path: "addnewservice",
         name: "admin.addnewservice",
@@ -143,6 +145,17 @@ const admin = [
           import("../pages/service_managements/addnew.services.vue"),
         meta: {
           title: "CTU CLINIC - Thêm dịch vụ mới",
+        },
+      },
+
+      // Chi tiết dịch vụ
+      {
+        path: "servicedetail/:id",
+        name: "admin.service.details",
+        component: () =>
+          import("../pages/service_managements/service.details.vue"),
+        meta: {
+          title: "CTU CLINIC - Chi tiết dịch vụ",
         },
       },
 

@@ -38,7 +38,7 @@
             class="btn btn-secondary"
             @click="$router.push({ name: 'admin.departments' })"
           >
-            Trở Lại
+            QUAY LẠI DANH SÁCH
           </button>
         </div>
 
@@ -94,11 +94,10 @@
         <!-- Thông tin nhân viên trong phòng -->
         <h3 class="mt-4">Danh Sách Nhân Viên</h3>
         <p>Đây là danh sách nhân viên làm việc tại phòng này</p>
-        <router-link>Xem các dịch vụ ở phòng làm việc này</router-link>
         <!-- -------  TABLE---------------- -->
         <div class="table-responsive mt-3">
           <div
-            class="mt-5 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
+            class="mt-2 tw-relative tw-overflow-x-auto tw-shadow-md tw-sm:rounded-lg"
           >
             <table
               class="tw-w-full tw-text-sm tw-text-left tw-rtl:text-right tw-text-gray-800 tw-dark:text-gray-400"

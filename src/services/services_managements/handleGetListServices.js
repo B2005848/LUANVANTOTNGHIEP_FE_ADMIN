@@ -8,7 +8,7 @@ export const handleGetListService = () => {
   const getData = async (page = 1) => {
     try {
       const response = await window.axios.get(
-        `http://localhost:3000/api/services/getlistservices/?page=${page}`
+        `http://localhost:3000/api/services/getlistservices/list/?page=${page}`
       );
       if (response.status === 200) {
         const { totalPages, listServices, itemsPerPage } = response.data;

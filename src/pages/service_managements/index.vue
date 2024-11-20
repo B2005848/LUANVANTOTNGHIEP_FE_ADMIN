@@ -208,8 +208,8 @@
                 <td class="tw-px-4 tw-py-2 tw-border-x">
                   <router-link
                     :to="{
-                      name: 'admin.department_details',
-                      params: { id: se.department_id },
+                      name: 'admin.service.details',
+                      params: { id: se.service_id },
                     }"
                   >
                     <font-awesome-icon
@@ -237,16 +237,13 @@
 
 <!----------------------------------------------------------SCRIP SETUP----------------------------------------------->
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { handleGetListService } from "@/services/services_managements/handleGetListServices";
-import { searchDepartments } from "@/services/department_managements/handleSearchDep";
 import PaginationComponent from "@/components/Pagination.vue";
 import { useRouter } from "vue-router";
 import formatDate from "@/helper/format-datetime";
-import Swal from "sweetalert2";
 import axios from "axios";
 import { formatCurrency } from "@/helper/currencyFormatter";
-const router = useRouter();
 
 const formatDateTime = formatDate.formatDateTime;
 const {
