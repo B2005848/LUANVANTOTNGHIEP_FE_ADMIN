@@ -8,37 +8,71 @@
         <!-- Add Service Form -->
         <form @submit.prevent="handleAddService">
           <div class="form-group mb-3">
-            <label for="serviceName">Tên dịch vụ</label>
+            <label class="form-label tw-font-bold" for="serviceId"
+              >Mã dịch vụ</label
+            >
+            <input
+              type="text"
+              id="serviceId"
+              v-model="newService.service_id"
+              class="form-control"
+              placeholder="Nhập mã dịch vụ mới, ví dụ: SV001"
+              required
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label tw-font-bold" for="serviceName"
+              >Tên dịch vụ</label
+            >
             <input
               type="text"
               id="serviceName"
               v-model="newService.service_name"
               class="form-control"
-              placeholder="Nhập tên dịch vụ"
+              placeholder="Nhập tên dịch vụ, ví dụ: Khám tai mũi họng"
               required
             />
           </div>
 
           <div class="form-group mb-3">
-            <label for="serviceFee">Giá dịch vụ</label>
+            <label class="form-label tw-font-bold" for="description"
+              >Mô tả dịch vụ</label
+            >
+            <input
+              type="text"
+              id="description"
+              v-model="newService.description"
+              class="form-control"
+              placeholder="Nhập mô tả cho dịch vụ này"
+              required
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label tw-font-bold" for="serviceFee"
+              >Giá dịch vụ</label
+            >
             <input
               type="number"
               id="serviceFee"
               v-model="newService.service_fee"
               class="form-control"
-              placeholder="Nhập giá dịch vụ"
+              placeholder="Nhập giá dịch vụ, ví dụ: 350000"
               required
             />
           </div>
 
           <div class="form-group mb-3">
-            <label for="duration">Thời gian thực hiện (phút)</label>
+            <label class="form-label tw-font-bold" for="duration"
+              >Thời gian thực hiện (phút)</label
+            >
             <input
               type="number"
               id="duration"
               v-model="newService.duration"
               class="form-control"
-              placeholder="Nhập thời gian thực hiện"
+              placeholder="Nhập thời gian thực hiện, ví dụ: 30"
               required
             />
           </div>
@@ -91,7 +125,9 @@ import Swal from "sweetalert2";
 
 // Initialize form data
 const newService = ref({
+  service_id: "",
   service_name: "",
+  description: "",
   service_fee: "",
   duration: "",
   department_id: "",
@@ -135,6 +171,7 @@ const updateDepartment = async () => {
       const department = response.data.data; // Get the department object
       departmentName.value = department.department_name; // Update the department name
       newService.value.department_id = department.department_id; // Set department_id in the form
+      newService.value.specialty_id = selectedSpecialty.value;
     } else {
       departmentName.value = "Phòng ban không xác định"; // No department found
       newService.value.department_id = ""; // Clear department_id if no department found
@@ -150,10 +187,10 @@ const handleAddService = async () => {
   try {
     // Add the new service
     const response = await axios.post(
-      "http://localhost:3000/api/services",
+      "http://localhost:3000/api/services/create",
       newService.value
     );
-    if (response.status === 200) {
+    if (response.status === 201) {
       Swal.fire("Thành công!", "Dịch vụ đã được thêm thành công!", "success");
       // Optionally, reset the form after successful submission
       newService.value = {
@@ -165,7 +202,11 @@ const handleAddService = async () => {
       };
     }
   } catch (error) {
-    Swal.fire("Lỗi!", "Đã xảy ra lỗi khi thêm dịch vụ.", "error");
+    Swal.fire(
+      "Lỗi!",
+      "Mã dịch vụ đã tồn tại, vui lòng sử dụng mã khác",
+      "error"
+    );
     console.error("Error adding service:", error);
   }
 };

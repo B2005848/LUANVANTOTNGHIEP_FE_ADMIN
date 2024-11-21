@@ -146,7 +146,11 @@
                 </th>
 
                 <!-- Service ID -->
-                <td class="tw-px-4 tw-py-2 tw-border-x">{{ se.service_id }}</td>
+                <td
+                  class="tw-px-4 tw-py-2 tw-border-x tw-font-bold text-primary"
+                >
+                  {{ se.service_id }}
+                </td>
 
                 <!-- Service Name -->
                 <td class="tw-px-4 tw-py-2 tw-border-x">
