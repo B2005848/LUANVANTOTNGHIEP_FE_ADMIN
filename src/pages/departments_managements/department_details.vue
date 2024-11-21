@@ -1,5 +1,18 @@
 <template>
   <div>
+    <div class="d-flex">
+      <button
+        @click="handleDelete"
+        type="button"
+        title="XÓA PHÒNG LÀM VIỆC NÀY"
+      >
+        <font-awesome-icon
+          icon="fa-solid fa-trash-can"
+          size="lg"
+          style="color: #b30000"
+        />
+      </button>
+    </div>
     <!-- Chi tiết phòng làm việc -->
     <div class="container mt-4">
       <div class="card p-4">
@@ -168,12 +181,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import PaginationComponent from "@/components/Pagination.vue";
 import Swal from "sweetalert2";
 const currentPage = ref(1);
 
 const route = useRoute();
+const router = useRouter();
 const departmentId = route.params.id;
 
 const departmentDetails = ref({});
@@ -267,6 +281,42 @@ const modifyDepartment = async () => {
   } catch (error) {
     console.error("Lỗi khi cập nhật thông tin phòng làm việc:", error);
     Swal.fire("Lỗi", "Có lỗi xảy ra khi cập nhật thông tin", "error");
+  }
+};
+
+// 4. Xóa phòng làm việc này
+const handleDelete = async () => {
+  try {
+    const result = await Swal.fire({
+      title: "Lưu ý",
+      text: "Bạn có chắc chắn xóa phòng làm việc này?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Xóa",
+      cancelButtonText: "Hủy",
+    });
+
+    if (result.isConfirmed) {
+      const response = await axios.delete(
+        `http://localhost:3000/api/departments/delete/${departmentId}`
+      );
+
+      if (response.status === 200) {
+        Swal.fire("Đã xóa thành công", "", "success");
+        router.push({
+          name: "admin.departments",
+        });
+      } else {
+        Swal.fire(
+          "Lỗi",
+          "Không thể xóa phòng làm việc này vì đã có bệnh nhân khám ở đây",
+          "error"
+        );
+      }
+    }
+  } catch (error) {
+    console.error("Lỗi khi xóa phòng làm việc:", error);
+    Swal.fire("Lỗi", "Có lỗi xảy ra khi xóa", "error");
   }
 };
 
