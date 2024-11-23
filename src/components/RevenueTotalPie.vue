@@ -2,7 +2,7 @@
   <div
     class="tw-container tw-mx-auto tw-p-6 tw-bg-white tw-shadow-md tw-rounded-lg"
   >
-    <p class="tw-text-2xl tw-font-bold tw-mb-6">
+    <p class="tw-text-xl tw-font-bold tw-mb-6">
       Thống kê doanh thu theo khoảng thời gian và trạng thái giao dịch
     </p>
     <p class="tw-mb-4">
@@ -121,34 +121,32 @@ const fetchRevenueStatistics = async () => {
 
 // Hàm cập nhật biểu đồ
 const updateChart = (data) => {
-  const labels = data.map(
-    (item) =>
-      `${item.transaction_day}-${item.transaction_month}-${item.transaction_year}`
+  const labels = ["Doanh thu dịch vụ đặt lịch", "Doanh thu đơn thuốc"];
+
+  // Tính tổng doanh thu
+  const totalAppointmentRevenue = data.reduce(
+    (sum, item) => sum + item.revenue_appointment,
+    0
+  );
+  const totalPrescriptionRevenue = data.reduce(
+    (sum, item) => sum + item.revenue_prescription,
+    0
   );
 
-  const appointmentRevenue = data.map((item) => item.revenue_appointment);
-  const prescriptionRevenue = data.map((item) => item.revenue_prescription);
+  const revenues = [totalAppointmentRevenue, totalPrescriptionRevenue];
 
   if (chart.value) {
     chart.value.destroy();
   }
 
-  // Tạo dữ liệu biểu đồ
+  // Cập nhật dữ liệu biểu đồ
   chartData.value = {
     labels,
     datasets: [
       {
-        label: "Doanh thu dịch vụ đặt lịch",
-        data: appointmentRevenue,
-        backgroundColor: "rgba(54, 162, 235, 0.6)",
-        borderColor: "rgba(54, 162, 235, 1)",
-        borderWidth: 1,
-      },
-      {
-        label: "Doanh thu đơn thuốc",
-        data: prescriptionRevenue,
-        backgroundColor: "rgba(255, 99, 132, 0.6)",
-        borderColor: "rgba(255, 99, 132, 1)",
+        data: revenues,
+        backgroundColor: ["rgba(54, 162, 235, 0.6)", "rgba(255, 99, 132, 0.6)"],
+        borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
         borderWidth: 1,
       },
     ],
@@ -156,7 +154,7 @@ const updateChart = (data) => {
 
   const ctx = document.getElementById("revenueChart").getContext("2d");
   chart.value = new Chart(ctx, {
-    type: "bar",
+    type: "pie", // Đổi type từ bar thành pie
     data: chartData.value,
     options: {
       responsive: true,
@@ -166,7 +164,7 @@ const updateChart = (data) => {
         },
         title: {
           display: true,
-          text: "Thống kê doanh thu",
+          text: "Thống kê doanh thu (Biểu đồ tròn)",
         },
       },
     },
@@ -181,6 +179,6 @@ onMounted(() => {
 
 <style scoped>
 .tw-container {
-  max-width: 800px;
+  max-width: 100%;
 }
 </style>
