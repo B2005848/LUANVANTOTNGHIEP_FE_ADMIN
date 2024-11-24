@@ -1,13 +1,3 @@
 <template>
-  <div id="app">
-    <Chat />
-  </div>
+  <div id="app">CÀI ĐẶT</div>
 </template>
-
-<script setup>
-import Chat from "@/components/ChatBox.vue"; // Import component Chat
-</script>
-
-<style>
-/* Add global styles here if needed */
-</style>

@@ -133,7 +133,9 @@ a:focus {
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.requests' }">CÁC YÊU CẦU</router-link>
+      <router-link :to="{ name: 'admin.requests' }"
+        >HỖ TRỢ BỆNH NHÂN</router-link
+      >
     </li>
     <li>
       <font-awesome-icon
