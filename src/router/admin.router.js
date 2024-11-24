@@ -169,13 +169,23 @@ const admin = [
         },
       },
 
-      //---------------------------------------------------------Router for admin request managements page
+      //---------------------------------------------------------Router for admin request managements page (CHAT ONLINE)
       {
         path: "request_managements",
         name: "admin.requests",
         component: () => import("../pages/request_managements/index.vue"),
         meta: {
           title: "CTU CLINIC - Các yêu cầu",
+        },
+      },
+
+      // Nội dung đoạn chat theo id
+      {
+        path: "chatcontent/:id",
+        name: "admin.chat",
+        component: () => import("../pages/request_managements/chatcontent.vue"),
+        meta: {
+          title: "CTU CLINIC - Nhắn tin hỗ trợ ",
         },
       },
 

@@ -13,9 +13,7 @@
             <strong>{{ contact.contact_id }}</strong>
             <p>{{ contact.last_message }}</p>
           </div>
-          <span class="timestamp">{{
-            formatTimestamp(contact.timestamp)
-          }}</span>
+          <span class="timestamp">{{ formatDateTime(contact.timestamp) }}</span>
         </li>
       </ul>
     </div>
@@ -27,7 +25,10 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import axios from "axios";
 import Cookies from "js-cookie"; // Import thư viện js-cookie
 import { io } from "socket.io-client"; // Import Socket.IO client
-
+import { useRouter } from "vue-router";
+import formatDate from "@/helper/format-datetime";
+const formatDateTime = formatDate.formatDateTime;
+const router = useRouter();
 // Lấy ID người gửi từ cookie
 const senderId = Cookies.get("staffId");
 
@@ -39,11 +40,7 @@ if (!senderId) {
 const chatPairs = ref([]); // Danh sách các cặp hội thoại
 
 // Tạo kết nối với server qua Socket.IO
-const socket = io("http://localhost:3000", {
-  auth: {
-    token: "your-auth-token", // Thêm token xác thực nếu cần
-  },
-});
+const socket = io("http://localhost:3000");
 
 // Hàm gọi API lấy danh sách cặp hội thoại
 const fetchChatPairs = async () => {
@@ -86,7 +83,11 @@ const listenForNewChatPairs = () => {
 // Hàm xử lý khi chọn một cặp hội thoại
 const selectChat = (contactId) => {
   console.log("Selected Chat:", contactId);
-  // Bạn có thể điều hướng hoặc mở hộp chat
+  // Điều hướng đến route chatcontent/:id
+  router.push({
+    name: "admin.chat", // Tên route đã định nghĩa trong Vue Router
+    params: { id: contactId }, // Truyền contactId làm tham số
+  });
 };
 
 // Hàm định dạng timestamp
