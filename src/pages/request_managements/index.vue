@@ -1,7 +1,7 @@
 <template>
   <div class="chat-list-container">
     <h2>Hỗ trợ bệnh nhân</h2>
-    <div class="chat-list mt-5">
+    <div v-if="chatPairs.length > 0" class="chat-list">
       <ul>
         <li
           v-for="contact in chatPairs"
@@ -14,10 +14,16 @@
               <img
                 class="tw-w-10 tw-h-10 tw-rounded-full"
                 :src="`http://localhost:3000${contact.image_avt}`"
-                alt=""
+                alt="Avatar"
               />
               <div class="tw-font-medium tw-dark:text-white">
-                <div>{{ contact.first_name + " " + contact.last_name }}</div>
+                <div v-if="contact.first_name && contact.last_name">
+                  {{ contact.first_name + " " + contact.last_name }}
+                </div>
+
+                <div v-if="!contact.first_name && !contact.last_name">
+                  {{ contact.contact_id }}
+                </div>
                 <div class="tw-ext-sm tw-text-gray-500 tw-dark:text-gray-400">
                   {{ contact.last_message }}
                 </div>
@@ -28,6 +34,8 @@
         </li>
       </ul>
     </div>
+
+    <div v-else>Không có bệnh nhân nào cần hỗ trợ cả</div>
   </div>
 </template>
 
@@ -85,12 +93,26 @@ const listenForNewChatPairs = () => {
   socket.on("new_chat_pair", (newChatPair) => {
     console.log("New chat pair received:", newChatPair);
 
-    // Thêm đoạn chat mới vào danh sách cặp hội thoại
-    chatPairs.value.push({
-      contact_id: newChatPair.contact_id,
-      last_message: newChatPair.last_message,
-      timestamp: newChatPair.timestamp,
-    });
+    // Kiểm tra nếu đoạn chat mới đã tồn tại trong danh sách không
+    const existingChat = chatPairs.value.find(
+      (pair) => pair.contact_id === newChatPair.contact_id
+    );
+
+    if (!existingChat) {
+      // Thêm đoạn chat mới vào danh sách cặp hội thoại
+      chatPairs.value.push({
+        contact_id: newChatPair.contact_id,
+        first_name: newChatPair.first_name,
+        last_name: newChatPair.last_name,
+        last_message: newChatPair.last_message,
+        timestamp: newChatPair.timestamp,
+        image_avt: newChatPair.image_avt,
+      });
+    } else {
+      // Cập nhật đoạn chat nếu nó đã tồn tại
+      existingChat.last_message = newChatPair.last_message;
+      existingChat.timestamp = newChatPair.timestamp;
+    }
   });
 };
 
