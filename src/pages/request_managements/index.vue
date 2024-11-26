@@ -1,7 +1,7 @@
 <template>
   <div class="chat-list-container">
-    <h2>ĐOẠN CHAT</h2>
-    <div class="chat-list">
+    <h2>Hỗ trợ bệnh nhân</h2>
+    <div class="chat-list mt-5">
       <ul>
         <li
           v-for="contact in chatPairs"
@@ -9,9 +9,20 @@
           @click="selectChat(contact.contact_id)"
           class="chat-item"
         >
-          <div class="chat-info">
-            <strong>{{ contact.contact_id }}</strong>
-            <p>{{ contact.last_message }}</p>
+          <div class="chat-info row">
+            <div class="tw-flex tw-items-center tw-gap-4">
+              <img
+                class="tw-w-10 tw-h-10 tw-rounded-full"
+                :src="`http://localhost:3000${contact.image_avt}`"
+                alt=""
+              />
+              <div class="tw-font-medium tw-dark:text-white">
+                <div>{{ contact.first_name + " " + contact.last_name }}</div>
+                <div class="tw-ext-sm tw-text-gray-500 tw-dark:text-gray-400">
+                  {{ contact.last_message }}
+                </div>
+              </div>
+            </div>
           </div>
           <span class="timestamp">{{ formatDateTime(contact.timestamp) }}</span>
         </li>
@@ -55,8 +66,11 @@ const fetchChatPairs = async () => {
     if (response.data.status) {
       chatPairs.value = response.data.data.map((item) => ({
         contact_id: item.contact_id,
+        first_name: item.first_name,
+        last_name: item.last_name,
         last_message: item.last_message,
         timestamp: item.last_message_time,
+        image_avt: item.image_avt,
       }));
     } else {
       console.error("Error fetching chat pairs:", response.data.message);
@@ -88,11 +102,6 @@ const selectChat = (contactId) => {
     name: "admin.chat", // Tên route đã định nghĩa trong Vue Router
     params: { id: contactId }, // Truyền contactId làm tham số
   });
-};
-
-// Hàm định dạng timestamp
-const formatTimestamp = (timestamp) => {
-  return new Date(timestamp).toLocaleString();
 };
 
 // Lấy danh sách cặp hội thoại khi component được mount

@@ -1,7 +1,32 @@
 <template>
-  <div class="chat-container">
-    <div class="chat-header">
-      <h3>Chat với: {{ contactName }}</h3>
+  <div class="chat-container card">
+    <div class="chat-header d-flex">
+      <div v-if="inforPatient && inforPatient.patient_id">
+        <router-link
+          class="tw-flex tw-items-center tw-gap-4"
+          :to="{
+            name: 'admin.patient_details',
+            params: { username: inforPatient.patient_id },
+          }"
+        >
+          <img
+            class="tw-w-10 tw-h-10 tw-rounded-full"
+            :src="`http://localhost:3000${inforPatient.image_avt}`"
+            alt=""
+          />
+          <div class="tw-font-medium tw-dark:text-white">
+            <div>
+              <h4>{{ contactName }}</h4>
+            </div>
+          </div>
+        </router-link>
+      </div>
+
+      <div>
+        <div class="btn-delele">
+          <button style="color: #dc143c">Xóa</button>
+        </div>
+      </div>
     </div>
     <div class="chat-content" ref="chatContent" @scroll="handleScroll">
       <div
@@ -48,6 +73,7 @@ const socket = io("http://localhost:3000");
 // Biến dữ liệu
 const contactId = route.params.id;
 const contactName = ref("Tên người nhận");
+const inforPatient = ref([]);
 const messages = ref([]);
 const newMessage = ref("");
 const currentPage = ref(1);
@@ -63,7 +89,6 @@ const handleScroll = () => {
   }
 };
 
-// Lấy danh sách tin nhắn
 // Lấy danh sách tin nhắn
 const fetchMessages = async (isLoadMore = false) => {
   if (isLoading.value || !hasMorePages.value) return;
@@ -188,11 +213,13 @@ const getNamePatientChat = async () => {
       `http://localhost:3000/api/handle/patient/getinfo/${contactId}`
     );
     if (response.status === 200) {
+      inforPatient.value = response.data.dataInfo;
       contactName.value =
         response.data.dataInfo.first_name +
         " " +
         response.data.dataInfo.last_name;
     }
+    console.log("Patient ID:", inforPatient.value.patient_id);
   } catch (error) {
     console.error("Error fetching patient info:", error);
   }
@@ -227,13 +254,12 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid #ccc;
 }
 
 .chat-header {
   padding: 10px;
   background-color: #f1f1f1;
-  border-bottom: 1px solid #ccc;
+  justify-content: space-between;
 }
 
 .chat-content {
@@ -241,24 +267,28 @@ onBeforeUnmount(() => {
   overflow-y: auto;
   padding: 10px;
   background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Tạo khoảng cách giữa các tin nhắn */
 }
 
 .message {
-  margin-bottom: 10px;
   padding: 10px;
   border-radius: 8px;
   max-width: 70%;
   word-wrap: break-word;
+  display: inline-block;
+  position: relative;
 }
 
 .message.sent {
-  align-self: flex-end;
+  align-self: flex-end; /* Căn chỉnh tin nhắn gửi sang bên phải */
   background-color: #dcf8c6;
 }
 
 .message.received {
-  align-self: flex-start;
-  background-color: #ffffff;
+  align-self: flex-start; /* Căn chỉnh tin nhắn nhận sang bên trái */
+  background-color: #eeecec;
 }
 
 .message.sending {
@@ -299,5 +329,10 @@ onBeforeUnmount(() => {
 
 .chat-input button:hover {
   background-color: #0056b3;
+}
+
+a {
+  text-decoration: none;
+  color: #2c2d2e;
 }
 </style>
