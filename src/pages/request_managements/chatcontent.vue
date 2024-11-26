@@ -144,7 +144,7 @@ const sendMessage = async () => {
     id: tempId,
     sender_id: senderId,
     content: newMessage.value.trim(),
-    timestamp: new Date().toISOString(),
+    timestamp: new Date().toLocaleString(),
     isSending: true,
   };
 
