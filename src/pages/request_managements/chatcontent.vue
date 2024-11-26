@@ -283,7 +283,7 @@ onBeforeUnmount(() => {
 
 .message.sent {
   align-self: flex-end; /* Căn chỉnh tin nhắn gửi sang bên phải */
-  background-color: #dcf8c6;
+  background-color: #c5e0ff;
 }
 
 .message.received {
@@ -297,7 +297,7 @@ onBeforeUnmount(() => {
 
 .message-timestamp {
   font-size: 0.8em;
-  color: #888;
+  color: #000000;
   text-align: right;
   margin-top: 5px;
 }
