@@ -182,6 +182,7 @@
                   <span v-if="data.status === 'CO-P'" style="color: #0000ff">
                     Đã hoàn thành
                   </span>
+
                   <span v-if="data.status === 'CA'" style="color: red">
                     Đã hủy
                   </span>
