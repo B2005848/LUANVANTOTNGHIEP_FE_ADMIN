@@ -1,7 +1,7 @@
 <template>
   <div class="chat-list-container">
     <h2>Hỗ trợ bệnh nhân</h2>
-    <div v-if="chatPairs.length > 0" class="chat-list">
+    <div v-if="chatPairs.length > 0" class="chat-list mt-5">
       <ul>
         <li
           v-for="contact in chatPairs"
@@ -24,7 +24,7 @@
                 <div v-if="!contact.first_name && !contact.last_name">
                   {{ contact.contact_id }}
                 </div>
-                <div class="tw-ext-sm tw-text-gray-500 tw-dark:text-gray-400">
+                <div class="tw-ext-sm tw-text-gray-700 tw-dark:text-gray-400">
                   {{ contact.last_message }}
                 </div>
               </div>
@@ -151,23 +151,26 @@ onBeforeUnmount(() => {
 }
 .chat-list ul {
   list-style-type: none;
-  padding: 0;
+  padding: 5px;
+  background-color: #00afef;
+  border-radius: 14px;
 }
 .chat-item {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  border-bottom: 1px solid #ccc;
   cursor: pointer;
 }
 .chat-item:hover {
-  background-color: #f9f9f9;
+  padding: 10px;
+  background-color: #9ee2f4;
+  border-radius: 14px;
 }
 .chat-info {
   max-width: 70%;
 }
 .timestamp {
-  color: gray;
+  color: rgb(240, 240, 240);
   font-size: 0.9em;
 }
 </style>
