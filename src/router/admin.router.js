@@ -7,7 +7,7 @@ const admin = [
     name: "admin.login",
     component: () => import("../layouts/account.login.vue"),
     meta: {
-      title: "CTU CLINIC - Login",
+      title: "CTU CLINIC - Quản trị viên đăng nhập",
     },
   },
   // -----------------------------------Router for admin pages

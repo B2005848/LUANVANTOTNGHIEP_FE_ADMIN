@@ -105,8 +105,14 @@ h1 {
 
     <div class="flex-1">
       <div class="form-login">
+        <img
+          style="align-items: center; justify-self: center"
+          src="\AdminIconB.svg"
+          alt=""
+          width="250"
+        />
         <p>
-          "Chào mừng bạn đến với khu vực "quản trị viên", vui lòng đăng nhập để
+          "Chào mừng bạn đến với khu vực "Quản trị viên", vui lòng đăng nhập để
           tiếp tục"
         </p>
         <form @submit.prevent="handleLogin">
