@@ -43,8 +43,9 @@ export const handleLoginService = () => {
         console.log("Login success", loginData.value.username);
       }
     } catch (error) {
+      console.error("Error during login:", error);
+
       errorMessage.value = error.response?.data?.message || "Login failed";
-      console.log(error.response.data.message);
     }
   };
 
