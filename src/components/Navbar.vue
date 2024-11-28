@@ -30,7 +30,7 @@ p {
     <div>
       <img src="/LogoCTUWithText.png" width="150" alt="" />
     </div>
-
+    <h4>Chào mừng bạn đến với khu vực của Quản Trị Viên</h4>
     <div class="dropdown">
       <div
         class="btn"
