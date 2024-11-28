@@ -4,7 +4,7 @@
   >
     <!-- Tiêu đề -->
     <p class="tw-text-xl tw-font-bold tw-mb-6">
-      Thống kê doanh thu theo khoảng thời gian và trạng thái giao dịch
+      Thống kê doanh thu theo dịch vụ
     </p>
     <p class="tw-mb-4">
       Vui lòng chọn khoảng thời gian và trạng thái giao dịch
@@ -14,28 +14,14 @@
     <div
       class="tw-grid tw-gap-4 tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-mb-6"
     >
-      <!-- <input
-        v-model="filters.startDate"
-        type="date"
-        placeholder="Ngày bắt đầu"
-        class="tw-border tw-border-gray-300 tw-p-2 tw-rounded tw-w-full tw-text-black"
-      /> -->
-
       <VueDatePicker
         v-model="filters.startDate"
         locale="vi"
-        format="dd/MM/yyyy "
+        format="dd/MM/yyyy"
         :enable-time-picker="false"
         placeholder="Ngày bắt đầu"
         text-input
       />
-
-      <!-- <input
-        v-model="filters.endDate"
-        type="date"
-        placeholder="Ngày kết thúc"
-        class="tw-border tw-border-gray-300 tw-p-2 tw-rounded tw-w-full tw-text-black"
-      /> -->
 
       <VueDatePicker
         v-model="filters.endDate"
@@ -78,7 +64,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import axios from "axios";
@@ -162,13 +147,11 @@ const fetchRevenueStatistics = async () => {
 
 // Hàm cập nhật biểu đồ
 const updateChart = async (data) => {
-  const labels = data.map(
-    (item) =>
-      `${item.transaction_day}-${item.transaction_month}-${item.transaction_year}`
-  );
+  // Lấy tên dịch vụ làm nhãn trục x
+  const labels = data.map((item) => item.service_name);
 
+  // Doanh thu của các dịch vụ
   const appointmentRevenue = data.map((item) => item.revenue_appointment);
-  const prescriptionRevenue = data.map((item) => item.revenue_prescription);
 
   if (chart.value) {
     chart.value.destroy(); // Hủy biểu đồ cũ nếu có
@@ -189,11 +172,11 @@ const updateChart = async (data) => {
   chart.value = new Chart(ctx, {
     type: "bar",
     data: {
-      labels,
+      labels, // Nhãn trục x là tên dịch vụ
       datasets: [
         {
           label: "Doanh thu dịch vụ đặt lịch",
-          data: appointmentRevenue,
+          data: appointmentRevenue, // Dữ liệu doanh thu của các dịch vụ
           backgroundColor: "rgba(54, 162, 235, 0.6)",
           borderColor: "rgba(54, 162, 235, 1)",
           borderWidth: 1,
@@ -208,7 +191,7 @@ const updateChart = async (data) => {
         },
         title: {
           display: true,
-          text: "Thống kê doanh thu",
+          text: "Thống kê doanh thu theo dịch vụ",
         },
       },
     },
@@ -220,6 +203,7 @@ onMounted(() => {
   fetchRevenueStatistics();
 });
 </script>
+
 <style scoped>
 .tw-container {
   max-width: 100%;
