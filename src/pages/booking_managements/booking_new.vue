@@ -2,20 +2,20 @@
   <div class="container-fluid mt-3">
     <div class="card p-4">
       <h4 class="text-center">Thông tin cơ bản của bệnh nhân</h4>
-      <form @submit.prevent="addEmployee" class="mt-4">
+      <form @submit.prevent="addpatient" class="mt-4">
         <!-- Thông tin cơ bản của Bệnh Nhân-->
         <div class="row mb-3">
           <div class="col-md-12">
-            <label for="staff_id" class="form-label"
+            <label for="patient_id" class="form-label"
               >Mã Bệnh Nhân (Tên tài khoản đăng nhập)
               <sup style="color: red">*</sup>
             </label>
             <input
               type="text"
-              v-model="patientData.staff_id"
+              v-model="patientData.patient_id"
               placeholder="Email hoặc số điện thoại"
               class="form-control"
-              id="staff_id"
+              id="patient_id"
               required
             />
           </div>
@@ -273,10 +273,9 @@ import Swal from "sweetalert2";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 const router = useRouter();
-// Dữ liệu nhân viên
+// Dữ liệu bệnh nhân
 const patientData = ref({
-  staff_id: "", // Employee ID (phone number)
-  role_id: "", // Role ID
+  patient_id: "", // patient ID (phone number)
   first_name: "", // First name
   last_name: "", // Last name
   birthday: "", // Birthday (format may need adjustment)
@@ -300,54 +299,6 @@ const selectedCity = ref(null);
 const selectedDistrict = ref(null);
 const selectedWard = ref(null);
 
-//Load dữ liệu vị trí làm việc Roles
-const roles = ref([]); // Biến lưu trữ danh sách vai trò
-
-// Hàm tải danh sách role từ API
-const loadRoles = async () => {
-  try {
-    const response = await axios.get("http://localhost:3000/api/roles/");
-    if (response.data.status === 200) {
-      roles.value = response.data.dataInfo; // Gán danh sách vai trò vào biến roles
-    } else {
-      Swal.fire("Lỗi!", "Không thể tải danh sách vai trò.", "error");
-    }
-  } catch (error) {
-    Swal.fire("Lỗi!", "Không thể kết nối với server để lấy vai trò.", "error");
-    console.error("Error loading roles:", error);
-  }
-};
-
-// ------CHUYEN KHOA
-const showSpecialtyModal = ref(false);
-const specialties = ref([]);
-
-const loadSpecialties = async () => {
-  try {
-    const response = await axios.get(
-      "http://localhost:3000/api/specialties/all"
-    );
-    if (response.data.message === "Specialties retrieved successfully") {
-      specialties.value = response.data.listSpecialties;
-      console.log("Danh sách chuyên khoa:", specialties.value);
-    }
-  } catch (error) {
-    console.error("Lỗi khi tải danh sách chuyên khoa:", error);
-  }
-};
-
-// Hàm xác nhận chuyên khoa đã chọn
-const confirmSpecialtySelection = () => {
-  showSpecialtyModal.value = false;
-};
-
-// Hiển thị tên chuyên khoa đã chọn
-const selectedSpecialtyNames = computed(() => {
-  return specialties.value
-    .filter((spec) => patientData.value.specialty.includes(spec.specialty_id))
-    .map((spec) => spec.specialty_name);
-});
-
 // Xử lý thay đổi khi chọn thành phố
 const onCityChange = () => {
   selectedDistrict.value = null;
@@ -359,17 +310,7 @@ const onDistrictChange = () => {
   selectedWard.value = null;
 };
 
-// Thêm Bệnh Nhânmới
-// Lưu ảnh tạm thời
-const file = ref(null);
-const handleFileChange = (event) => {
-  const selectedFile = event.target.files[0];
-  if (selectedFile) {
-    file.value = selectedFile;
-  }
-};
-
-const addEmployee = async () => {
+const addpatient = async () => {
   // Cấu trúc địa chỉ chi tiết
   patientData.value.address_contact = `${patientData.value.street || ""}, ${
     selectedWard.value?.name || ""
@@ -379,9 +320,8 @@ const addEmployee = async () => {
   // Tạo dữ liệu cho tài khoản, và thông tin chi tiết từ các trường form
   const accountData = [
     {
-      staff_id: patientData.value.staff_id,
+      patient_id: patientData.value.patient_id,
       password: "123@", //Mặc khẩu mặc định
-      role_id: patientData.value.role_id,
       first_name: patientData.value.first_name,
       last_name: patientData.value.last_name,
       birthday: moment(patientData.value.birthday, "DD/MM/YYYY").format(
@@ -408,52 +348,7 @@ const addEmployee = async () => {
       responseCreateAccount.data.message === "create accounts success" &&
       responseCreateAccount.data.data[0].status
     ) {
-      // Kiểm tra có ảnh không, nếu có thì upload trước khi thêm nhân viên
-      if (file.value) {
-        try {
-          // Tạo formData để gửi ảnh
-          const formData = new FormData();
-          formData.append("avatar", file.value);
-          formData.append("staffId", accountData[0].staff_id);
-          // Gửi ảnh lên API
-          const uploadResponse = await axios.post(
-            "http://localhost:3000/api/file/uploadAvtStaff", // API upload ảnh
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-
-          // Kiểm tra phản hồi từ API
-          if (uploadResponse.status === 200) {
-            Swal.fire("Thành công!", "Ảnh hồ sơ đã được tải lên.", "success");
-            // Lưu đường dẫn ảnh trong patientData nếu cần
-            patientData.value.avatar = uploadResponse.data.filePath; // Dự kiến là trả về đường dẫn ảnh
-          } else {
-            Swal.fire("Lỗi!", "Không thể tải ảnh lên.", "error");
-            return;
-          }
-        } catch (error) {
-          Swal.fire("Lỗi!", "Đã có lỗi xảy ra khi tải ảnh.", "error");
-          console.error("Lỗi upload ảnh:", error);
-          return;
-        }
-      }
-      const specialtyData = {
-        specialtyIds: patientData.value.specialty, // Đóng gói thành đối tượng với trường specialtyIds
-      };
-      const responseAddSpecialties = await axios.post(
-        `http://localhost:3000/api/handle/staff/addSpecialtiesForStaff/${accountData[0].staff_id}`,
-        specialtyData
-      );
-
-      if (
-        responseAddSpecialties.status === 200 &&
-        responseAddSpecialties.data.message ===
-          "Chuyên khoa đã được thêm cho nhân viên."
-      ) {
+      {
         Swal.fire({
           title: "Thành công!",
           text: "Bệnh Nhânmới đã được thêm",
@@ -467,20 +362,20 @@ const addEmployee = async () => {
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             router.push({
               name: "admin.create_staff_shift",
-              params: { staff_id: patientData.value.staff_id },
+              params: { patient_id: patientData.value.patient_id },
             });
             console.log(
-              `Chuẩn bị sắp xếp ca làm việc cho Bệnh Nhânmới này ${patientData.value.staff_id}`
+              `Chuẩn bị sắp xếp ca làm việc cho Bệnh Nhân mới này ${patientData.value.patient_id}`
             );
           }
         });
       }
     } else {
-      Swal.fire("Lỗi!", "Đã xảy ra lỗi khi thêm nhân viên.", "error");
+      Swal.fire("Lỗi!", "Đã xảy ra lỗi khi thêm bệnh nhân.", "error");
     }
   } catch (error) {
     Swal.fire("Lỗi!", "Không thể kết nối với server.", "error");
-    console.error("Error adding employee:", error);
+    console.error("Error adding patient:", error);
   }
 };
 
@@ -493,9 +388,6 @@ onMounted(() => {
   ]).then(() => {
     console.log(addressData.value);
   });
-
-  loadRoles();
-  loadSpecialties();
 });
 </script>
 
