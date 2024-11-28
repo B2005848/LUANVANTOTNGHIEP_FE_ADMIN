@@ -11,7 +11,7 @@
 
         <div class="option__booking row">
           <div class="option__1 col-6">
-            <router-link :to="{ name: 'home.page.booking.old' }">
+            <router-link :to="{ name: 'admin.create.booking.old' }">
               <button
                 :style="corlorButtonCursor1"
                 @click="buttonCorsor1"
@@ -24,7 +24,7 @@
           </div>
 
           <div class="option__2 col-6">
-            <router-link :to="{ name: 'home.page.booking.new' }">
+            <router-link :to="{ name: 'admin.create.booking.new' }">
               <button
                 @click="buttonCorsor2"
                 :style="corlorButtonCursor2"

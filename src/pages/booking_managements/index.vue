@@ -50,14 +50,14 @@
           </div>
 
           <div class="flex-1">
-            <button type="button" title="Tạo lịch hẹn">
+            <router-link :to="{ name: 'admin.create.booking' }">
               <font-awesome-icon
                 icon=" fa-plus"
                 bounce
                 size="lg"
                 style="color: #74c0fc"
               />
-            </button>
+            </router-link>
           </div>
         </div>
 
@@ -216,24 +216,27 @@
                   </span>
                 </td>
                 <td class="px-6 py-4">
-                  <select
-                    v-model="data.selectedAction"
-                    @change="
-                      updateAppointmentStatus(
-                        data.appointment_id,
-                        data.transaction_id,
-                        data.selectedAction
-                      )
-                    "
-                    class="tw-border tw-p-2 tw-rounded"
-                  >
-                    <option value="">Chọn hành động</option>
-                    <option value="C-IN">Đã đến</option>
-                    <option value="CO-F">Xác nhận</option>
-                    <option value="NO-S">Không đến</option>
-                    <option value="CA">Hủy</option>
-                    <!-- Thêm các lựa chọn khác nếu cần -->
-                  </select>
+                  <span v-if="data.status !== 'CO-P'">
+                    <select
+                      v-model="data.selectedAction"
+                      @change="
+                        updateAppointmentStatus(
+                          data.appointment_id,
+                          data.transaction_id,
+                          data.selectedAction
+                        )
+                      "
+                      class="tw-border tw-p-2 tw-rounded"
+                    >
+                      <option value="">Chọn hành động</option>
+                      <option value="C-IN">Đã đến</option>
+                      <option value="CO-F">Xác nhận</option>
+                      <option value="NO-S">Không đến</option>
+                      <option value="CA">Hủy</option>
+                      <!-- Thêm các lựa chọn khác nếu cần -->
+                    </select>
+                  </span>
+                  <span v-if="data.status === 'CO-P'"> Đã khám xong </span>
                 </td>
 
                 <td class="px-6 py-4">{{ formatDateTime(data.created_at) }}</td>

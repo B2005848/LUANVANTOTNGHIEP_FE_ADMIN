@@ -179,6 +179,36 @@ const admin = [
         },
       },
 
+      {
+        path: "create/booking_managements",
+        name: "admin.create.booking",
+        component: () => import("../layouts/booking_page.vue"),
+        meta: {
+          title: "CTU CLINIC - Tạo phiếu khám",
+        },
+        children: [
+          {
+            path: "create_booking_old",
+            name: "admin.create.booking.old",
+            component: () =>
+              import("../pages/booking_managements/booking_old.vue"),
+            meta: {
+              title: "CTU CLINIC - Tạo phiếu khám cho bệnh nhân cũ",
+            },
+          },
+
+          {
+            path: "create_booking_new",
+            name: "admin.create.booking.new",
+            component: () =>
+              import("../pages/booking_managements/booking_new.vue"),
+            meta: {
+              title: "CTU CLINIC - Tạo phiếu khám cho bệnh nhân mới",
+            },
+          },
+        ],
+      },
+
       //---------------------------------------------------------Router for admin request managements page (CHAT ONLINE)
       {
         path: "request_managements",
