@@ -61,6 +61,5 @@ useProccessStore.setStep(1);
 <style scoped>
 @import "@/assets/css/pages/booking_new.css";
 @import "@/assets/css/pages/booking_page.css";
-
 @import "@/assets/css/animation__page.css";
 </style>

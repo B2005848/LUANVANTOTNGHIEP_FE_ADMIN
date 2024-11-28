@@ -12,7 +12,7 @@
             </label>
             <input
               type="text"
-              v-model="patientData.patient_id"
+              v-model="patientData.username"
               placeholder="Email hoặc số điện thoại"
               class="form-control"
               id="patient_id"
@@ -80,6 +80,19 @@
               </div>
             </div>
           </div>
+
+          <div class="col-md-6">
+            <!-- Do ngôn ngữ trình duyệt -->
+            <label for="health_insurance_id" class="form-label"
+              >Mã số BHYT <sup style="color: red"></sup>
+            </label>
+            <input
+              type="text"
+              v-model="patientData.health_insurance_id"
+              class="form-control"
+              id="health_insurance_id"
+            />
+          </div>
         </div>
 
         <div class="row mb-3">
@@ -126,15 +139,12 @@
             />
           </div>
           <div class="col-md-6">
-            <label for="email" class="form-label"
-              >Email <sup style="color: red">*</sup>
-            </label>
+            <label for="email" class="form-label">Email </label>
             <input
               type="email"
               v-model="patientData.email"
               class="form-control"
               id="email"
-              required
             />
           </div>
         </div>
@@ -253,6 +263,17 @@
               required
             />
           </div>
+
+          <div class="col-md-6">
+            <label for="major" class="form-label">Nghề Nghiệp:</label>
+            <input
+              type="text"
+              v-model="patientData.major"
+              class="form-control"
+              id="religion"
+              required
+            />
+          </div>
         </div>
 
         <!-- Nút thêm Bệnh Nhân-->
@@ -275,11 +296,13 @@ import "@vuepic/vue-datepicker/dist/main.css";
 const router = useRouter();
 // Dữ liệu bệnh nhân
 const patientData = ref({
-  patient_id: "", // patient ID (phone number)
+  username: "", // patient ID (phone number)
   first_name: "", // First name
   last_name: "", // Last name
   birthday: "", // Birthday (format may need adjustment)
   citizen_id: "", // National ID
+  major: "",
+  health_insurance_id: "",
   phone_number: "", // Phone number
   gender: "0", // Gender (0 for female, 1 for male)
   email: "", // Email address
@@ -287,9 +310,7 @@ const patientData = ref({
   nation: "", // Ethnicity
   religion: "", // Religion
   nationality: "", // Nationality
-  work_contract: 0, // Contract duration (in years)
   statusAccount: "1", // Account status (active)
-  specialty: [], // List of specialties (array)
   street: "", // Street address (added here)
 });
 
@@ -318,63 +339,57 @@ const addpatient = async () => {
     selectedCity.value?.name || ""
   }`.trim();
   // Tạo dữ liệu cho tài khoản, và thông tin chi tiết từ các trường form
-  const accountData = [
-    {
-      patient_id: patientData.value.patient_id,
-      password: "123@", //Mặc khẩu mặc định
-      first_name: patientData.value.first_name,
-      last_name: patientData.value.last_name,
-      birthday: moment(patientData.value.birthday, "DD/MM/YYYY").format(
-        "DD/MM/YYYY"
-      ), // Chuyển đổi định dạng ngày bằng moment
-      citizen_id: patientData.value.citizen_id,
-      gender: patientData.value.gender,
-      phone_number: patientData.value.phone_number,
-      email: patientData.value.email,
-      address_contact: patientData.value.address_contact,
-      work_contract: patientData.value.work_contract,
-      nation: patientData.value.nation,
-      religion: patientData.value.religion,
-      nationality: patientData.value.nationality,
-    },
-  ];
+  const accountData = {
+    username: patientData.value.username,
+    password: "123@", //Mặc khẩu mặc định
+    first_name: patientData.value.first_name,
+    last_name: patientData.value.last_name,
+    birthday: moment(patientData.value.birthday, "DD/MM/YYYY").format(
+      "DD/MM/YYYY"
+    ), // Chuyển đổi định dạng ngày bằng moment
+    citizen_id: patientData.value.citizen_id,
+    gender: patientData.value.gender,
+    phone: patientData.value.phone_number,
+    email: patientData.value.email,
+    major: patientData.value.major,
+    address_contact: patientData.value.address_contact,
+    nation: patientData.value.nation,
+    religion: patientData.value.religion,
+    nationality: patientData.value.nationality,
+    health_insurance_id: patientData.value.health_insurance_id,
+  };
   try {
     const responseCreateAccount = await axios.post(
-      "http://localhost:3000/api/staff/account/createAccount",
+      "http://localhost:3000/api/patient/account/create",
       accountData
     );
 
-    if (
-      responseCreateAccount.data.message === "create accounts success" &&
-      responseCreateAccount.data.data[0].status
-    ) {
+    if (responseCreateAccount.status === 201) {
       {
         Swal.fire({
           title: "Thành công!",
-          text: "Bệnh Nhânmới đã được thêm",
+          text: "Bệnh Nhân mới đã được thêm",
           icon: "success",
           showCancelButton: true,
-          confirmButtonText: "OK",
-          cancelButtonText: "Sắp xếp ca làm việc",
+          confirmButtonText: "Tiến hành đăng kí khám dịch vụ",
+          cancelButtonText: "Hủy",
         }).then((result) => {
           if (result.isConfirmed) {
+            router.push({
+              name: "admin.select.department",
+              params: { patient_id: patientData.value.username },
+            });
             console.log("Đã thêm thành công");
           } else if (result.dismiss === Swal.DismissReason.cancel) {
-            router.push({
-              name: "admin.create_staff_shift",
-              params: { patient_id: patientData.value.patient_id },
-            });
-            console.log(
-              `Chuẩn bị sắp xếp ca làm việc cho Bệnh Nhân mới này ${patientData.value.patient_id}`
-            );
+            Swal.fire("Thông báo!", "Đã hủy việc đăng kí khám.", "warning");
           }
         });
       }
     } else {
-      Swal.fire("Lỗi!", "Đã xảy ra lỗi khi thêm bệnh nhân.", "error");
+      Swal.fire("Lỗi!", "Đã xảy ra lỗi khi thêm bệnh nhân. ", "error");
     }
   } catch (error) {
-    Swal.fire("Lỗi!", "Không thể kết nối với server.", "error");
+    Swal.fire("Lỗi!", error, "error");
     console.error("Error adding patient:", error);
   }
 };

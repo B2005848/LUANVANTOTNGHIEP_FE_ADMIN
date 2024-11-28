@@ -55,6 +55,7 @@ const admin = [
           title: "CTU CLINIC - Thêm nhân viên nhân mới",
         },
       },
+
       // --------------------------------------Router for admin patients managements page
       {
         path: "patients_managements",
@@ -206,6 +207,20 @@ const admin = [
               title: "CTU CLINIC - Tạo phiếu khám cho bệnh nhân mới",
             },
           },
+
+          // QUY TRÌNH ĐĂNG KÍ KHÁM BỆNH TẠI PHÒNG KHÁM
+          // step 1: chọn phòng khám
+          {
+            path: "select_department/:patient_id",
+            name: "admin.select.department",
+            component: () =>
+              import("../pages/booking_managements/select_department.vue"),
+            meta: {
+              title: "CTU CLINIC - Chọn phòng khám",
+            },
+          },
+
+          // Step 2: chọn dịch vụ khám
         ],
       },
 
