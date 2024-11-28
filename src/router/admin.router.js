@@ -95,6 +95,16 @@ const admin = [
           },
         ],
       },
+      // Chi tiết quá trình điều trị
+      {
+        path: "detail_treatment_history/:record_id",
+        name: "admin.patient_detail.record",
+        component: () =>
+          import("../pages/patient_managements/record_detail.vue"),
+        meta: {
+          title: "CTU CLINIC - QUÁ TRÌNH ĐIỀU TRỊ",
+        },
+      },
       // Add a new patient
       {
         path: "add_a_newpatient",
