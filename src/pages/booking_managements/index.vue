@@ -50,7 +50,7 @@
           </div>
 
           <div class="flex-1">
-            <button type="button" title="Thêm nhân viên mới">
+            <button type="button" title="Tạo lịch hẹn">
               <font-awesome-icon
                 icon=" fa-plus"
                 bounce
@@ -61,6 +61,28 @@
           </div>
         </div>
 
+        <div style="display: flex; flex-direction: column; gap: 20px">
+          <div style="font-weight: bold">Chú thích hành động:</div>
+          <div>
+            <span style="font-weight: bold">Xác nhận:</span> "Xác nhận thông tin
+            lịch hẹn"
+          </div>
+          <div>
+            <span style="font-weight: bold">Đã đến:</span> "Xác nhận bệnh nhân
+            đã đến phòng khám đúng hẹn và
+            <span style="font-weight: bold; text-decoration: underline">
+              đã thanh toán dịch vụ khám</span
+            >"
+          </div>
+          <div>
+            <span style="font-weight: bold">Không đến:</span> "Bệnh nhân không
+            đến phòng khám khi quá thời gian hẹn"
+          </div>
+          <div>
+            <span style="font-weight: bold">Hủy:</span> "Hủy lịch hẹn khi không
+            đúng thông tin "
+          </div>
+        </div>
         <!-- --TW CSS -->
         <!-- list emp -->
         <div
@@ -81,12 +103,12 @@
                 <th scope="col" class="tw-px-6 tw-py-4">Ngày hẹn</th>
                 <th scope="col" class="tw-px-6 tw-py-4">Lí do khám</th>
                 <th scope="col" class="tw-px-6 tw-py-4">Dịch vụ khám</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Thanh toán</th>
                 <th scope="col" class="tw-px-6 tw-py-4">Phòng tiếp nhận</th>
                 <th scope="col" class="tw-px-6 tw-py-4">Trạng thái</th>
-                <th scope="col" class="tw-px-6 tw-py-4">Ngày tạo lịch hẹn</th>
-                <th scope="col" class="tw-px-6 tw-py-4">
-                  Ngày cập nhật lịch hẹn
-                </th>
+                <th scope="col" class="tw-px-6 tw-py-4">Hành động</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Ngày tạo</th>
+                <th scope="col" class="tw-px-6 tw-py-4">Ngày cập nhật</th>
               </tr>
             </thead>
             <tbody>
@@ -142,6 +164,19 @@
                 <!-- DỊCH VỤ KHÁM -->
                 <td class="px-6 py-4">{{ data.service_name }}</td>
 
+                <!-- Trạng thái thanh toán -->
+                <td class="px-6 py-4">
+                  <span class="text-warning" v-if="data.payment_status === 'X'">
+                    Chưa thanh toán
+                  </span>
+
+                  <span class="text-success" v-if="data.payment_status === 'C'">
+                    Đã thanh toán
+                  </span>
+
+                  <span v-if="data.payment_status === 'P'"> Đang xử lí </span>
+                </td>
+
                 <!-- PHÒNG TIẾP NHẬN  -->
                 <td class="px-6 py-4">
                   {{ data.department_id }} <br />
@@ -150,25 +185,15 @@
 
                 <!-- TRẠNG THÁI ĐẶT HẸN -->
                 <td class="px-6 py-4">
-                  <span v-if="data.status === 'S'" style="font-weight: bold">
-                    <button
-                      @click="confirmAppointment(data.appointment_id)"
-                      style="
-                        background-color: #0000ff;
-                        font-size: 12px;
-                        padding: 10px;
-                        border-radius: 13px;
-                        margin-left: 5px;
-                      "
-                    >
-                      Xác nhận
-                    </button>
-                  </span>
-                  <span
-                    v-if="data.status === 'CO-F'"
-                    style="color: rgb(197, 199, 80)"
-                  >
-                    Đã xác nhận
+                  <span v-if="data.status === 'CO-F'">Đã xác nhận </span>
+                  <span v-if="data.status === 'S'">
+                    <font-awesome-icon
+                      icon="fa-solid fa-bell"
+                      shake
+                      size="xl"
+                      style="color: #ffd43b"
+                    />
+                    Chờ xác nhận
                   </span>
                   <span v-if="data.status === 'C-IN'"> Đã đến </span>
                   <span v-if="data.status === 'IN-P'" style="color: #63e6be">
@@ -189,8 +214,28 @@
                   <span v-if="data.status === 'NO-S'" style="color: #4682b4">
                     Không đến
                   </span>
-                  <span v-if="data.status === 'RE-S'"> Đã dời lịch </span>
                 </td>
+                <td class="px-6 py-4">
+                  <select
+                    v-model="data.selectedAction"
+                    @change="
+                      updateAppointmentStatus(
+                        data.appointment_id,
+                        data.transaction_id,
+                        data.selectedAction
+                      )
+                    "
+                    class="tw-border tw-p-2 tw-rounded"
+                  >
+                    <option value="">Chọn hành động</option>
+                    <option value="C-IN">Đã đến</option>
+                    <option value="CO-F">Xác nhận</option>
+                    <option value="NO-S">Không đến</option>
+                    <option value="CA">Hủy</option>
+                    <!-- Thêm các lựa chọn khác nếu cần -->
+                  </select>
+                </td>
+
                 <td class="px-6 py-4">{{ formatDateTime(data.created_at) }}</td>
                 <td class="px-6 py-4">{{ formatDateTime(data.updated_at) }}</td>
               </tr>
@@ -236,9 +281,26 @@ const fetchDataByPage = async (page) => {
   await getData(page);
 };
 
-const confirmAppointment = async (appointmentId) => {
+const updateAppointmentStatus = async (
+  appointmentId,
+  transaction_id,
+  action
+) => {
+  if (!action) return; // Nếu không chọn hành động thì không làm gì
+
+  // Hiển thị thông báo xác nhận
   const result = await Swal.fire({
-    title: "Bạn chắc chắn xác nhận lịch hẹn này?",
+    title: `Bạn chắc chắn muốn ${
+      action === "CO-F"
+        ? "xác nhận"
+        : action === "CA"
+        ? "hủy"
+        : action === "C-IN"
+        ? "xác nhận bệnh nhân đã đến khám"
+        : action === "NO-S"
+        ? "xác nhận bệnh nhân 'KHÔNG ĐẾN HẸN với'"
+        : "Thực hiện hành động"
+    } lịch hẹn này?`,
     icon: "warning",
     showCancelButton: true,
     confirmButtonText: "Xác nhận",
@@ -247,14 +309,51 @@ const confirmAppointment = async (appointmentId) => {
 
   if (result.isConfirmed) {
     try {
-      await axios.put(
-        "http://localhost:3000/api/appointment/modifyStatus/" + appointmentId,
-        { status: "CO-F" }
+      // Gọi API để cập nhật trạng thái
+      const response = await axios.put(
+        `http://localhost:3000/api/appointment/modifyStatus/${appointmentId}`,
+        { status: action }
       );
-      Swal.fire("Thành công!", "Lịch hẹn đã được xác nhận.", "success");
-      fetchDataByPage(1); // Reload the appointments to reflect the update
+
+      // Nếu hành động là "Đã đến" (C-IN), gọi thêm API thứ hai
+      if (action === "C-IN") {
+        const checkInResponse = await axios.put(
+          `http://localhost:3000/api/statistics/revenue/update-status/${transaction_id}`,
+          { newStatus: "C" } // Dữ liệu có thể thay đổi tùy theo API
+        );
+
+        // Kiểm tra kết quả của API thứ hai
+        if (checkInResponse.status === 200) {
+          Swal.fire(
+            "Thành công!",
+            "Lịch hẹn đã được xác nhận và bệnh nhân đã được ghi nhận đã thanh toán.",
+            "success"
+          );
+        } else {
+          throw new Error("Có lỗi khi xác nhận bệnh nhân đã đến.");
+        }
+      } else {
+        Swal.fire(
+          "Thành công!",
+          `Lịch hẹn đã được ${
+            action === "C-IN"
+              ? "xác nhận"
+              : action === "CA"
+              ? "hủy"
+              : "dời lịch"
+          }.`,
+          "success"
+        );
+      }
+
+      // Cập nhật lại danh sách lịch hẹn sau khi thay đổi trạng thái
+      fetchDataByPage(currentPage.value); // Tải lại dữ liệu từ server
     } catch (error) {
-      Swal.fire("Lỗi!", "Có lỗi xảy ra khi xác nhận lịch hẹn.", "error");
+      Swal.fire(
+        "Lỗi!",
+        error.message || "Có lỗi xảy ra khi cập nhật trạng thái lịch hẹn.",
+        "error"
+      );
     }
   }
 };
