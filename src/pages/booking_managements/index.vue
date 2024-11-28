@@ -54,7 +54,7 @@
               <font-awesome-icon
                 icon=" fa-plus"
                 bounce
-                size="lg"
+                size="2xl"
                 style="color: #74c0fc"
               />
             </router-link>

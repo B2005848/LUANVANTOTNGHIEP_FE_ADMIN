@@ -5,9 +5,7 @@
       <div class="title text-center">
         <h3>ĐĂNG KÍ KHÁM BỆNH</h3>
 
-        <p style="color: #6b6b6b; margin-top: 15px">
-          Bạn đã từng khám tại phòng khám Shine On You chưa?
-        </p>
+        <p style="color: #6b6b6b; margin-top: 15px">Chọn phương thức đăng kí</p>
 
         <div class="option__booking row">
           <div class="option__1 col-6">
