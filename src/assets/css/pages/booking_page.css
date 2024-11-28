@@ -1,0 +1,48 @@
+.main {
+  border: #b3b3b3 solid 1px;
+  border-radius: 10px;
+  width: 70%;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.title {
+  height: 200px;
+}
+a {
+  text-decoration: none;
+}
+
+.option__booking {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.option__booking button {
+  border-color: #307be7;
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #307be7;
+  cursor: pointer;
+  text-align: center;
+  width: 200px;
+}
+
+.ul__list {
+  list-style: none;
+  display: flex;
+  margin-top: 20px;
+}
+
+.ul__list li {
+  margin: 10px;
+}
+
+.ul__list li.active {
+  font-weight: bold;
+  color: #007bff;
+}

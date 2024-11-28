@@ -1,0 +1,44 @@
+.container {
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.note__star {
+  color: red;
+}
+
+.btn__submit {
+  border-radius: 15px;
+  background-color: #307be7;
+  border: #307be7;
+  color: #fff;
+  text-align: center;
+  width: 200px;
+  padding: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  position: relative; /* Để có thể sử dụng các phần tử giả */
+  overflow: hidden; /* Để ẩn các phần tử giả bên ngoài nút */
+  z-index: 1;
+}
+
+.btn__submit::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 0;
+  background-color: #4389ec;
+  transition: height 0.3s ease-in-out, top 0.3s ease-in-out;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.btn__submit:hover::before {
+  height: 200%;
+}
