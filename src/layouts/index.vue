@@ -43,7 +43,7 @@
 
 .sidebar {
   background-color: #f0f0f1;
-  width: 300px;
+  width: 350px;
   height: 100%;
   overflow-y: auto;
 }
