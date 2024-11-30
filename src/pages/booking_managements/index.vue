@@ -166,7 +166,12 @@
 
                 <!-- Trạng thái thanh toán -->
                 <td class="px-6 py-4">
-                  <span class="text-warning" v-if="data.payment_status === 'X'">
+                  <span
+                    class="text-warning"
+                    v-if="
+                      data.payment_status === 'X' || data.payment_status === 'F'
+                    "
+                  >
                     Chưa thanh toán
                   </span>
 
