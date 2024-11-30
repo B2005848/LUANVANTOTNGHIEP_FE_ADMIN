@@ -95,7 +95,7 @@ const fetchPatientRecords = async () => {
       error.value = response.message || "Có lỗi khi tải dữ liệu";
     }
   } catch (err) {
-    error.value = "Không thể kết nối đến server";
+    error.value = "Không có dữ liệu ";
   } finally {
     loading.value = false;
   }

@@ -146,7 +146,10 @@
                 </td>
 
                 <!-- Email -->
-                <td class="tw-px-4 tw-py-2 tw-border-x">{{ pa.email }}</td>
+                <td class="tw-px-4 tw-py-2 tw-border-x">
+                  <span v-if="pa.email === null">Chưa cập nhật</span>
+                  <span v-else>{{ pa.email }}</span>
+                </td>
 
                 <!-- Citizen ID -->
                 <td class="tw-px-4 tw-py-2 tw-border-x">
