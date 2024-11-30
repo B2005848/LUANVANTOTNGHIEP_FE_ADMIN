@@ -151,7 +151,7 @@ const updateChart = async (data) => {
   const labels = data.map((item) => item.service_name);
 
   // Doanh thu của các dịch vụ
-  const appointmentRevenue = data.map((item) => item.revenue_appointment);
+  const appointmentRevenue = data.map((item) => item.total_revenue);
 
   if (chart.value) {
     chart.value.destroy(); // Hủy biểu đồ cũ nếu có
