@@ -163,7 +163,7 @@
           </div>
         </div>
 
-        <div v-if="selectHour">
+        <div v-if="selectedHour">
           <label
             for="message"
             class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 tw-dark:text-white"
@@ -178,13 +178,26 @@
           ></textarea>
         </div>
         <!-- Xác nhận -->
-        <button
-          v-if="showbtnPayment"
-          class="btn btn-success w-100 tw-mt-5"
-          @click="confirmSelection"
-        >
-          Tiến hành thanh toán
-        </button>
+
+        <div v-if="showbtnPayment" class="row">
+          <div class="col-md-6">
+            <button
+              class="btn btn-success w-100 tw-mt-5"
+              @click="paymnentDirect"
+            >
+              THANH TOÁN TIỀN MẶT
+            </button>
+          </div>
+
+          <div class="col-md-6">
+            <button
+              class="btn btn-success w-100 tw-mt-5"
+              @click="paymnentDirect"
+            >
+              THANH TOÁN VNPAY
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -257,6 +270,19 @@ const fetchDoctorShifts = async () => {
   }
 };
 
+// Load buổi làm việc của bác sĩ
+const loadShift = async () => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/handle/staff/getDoctorShifts/${department_id}/${specialty_id}/${selecteddoctor.value.doctor_id}`
+    );
+    shifts.value = response.data.shifts;
+    console.log(shifts);
+  } catch (error) {
+    console.error("Lỗi khi tải danh sách bác sĩ:", error);
+  }
+};
+
 // Chọn buổi và load giờ
 const selectshift = (shift) => {
   selectedshift.value = shift;
@@ -274,19 +300,7 @@ const selectshift = (shift) => {
   options.push(endMoment.format("HH:mm"));
 
   availableHours.value = options;
-};
-
-// Load buổi làm việc của bác sĩ
-const loadShift = async () => {
-  try {
-    const response = await axios.get(
-      `http://localhost:3000/api/handle/staff/getDoctorShifts/${department_id}/${specialty_id}/${selecteddoctor.value.doctor_id}`
-    );
-    shifts.value = response.data.shifts;
-    console.log(shifts);
-  } catch (error) {
-    console.error("Lỗi khi tải danh sách bác sĩ:", error);
-  }
+  console.log("ID ca làm việc đã chọn:", selectedshift.value.shift_id);
 };
 
 const selectedHour = ref(null);
@@ -295,6 +309,9 @@ const selectHour = async (hour) => {
   console.log(`Giờ khám đã chọn: ${hour}`);
   selectedHour.value = hour;
   // Bạn có thể xử lý thêm ở đây, ví dụ lưu lại giờ chọn, chuyển qua bước tiếp theo...
+  const endTime = moment(selectedHour, "HH:mm")
+    .add(30, "minutes")
+    .format("HH:mm");
   const appointmentDetails = {
     doctor_id: selecteddoctor.value.doctor_id,
     department_id: department_id,
@@ -302,6 +319,7 @@ const selectHour = async (hour) => {
     service_id: "SV001",
     start_time: hour,
     shift_id: selectedshift.shift_id,
+    end_time: endTime,
   };
 
   const isAvailable = await axios.get(
@@ -310,36 +328,16 @@ const selectHour = async (hour) => {
   );
 
   if (isAvailable.status === 200) {
-    Swal.fire("Thông tin hợp lệ");
+    Swal.fire("THÔNG BÁO", "Thông tin hợp lệ", "success");
     showbtnPayment.value = true;
   } else {
     Swal.fire(
-      "Khung giờ này đã có người đặt, vui lòng chọn khung giờ hoặc ngày khác"
+      "THÔNG BÁO",
+      "Khung giờ này đã có người đặt, vui lòng chọn khung giờ hoặc ngày khác",
+      "warning"
     );
     showbtnPayment.value = false;
   }
-};
-
-// Xác nhận lịch và tiến hành đến phương thức thanh toán
-const confirmSelection = () => {
-  const endTime = moment(selectedHour, "HH:mm")
-    .add(30, "minutes")
-    .format("HH:mm");
-  // Tiến hành chọn dịch vụ hoặc chuyển bước tiếp theo
-  router.push({
-    name: "admin.select.doctor",
-    params: {
-      patient_id: patient_id,
-      department_id: department_id,
-      doctor_id: selecteddoctor.value.doctor_id,
-      specialty_id: selecteddoctor.value.specialty_id,
-      appointment_date: selectedDate,
-      start_time: selectHour,
-      endTime: endTime,
-      shift_id: selectshift.shift_id,
-      reason: reason.value,
-    },
-  });
 };
 
 onMounted(() => {

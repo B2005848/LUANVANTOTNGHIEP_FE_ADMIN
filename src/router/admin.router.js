@@ -233,10 +233,10 @@ const admin = [
 
           // Step 3: Chọn bác sĩ
           {
-            path: "select_service/:patient_id/:department_id/:service_id/:specialty_id",
+            path: "select_doctors/:patient_id/:department_id/:service_id/:specialty_id",
             name: "admin.select.doctor",
             component: () =>
-              import("../pages/booking_managements/slelect_doctor.vue"),
+              import("../pages/booking_managements/select_doctor.vue"),
             meta: {
               title: "CTU CLINIC - Chọn bác sĩ",
             },
