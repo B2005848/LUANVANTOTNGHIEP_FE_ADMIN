@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid mt-3">
     <div>
-      <ul class="ul__list d-flex">
+      <ul class="ul__list d-flex" style="justify-content: center">
         <li>Tạo hồ sơ</li>
         <li>&gt;</li>
         <li>Chọn phòng khám</li>
@@ -9,8 +9,6 @@
         <li class="active">Chọn dịch vụ</li>
         <li>&gt;</li>
         <li>Chọn bác sĩ</li>
-        <li>&gt;</li>
-        <li>Chọn ngày khám</li>
         <li>&gt;</li>
         <li>Thanh toán</li>
       </ul>
@@ -88,7 +86,7 @@ const confirmSelection = () => {
   );
   // Tiến hành chọn dịch vụ hoặc chuyển bước tiếp theo
   router.push({
-    name: "admin.select.service",
+    name: "admin.select.doctor",
     params: {
       patient_id: patient_id,
       department_id: department_id,

@@ -233,7 +233,7 @@ const admin = [
 
           // Step 3: Chọn bác sĩ
           {
-            path: "select_service/:patient_id/:department_id/:service_id",
+            path: "select_service/:patient_id/:department_id/:service_id/:specialty_id",
             name: "admin.select.doctor",
             component: () =>
               import("../pages/booking_managements/slelect_doctor.vue"),
