@@ -12,7 +12,13 @@
           class="mb-3"
         >
           <button
-            class="btn btn-outline-primary w-100"
+            :class="[
+              'btn',
+              'w-100',
+              department.department_id === selectedDepartment?.department_id
+                ? 'selected'
+                : 'btn-outline-primary',
+            ]"
             @click="selectDepartment(department)"
           >
             {{ department.department_name }}
@@ -45,14 +51,17 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { useRouter, useRoute } from "vue-router";
 import PaginationComponent from "@/components/Pagination.vue";
 import { useProccess } from "@/stores/proccess_booking.store";
 import Theproccessbooking from "@/components/proccess_booking.vue";
-
+const router = useRouter();
+const route = useRoute();
 const departments = ref([]);
 const selectedDepartment = ref(null);
 const currentPage = ref(1);
 const totalPages = ref(1);
+const patient_id = route.params.patient_id;
 
 // Hàm tải danh sách phòng khám theo trang
 const loadDepartments = async (page) => {
@@ -77,6 +86,13 @@ const selectDepartment = (department) => {
 const confirmSelection = () => {
   console.log("ID Phòng Khám Đã Chọn:", selectedDepartment.value.department_id);
   // Tiến hành chọn dịch vụ hoặc chuyển bước tiếp theo
+  router.push({
+    name: "admin.select.service",
+    params: {
+      patient_id: patient_id,
+      department_id: selectedDepartment.value.department_id,
+    },
+  });
 };
 
 // Hàm xử lý khi chuyển trang
@@ -95,5 +111,19 @@ onMounted(() => {
 .container-fluid {
   max-width: 100%;
   margin: 0 auto;
+}
+.selected {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.btn:hover {
+  color: white;
+}
+
+.btn-outline-primary {
+  border-color: #007bff;
+  color: #007bff;
 }
 </style>

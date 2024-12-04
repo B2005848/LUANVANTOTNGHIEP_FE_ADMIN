@@ -1,287 +1,293 @@
 <template>
   <div class="container-fluid mt-3">
-    <div class="card p-4">
-      <h4 class="text-center">Thông tin cơ bản của bệnh nhân</h4>
-      <form @submit.prevent="addpatient" class="mt-4">
-        <!-- Thông tin cơ bản của Bệnh Nhân-->
-        <div class="row mb-3">
-          <div class="col-md-12">
-            <label for="patient_id" class="form-label"
-              >Mã Bệnh Nhân (Tên tài khoản đăng nhập)
-              <sup style="color: red">*</sup>
-            </label>
-            <input
-              type="text"
-              v-model="patientData.username"
-              placeholder="Email hoặc số điện thoại"
-              class="form-control"
-              id="patient_id"
-              required
-            />
-          </div>
+    <div>
+      <ul class="ul__list d-flex">
+        <li class="active">Tạo hồ sơ</li>
+        <li>&gt;</li>
+        <li>Chọn phòng khám</li>
+        <li>&gt;</li>
+        <li>Chọn dịch vụ</li>
+        <li>&gt;</li>
+        <li>Chọn bác sĩ</li>
+        <li>&gt;</li>
+        <li>Chọn ngày khám</li>
+        <li>&gt;</li>
+        <li>Thanh toán</li>
+      </ul>
+    </div>
+    <h4 class="text-center">Thông tin cơ bản của bệnh nhân</h4>
+    <form @submit.prevent="addpatient" class="mt-4">
+      <!-- Thông tin cơ bản của Bệnh Nhân-->
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <label for="patient_id" class="form-label"
+            >Mã Bệnh Nhân (Tên tài khoản đăng nhập)
+            <sup style="color: red">*</sup>
+          </label>
+          <input
+            type="text"
+            v-model="patientData.username"
+            placeholder="Email hoặc số điện thoại"
+            class="form-control"
+            id="patient_id"
+            required
+          />
         </div>
+      </div>
 
-        <!-- Thông tin cá nhân khác -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="first_name" class="form-label"
-              >Họ và tên đệm <sup style="color: red">*</sup>
-            </label>
-            <input
-              type="text"
-              v-model="patientData.first_name"
-              class="form-control"
-              placeholder="Ví dụ Nguyễn Văn"
-              id="first_name"
-              required
-            />
-          </div>
-          <div class="col-md-6">
-            <label for="last_name" class="form-label"
-              >Tên <sup style="color: red">*</sup>
-            </label>
-            <input
-              type="text"
-              v-model="patientData.last_name"
-              class="form-control"
-              placeholder="Ví dụ ABC"
-              id="last_name"
-              required
-            />
-          </div>
+      <!-- Thông tin cá nhân khác -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="first_name" class="form-label"
+            >Họ và tên đệm <sup style="color: red">*</sup>
+          </label>
+          <input
+            type="text"
+            v-model="patientData.first_name"
+            class="form-control"
+            placeholder="Ví dụ Nguyễn Văn"
+            id="first_name"
+            required
+          />
         </div>
+        <div class="col-md-6">
+          <label for="last_name" class="form-label"
+            >Tên <sup style="color: red">*</sup>
+          </label>
+          <input
+            type="text"
+            v-model="patientData.last_name"
+            class="form-control"
+            placeholder="Ví dụ ABC"
+            id="last_name"
+            required
+          />
+        </div>
+      </div>
 
-        <!-- Gender -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label class="form-label d-block"
-              >Giới Tính <sup style="color: red">*</sup>
-            </label>
-            <div class="gender-options">
-              <div class="form-check form-check-inline">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  v-model="patientData.gender"
-                  id="female"
-                  value="0"
-                />
-                <label class="form-check-label" for="female">Nữ</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  v-model="patientData.gender"
-                  id="male"
-                  value="1"
-                />
-                <label class="form-check-label" for="male">Nam</label>
-              </div>
+      <!-- Gender -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label d-block"
+            >Giới Tính <sup style="color: red">*</sup>
+          </label>
+          <div class="gender-options">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="patientData.gender"
+                id="female"
+                value="0"
+              />
+              <label class="form-check-label" for="female">Nữ</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="patientData.gender"
+                id="male"
+                value="1"
+              />
+              <label class="form-check-label" for="male">Nam</label>
             </div>
           </div>
-
-          <div class="col-md-6">
-            <!-- Do ngôn ngữ trình duyệt -->
-            <label for="health_insurance_id" class="form-label"
-              >Mã số BHYT <sup style="color: red"></sup>
-            </label>
-            <input
-              type="text"
-              v-model="patientData.health_insurance_id"
-              class="form-control"
-              id="health_insurance_id"
-            />
-          </div>
         </div>
 
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <!-- Do ngôn ngữ trình duyệt -->
-            <label for="birthday" class="form-label"
-              >Ngày Sinh <sup style="color: red">*</sup>
-            </label>
-            <VueDatePicker
-              v-model="patientData.birthday"
-              locale="vi"
-              format="dd/MM/yyyy"
-              :enable-time-picker="false"
-              placeholder="Chọn ngày sinh"
-              text-input
-            />
-          </div>
-          <div class="col-md-6">
-            <label for="citizen_id" class="form-label"
-              >CCCD/CMND <sup style="color: red">*</sup>
-            </label>
-            <input
-              type="text"
-              v-model="patientData.citizen_id"
-              class="form-control"
-              id="citizen_id"
-              required
-              maxlength="13"
-            />
-          </div>
+        <div class="col-md-6">
+          <!-- Do ngôn ngữ trình duyệt -->
+          <label for="health_insurance_id" class="form-label"
+            >Mã số BHYT <sup style="color: red"></sup>
+          </label>
+          <input
+            type="text"
+            v-model="patientData.health_insurance_id"
+            class="form-control"
+            id="health_insurance_id"
+          />
         </div>
+      </div>
 
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="phone_number" class="form-label"
-              >Số Điện Thoại <sup style="color: red">*</sup>
-            </label>
-            <input
-              type="tel"
-              v-model="patientData.phone_number"
-              class="form-control"
-              id="phone_number"
-              required
-            />
-          </div>
-          <div class="col-md-6">
-            <label for="email" class="form-label">Email </label>
-            <input
-              type="email"
-              v-model="patientData.email"
-              class="form-control"
-              id="email"
-            />
-          </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <!-- Do ngôn ngữ trình duyệt -->
+          <label for="birthday" class="form-label"
+            >Ngày Sinh <sup style="color: red">*</sup>
+          </label>
+          <VueDatePicker
+            v-model="patientData.birthday"
+            locale="vi"
+            format="dd/MM/yyyy"
+            :enable-time-picker="false"
+            placeholder="Chọn ngày sinh"
+            text-input
+          />
         </div>
+        <div class="col-md-6">
+          <label for="citizen_id" class="form-label"
+            >CCCD/CMND <sup style="color: red">*</sup>
+          </label>
+          <input
+            type="text"
+            v-model="patientData.citizen_id"
+            class="form-control"
+            id="citizen_id"
+            required
+            maxlength="13"
+          />
+        </div>
+      </div>
 
-        <!-- Địa chỉ chi tiết -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="city" class="form-label"
-              >Thành Phố / Tỉnh <sup style="color: red">*</sup>
-            </label>
-            <select
-              v-model="selectedCity"
-              @change="onCityChange"
-              class="form-select"
-              id="city"
-              required
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="phone_number" class="form-label"
+            >Số Điện Thoại <sup style="color: red">*</sup>
+          </label>
+          <input
+            type="tel"
+            v-model="patientData.phone_number"
+            class="form-control"
+            id="phone_number"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email </label>
+          <input
+            type="email"
+            v-model="patientData.email"
+            class="form-control"
+            id="email"
+          />
+        </div>
+      </div>
+
+      <!-- Địa chỉ chi tiết -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="city" class="form-label"
+            >Thành Phố / Tỉnh <sup style="color: red">*</sup>
+          </label>
+          <select
+            v-model="selectedCity"
+            @change="onCityChange"
+            class="form-select"
+            id="city"
+            required
+          >
+            <option
+              v-for="city in addressData"
+              :key="city.level1_id"
+              :value="city"
             >
-              <option
-                v-for="city in addressData"
-                :key="city.level1_id"
-                :value="city"
-              >
-                {{ city.name }}
-              </option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label for="district" class="form-label"
-              >Quận / Huyện <sup style="color: red">*</sup>
-            </label>
-            <select
-              v-model="selectedDistrict"
-              @change="onDistrictChange"
-              class="form-select"
-              id="district"
-              required
+              {{ city.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="district" class="form-label"
+            >Quận / Huyện <sup style="color: red">*</sup>
+          </label>
+          <select
+            v-model="selectedDistrict"
+            @change="onDistrictChange"
+            class="form-select"
+            id="district"
+            required
+          >
+            <option
+              v-for="district in selectedCity?.level2s || []"
+              :key="district.level2_id"
+              :value="district"
             >
-              <option
-                v-for="district in selectedCity?.level2s || []"
-                :key="district.level2_id"
-                :value="district"
-              >
-                {{ district.name }}
-              </option>
-            </select>
-          </div>
+              {{ district.name }}
+            </option>
+          </select>
         </div>
+      </div>
 
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="ward" class="form-label"
-              >Xã / Phường <sup style="color: red">*</sup>
-            </label>
-            <select
-              v-model="selectedWard"
-              class="form-select"
-              id="ward"
-              required
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="ward" class="form-label"
+            >Xã / Phường <sup style="color: red">*</sup>
+          </label>
+          <select v-model="selectedWard" class="form-select" id="ward" required>
+            <option
+              v-for="ward in selectedDistrict?.level3s || []"
+              :key="ward.level3_id"
+              :value="ward"
             >
-              <option
-                v-for="ward in selectedDistrict?.level3s || []"
-                :key="ward.level3_id"
-                :value="ward"
-              >
-                {{ ward.name }}
-              </option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label for="street" class="form-label"
-              >Số Nhà, Tên Đường <sup style="color: red">*</sup>
-            </label>
-            <input
-              type="text"
-              v-model="patientData.street"
-              class="form-control"
-              id="street"
-              placeholder="Ví dụ: 122A1, QLN1"
-              required
-            />
-          </div>
+              {{ ward.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="street" class="form-label"
+            >Số Nhà, Tên Đường <sup style="color: red">*</sup>
+          </label>
+          <input
+            type="text"
+            v-model="patientData.street"
+            class="form-control"
+            id="street"
+            placeholder="Ví dụ: 122A1, QLN1"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Thông tin bổ sung -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="nation" class="form-label">Dân Tộc</label>
+          <input
+            type="text"
+            v-model="patientData.nation"
+            class="form-control"
+            id="nation"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="religion" class="form-label">Tôn Giáo</label>
+          <input
+            type="text"
+            v-model="patientData.religion"
+            class="form-control"
+            id="religion"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="nationality" class="form-label">Quốc Tịch</label>
+          <input
+            type="text"
+            v-model="patientData.nationality"
+            class="form-control"
+            id="nationality"
+            required
+          />
         </div>
 
-        <!-- Thông tin bổ sung -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="nation" class="form-label">Dân Tộc</label>
-            <input
-              type="text"
-              v-model="patientData.nation"
-              class="form-control"
-              id="nation"
-              required
-            />
-          </div>
-          <div class="col-md-6">
-            <label for="religion" class="form-label">Tôn Giáo</label>
-            <input
-              type="text"
-              v-model="patientData.religion"
-              class="form-control"
-              id="religion"
-              required
-            />
-          </div>
+        <div class="col-md-6">
+          <label for="major" class="form-label">Nghề Nghiệp:</label>
+          <input
+            type="text"
+            v-model="patientData.major"
+            class="form-control"
+            id="religion"
+            required
+          />
         </div>
+      </div>
 
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="nationality" class="form-label">Quốc Tịch</label>
-            <input
-              type="text"
-              v-model="patientData.nationality"
-              class="form-control"
-              id="nationality"
-              required
-            />
-          </div>
-
-          <div class="col-md-6">
-            <label for="major" class="form-label">Nghề Nghiệp:</label>
-            <input
-              type="text"
-              v-model="patientData.major"
-              class="form-control"
-              id="religion"
-              required
-            />
-          </div>
-        </div>
-
-        <!-- Nút thêm Bệnh Nhân-->
-        <button type="submit" class="btn btn-primary w-100 mt-3">
-          TIẾP TỤC
-        </button>
-      </form>
-    </div>
+      <!-- Nút thêm Bệnh Nhân-->
+      <button type="submit" class="btn btn-primary w-100 mt-3">TIẾP TỤC</button>
+    </form>
   </div>
 </template>
 
@@ -443,5 +449,21 @@ onMounted(() => {
 
 .modal-lg {
   max-width: 80%;
+}
+
+.ul__list {
+  list-style: none;
+  display: flex;
+  margin-top: 20px;
+}
+
+.ul__list li {
+  margin: 10px;
+}
+
+.ul__list li.active {
+  font-weight: bold; /* Thay đổi style khi active */
+  color: #007bff; /* Màu sắc khi active */
+  cursor: pointer; /* Chỉnh con trỏ thành dấu chấm khi di chuột */
 }
 </style>

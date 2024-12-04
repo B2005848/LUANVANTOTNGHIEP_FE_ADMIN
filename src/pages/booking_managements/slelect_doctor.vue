@@ -16,7 +16,7 @@
       </ul>
     </div>
     <div class="card p-4">
-      <h4 class="text-center">Chọn dịch vụ khám</h4>
+      <h4 class="text-center">Chọn dịch bác sĩ</h4>
 
       <!-- Danh sách Phòng Khám -->
       <div v-if="services.length">
@@ -32,7 +32,6 @@
             @click="selectservice(service)"
           >
             {{ service.service_name }}
-            {{ formatCurrency(service.service_fee) }}
           </button>
         </div>
       </div>
@@ -54,7 +53,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRouter, useRoute } from "vue-router";
-import { formatCurrency } from "@/helper/currencyFormatter";
+
 const router = useRouter();
 const route = useRoute();
 
@@ -74,26 +73,20 @@ const loadservices = async () => {
   }
 };
 
-// Chọn dịch
+// Chọn phòng khám
 const selectservice = (service) => {
   selectedservice.value = service;
 };
 
-// Xác nhận dịch đã chọn
+// Xác nhận phòng khám đã chọn
 const confirmSelection = () => {
   console.log("ID Dịch Vụ Đã Chọn:", selectedservice.value.service_id);
-  console.log(
-    "ID Chuyên Khoa Dịch Vụ Đã Chọn",
-    selectedservice.value.specialty_id
-  );
   // Tiến hành chọn dịch vụ hoặc chuyển bước tiếp theo
   router.push({
     name: "admin.select.service",
     params: {
       patient_id: patient_id,
-      department_id: department_id,
       service_id: selectedservice.value.service_id,
-      specialty_id: selectedservice.value.specialty_id,
     },
   });
 };

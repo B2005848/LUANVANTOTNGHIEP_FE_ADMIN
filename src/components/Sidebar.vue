@@ -137,14 +137,17 @@ a:focus {
         >HỖ TRỢ BỆNH NHÂN</router-link
       >
     </li>
-    <li>
+    <!-- <li>
       <font-awesome-icon
         icon="fa-solid fa-gear"
         style="color: #094067"
         size="sm"
         class="me-2"
       />
-      <router-link :to="{ name: 'admin.settings' }">CÀI ĐẶT</router-link>
-    </li>
+      <router-link :to="{ name: 'admin.settings' }">
+        CÀI ĐẶT
+
+      </router-link>
+    </li> -->
   </ul>
 </template>

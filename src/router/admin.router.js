@@ -221,6 +221,26 @@ const admin = [
           },
 
           // Step 2: chọn dịch vụ khám
+          {
+            path: "select_service/:patient_id/:department_id/",
+            name: "admin.select.service",
+            component: () =>
+              import("../pages/booking_managements/select_service.vue"),
+            meta: {
+              title: "CTU CLINIC - Chọn dịch vụ",
+            },
+          },
+
+          // Step 3: Chọn bác sĩ
+          {
+            path: "select_service/:patient_id/:department_id/:service_id",
+            name: "admin.select.doctor",
+            component: () =>
+              import("../pages/booking_managements/slelect_doctor.vue"),
+            meta: {
+              title: "CTU CLINIC - Chọn bác sĩ",
+            },
+          },
         ],
       },
 
