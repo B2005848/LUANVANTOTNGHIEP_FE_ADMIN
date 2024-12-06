@@ -180,6 +180,8 @@
                   </span>
 
                   <span v-if="data.payment_status === 'P'"> Đang xử lí </span>
+
+                  <span v-if="data.payment_status === 'H'"> Đã hoàn tiền </span>
                 </td>
 
                 <!-- PHÒNG TIẾP NHẬN  -->
@@ -274,7 +276,42 @@ import formatDate from "@/helper/format-datetime";
 const formatDateTime = formatDate.formatDateTime;
 const formatDay = formatDate.formatDateBirth;
 import Swal from "sweetalert2";
+import { useRoute, useRouter } from "vue-router";
+const route = useRoute();
+const router = useRouter();
 
+// Hàm hiển thị thông báo
+const checkUrlAndNotify = () => {
+  const status = route.query.status; // Lấy giá trị 'status' từ query string
+  const transactionId = route.query.transactionId; // Lấy giá trị 'transactionId' từ query string
+
+  if (status && transactionId) {
+    // Nếu có status và transactionId, hiển thị thông báo
+    if (status === "success") {
+      Swal.fire({
+        icon: "success",
+        title: "Đặt lịch thành công",
+        text: `Giao dịch thành công! Mã giao dịch: ${transactionId}`,
+      });
+    } else if (status === "failure") {
+      Swal.fire({
+        icon: "error",
+        title: "Đặt lịch không thành công",
+        text: `Giao dịch thất bại! Mã giao dịch: ${transactionId}`,
+      });
+    }
+
+    // Xóa các giá trị status và transactionId khỏi URL để tránh lặp lại thông báo
+    router.replace({
+      query: { ...route.query, status: undefined, transactionId: undefined },
+    });
+  }
+};
+
+// Kiểm tra URL ngay khi component được gọi
+onMounted(() => {
+  checkUrlAndNotify();
+});
 const {
   getData,
   listAppointmentsData,
@@ -318,7 +355,7 @@ const updateAppointmentStatus = async (
   if (result.isConfirmed) {
     try {
       // Gọi API để cập nhật trạng thái
-      const response = await axios.put(
+      await axios.put(
         `http://localhost:3000/api/appointment/modifyStatus/${appointmentId}`,
         { status: action }
       );
@@ -340,16 +377,27 @@ const updateAppointmentStatus = async (
         } else {
           throw new Error("Có lỗi khi xác nhận bệnh nhân đã đến.");
         }
+      }
+      if (action === "CA") {
+        const checkInResponse = await axios.put(
+          `http://localhost:3000/api/statistics/revenue/update-status/${transaction_id}`,
+          { newStatus: "H" } // Dữ liệu có thể thay đổi tùy theo API
+        );
+
+        // Kiểm tra kết quả của API thứ hai
+        if (checkInResponse.status === 200) {
+          Swal.fire(
+            "Thành công!",
+            "Lịch hẹn đã được xác nhận hủy thành công",
+            "success"
+          );
+        } else {
+          throw new Error("Có lỗi khi xác nhận hủy lịch hẹn");
+        }
       } else {
         Swal.fire(
           "Thành công!",
-          `Lịch hẹn đã được ${
-            action === "C-IN"
-              ? "xác nhận"
-              : action === "CA"
-              ? "hủy"
-              : "dời lịch"
-          }.`,
+          `Lịch hẹn đã được ${action === "C-IN" ? "xác nhận" : "dời lịch"}.`,
           "success"
         );
       }

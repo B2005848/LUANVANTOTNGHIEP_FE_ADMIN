@@ -192,7 +192,7 @@
           <div class="col-md-6">
             <button
               class="btn btn-success w-100 tw-mt-5"
-              @click="paymnentDirect"
+              @click="paymnentVNpay"
             >
               THANH TOÁN VNPAY
             </button>
@@ -211,6 +211,7 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import moment from "moment-timezone";
 import Swal from "sweetalert2";
+
 const router = useRouter();
 const route = useRoute();
 const showbtnPayment = ref(false);
@@ -222,6 +223,7 @@ const availableHours = ref([]); // Các giờ có thể chọn trong buổi
 const patient_id = route.params.patient_id;
 const department_id = route.params.department_id;
 const specialty_id = route.params.specialty_id;
+const service_id = route.params.service_id;
 const reason = ref("Chờ tư vấn của bác sĩ");
 // Hàm tải danh sách bác sĩ
 const loaddoctors = async () => {
@@ -309,25 +311,27 @@ const selectHour = async (hour) => {
   console.log(`Giờ khám đã chọn: ${hour}`);
   selectedHour.value = hour;
   // Bạn có thể xử lý thêm ở đây, ví dụ lưu lại giờ chọn, chuyển qua bước tiếp theo...
-  const endTime = moment(selectedHour, "HH:mm")
-    .add(30, "minutes")
-    .format("HH:mm");
+  console.log(
+    "Ngày đã chọn:",
+    moment.utc(selectedDate.value).format("YYYY-MM-DD")
+  );
   const appointmentDetails = {
     doctor_id: selecteddoctor.value.doctor_id,
     department_id: department_id,
-    appointment_date: moment(selectedDate).format("YYYY-MM-DD"),
-    service_id: "SV001",
+    appointment_date: moment.utc(selectedDate.value).format("YYYY-MM-DD"),
+    service_id: service_id,
     start_time: hour,
-    shift_id: selectedshift.shift_id,
-    end_time: endTime,
+    shift_id: selectedshift.value.shift_id,
   };
 
   const isAvailable = await axios.get(
     "http://localhost:3000/api/appointment/check-existing-time",
-    appointmentDetails
+    {
+      params: appointmentDetails,
+    }
   );
 
-  if (isAvailable.status === 200) {
+  if (isAvailable.data.status === true) {
     Swal.fire("THÔNG BÁO", "Thông tin hợp lệ", "success");
     showbtnPayment.value = true;
   } else {
@@ -337,6 +341,159 @@ const selectHour = async (hour) => {
       "warning"
     );
     showbtnPayment.value = false;
+  }
+};
+
+// THANH TOÁN TẠI PHÒNG KHÁM
+const paymnentDirect = async () => {
+  const endTime = moment(selectedHour.value, "HH:mm")
+    .add(30, "minutes")
+    .format("HH:mm");
+  const infoService = await axios.get(
+    `http://localhost:3000/api/services/getdetail/${service_id}`
+  );
+  if (infoService.status === 200) {
+    const amount = infoService.data.dataInfo.service_fee;
+    const resultBooking = await axios.post(
+      `http://localhost:3000/api/appointment/booking/${patient_id}`,
+      {
+        staff_id: selecteddoctor.value.doctor_id,
+        department_id: department_id,
+        appointment_date: moment.utc(selectedDate.value).format("YYYY-MM-DD"),
+        start_time: selectedHour.value,
+        end_time: endTime,
+        shift_id: selectedshift.value.shift_id,
+        service_id: service_id,
+        reason: reason.value,
+        payment_method_id: 1,
+      }
+    );
+    console.log();
+    if (resultBooking.status === 200) {
+      Swal.fire({
+        icon: "success",
+        title: "THÀNH CÔNG",
+        text: "Đăng kí khám bệnh thành công",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận thanh toán",
+        cancelButtonText: "Thanh toán sau",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const resultPayment = await axios.post(
+            "http://localhost:3000/api/appointment/add",
+            {
+              patient_id: patient_id,
+              appointment_id: resultBooking.data.data.appointment_id,
+              amount: amount,
+              payment_method_id: 1,
+              payment_status: "C",
+              bankCode: "TT",
+            }
+          );
+
+          if (resultPayment.status === 201) {
+            Swal.fire(
+              "THÀNH CÔNG",
+              "Xác nhận thanh toán thành công",
+              "success"
+            );
+            router.push({
+              name: "admin.booking",
+            });
+          }
+        } else {
+          const resultPayment = await axios.post(
+            "http://localhost:3000/api/appointment/add",
+            {
+              patient_id: patient_id,
+              appointment_id: resultBooking.data.data.appointment_id,
+              amount: amount,
+              payment_method_id: 1,
+              payment_status: "P",
+              bankCode: "TT",
+            }
+          );
+          if (resultPayment.status === 201) {
+            Swal.fire("THÀNH CÔNG", "Đã xác nhận thanh toán sau", "success");
+            router.push({
+              name: "admin.booking",
+            });
+          }
+        }
+      });
+    }
+  }
+};
+
+// THANH TOÁN VNPAY
+const paymnentVNpay = async () => {
+  const endTime = moment(selectedHour.value, "HH:mm")
+    .add(30, "minutes")
+    .format("HH:mm");
+  const infoService = await axios.get(
+    `http://localhost:3000/api/services/getdetail/${service_id}`
+  );
+  if (infoService.status === 200) {
+    const amount = infoService.data.dataInfo.service_fee;
+    const resultBooking = await axios.post(
+      `http://localhost:3000/api/appointment/booking/${patient_id}`,
+      {
+        staff_id: selecteddoctor.value.doctor_id,
+        department_id: department_id,
+        appointment_date: moment.utc(selectedDate.value).format("YYYY-MM-DD"),
+        start_time: selectedHour.value,
+        end_time: endTime,
+        shift_id: selectedshift.value.shift_id,
+        service_id: service_id,
+        reason: reason.value,
+        payment_method_id: 2,
+      }
+    );
+    console.log();
+    if (resultBooking.status === 200) {
+      Swal.fire({
+        icon: "success",
+        title: "THÀNH CÔNG",
+        text: "Đăng kí khám bệnh thành công",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận thanh toán",
+        cancelButtonText: "Hủy",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const resultPayment = await axios.post(
+            "http://localhost:3000/api/VNPay/payment/appointment-payment-web",
+            {
+              patient_id: patient_id,
+              appointment_id: resultBooking.data.data.appointment_id,
+              amount: amount,
+              bankCode: "VNBANK",
+              ipAddr: "192.168.137.1", // Địa chỉ IP của người dùng (bạn có thể lấy từ req.ip nếu triển khai thực tế)
+            }
+          );
+          if (resultPayment.status === 200) {
+            // Hiển thị SweetAlert loading trước khi chuyển trang
+            Swal.fire({
+              title: "Đang chuyển tới cổng thanh toán...",
+              text: "Vui lòng chờ giây lát",
+              icon: "info",
+              allowOutsideClick: false,
+              showConfirmButton: false,
+              willOpen: () => {
+                Swal.showLoading();
+              },
+            });
+            // Chuyển hướng tới trang thanh toán sau 0.5 giây
+            setTimeout(() => {
+              window.location.href = resultPayment.data.paymentUrl;
+            }, 500);
+          }
+        } else {
+          await axios.delete(
+            `http://localhost:3000/api/appointment/delete/${resultBooking.data.data.appointment_id}`
+          );
+        }
+      });
+    }
   }
 };
 
