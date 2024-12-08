@@ -797,6 +797,7 @@ const handleSaveInfoBasic = async () => {
         nationality:
           infoDetailData.value.nationality || staffDetail.value.nationality,
         status: infoDetailData.value.status || staffDetail.value.statusAccount,
+        role_id: selectedRole.value,
       };
 
       // Gửi yêu cầu PATCH tới API

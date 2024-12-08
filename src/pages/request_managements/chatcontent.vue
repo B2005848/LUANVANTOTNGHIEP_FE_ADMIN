@@ -21,12 +21,6 @@
           </div>
         </router-link>
       </div>
-
-      <div>
-        <div class="btn-delele">
-          <button style="color: #dc143c">Xóa</button>
-        </div>
-      </div>
     </div>
     <div class="chat-content" ref="chatContent" @scroll="handleScroll">
       <div
