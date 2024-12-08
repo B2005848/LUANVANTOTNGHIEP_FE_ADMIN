@@ -246,7 +246,6 @@
             v-model="patientData.nation"
             class="form-control"
             id="nation"
-            required
           />
         </div>
         <div class="col-md-6">
@@ -256,7 +255,6 @@
             v-model="patientData.religion"
             class="form-control"
             id="religion"
-            required
           />
         </div>
       </div>
@@ -269,7 +267,6 @@
             v-model="patientData.nationality"
             class="form-control"
             id="nationality"
-            required
           />
         </div>
 
