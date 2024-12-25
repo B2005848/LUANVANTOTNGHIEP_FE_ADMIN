@@ -38,4 +38,8 @@ npm run dev
 npm run build
 ```
 
-# Copyright (c) 2024 LeThanhNamCTUB2005848. All rights reserved.
+📝 License
+Copyright © 2024 LeThanhNamCTUB2005848. All rights reserved.
+
+This project is licensed under a proprietary license. Unauthorized copying, modification, or distribution of this software is prohibited without explicit permission from the author.
+
